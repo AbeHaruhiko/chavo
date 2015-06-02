@@ -40,12 +40,12 @@ section.jumbotron {
   }
 }
 
-.techs {
+.voices {
   display: flex;
   flex-flow: row wrap;
 
   md-card {
-    width: 30%;
+    width: 50%;
 
     img.pull-right {
       float: right;

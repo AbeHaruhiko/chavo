@@ -1,43 +1,33 @@
 module chavo {
   'use strict';
 
-  class Thing {
-    public rank: number;
-    public title: string;
-    public url: string;
-    public description: string;
-    public logo: string;
-
-    constructor(title: string, url: string, description: string, logo: string) {
-      this.title = title;
-      this.url = url;
-      this.description = description;
-      this.logo = logo;
-      this.rank = Math.random();
+  class Voice {
+    constructor(public description: string, public author: string, public age: number, public icon: string, public createdAt: string) {
     }
   }
 
   interface IMainScope extends ng.IScope {
-    awesomeThings: Thing[]
+    voices: Voice[]
   }
 
   export class MainCtrl {
 
-    awesomeThings = new Array<Thing>();
+    voices = new Array<Voice>();
 
     /* @ngInject */
     constructor (public $scope: IMainScope) {
       var awesomes = [
-      {
-        'title': 'AngularJS',
-        'url': 'https://angularjs.org/',
-        'description': 'HTML enhanced for web apps!',
-        'logo': 'angular.png'
-      }
+        {
+          'description': 'ぱぱ！！',
+          'author': 'あべさんのお子さん',
+          'age': 2.6,
+          'icon': 'angular.png',
+          'createdAt': '2015-06-02'
+        }
     ];
 
-      awesomes.forEach((awesome: Thing) => {
-        this.awesomeThings.push(awesome);
+      awesomes.forEach((awesome: Voice) => {
+        this.voices.push(awesome);
       });
     }
   }

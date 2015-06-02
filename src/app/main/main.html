@@ -3,30 +3,19 @@
   <md-content>
     <header ng-include="'app/components/navbar/navbar.html'"></header>
 
-    <section class="jumbotron">
-      <h1>'Allo, 'Allo!</h1>
-      <p class="lead">
-        <img src="assets/images/yeoman.png" alt="I'm Yeoman"><br>
-        Always a pleasure scaffolding your apps.
-      </p>
-      <p><a class="btn" ng-href="#">Splendid!</a></p>
-    </section>
-
-    <div class="techs" layout-align="center">
-      <md-card ng-repeat="awesomeThing in main.awesomeThings | orderBy:'rank'">
+    <div class="voices" layout-align="center">
+      <md-card ng-repeat="voice in main.voices | orderBy:'rank'">
         <div class="thumbnail">
-          <img class="pull-right" ng-src="assets/images/{{awesomeThing.logo}}" alt="{{awesomeThing.title}}">
+          <img class="pull-right" ng-src="assets/images/{{voice.icon}}" alt="{{voice.author}}">
           <div class="caption">
-            <h3>{{awesomeThing.title}}</h3>
-            <p>{{awesomeThing.description}}</p>
-            <p><a ng-href="{{awesomeThing.url}}">{{awesomeThing.url}}</a></p>
+            <p>{{voice.description}}</p>
           </div>
         </div>
       </md-card>
     </div>
     <footer>
       <md-toolbar layout="row" layout-align="center center">
-        <p>With ♥ from <a href="https://twitter.com/Swiip">@Swiip</a></p>
+        <p>ちゃぼ</p>
       </md-toolbar>
     </footer>
   </md-content>

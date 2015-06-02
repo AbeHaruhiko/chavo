@@ -1,31 +1,32 @@
 var chavo;
 (function (chavo) {
     'use strict';
-    var Thing = (function () {
-        function Thing(title, url, description, logo) {
-            this.title = title;
-            this.url = url;
+    var Voice = (function () {
+        function Voice(description, author, age, icon, createdAt) {
             this.description = description;
-            this.logo = logo;
-            this.rank = Math.random();
+            this.author = author;
+            this.age = age;
+            this.icon = icon;
+            this.createdAt = createdAt;
         }
-        return Thing;
+        return Voice;
     })();
     var MainCtrl = (function () {
         function MainCtrl($scope) {
             var _this = this;
             this.$scope = $scope;
-            this.awesomeThings = new Array();
+            this.voices = new Array();
             var awesomes = [
                 {
-                    'title': 'AngularJS',
-                    'url': 'https://angularjs.org/',
-                    'description': 'HTML enhanced for web apps!',
-                    'logo': 'angular.png'
+                    'description': 'ぱぱ！！',
+                    'author': 'あべさんのお子さん',
+                    'age': 2.6,
+                    'icon': 'angular.png',
+                    'createdAt': '2015-06-02'
                 }
             ];
             awesomes.forEach(function (awesome) {
-                _this.awesomeThings.push(awesome);
+                _this.voices.push(awesome);
             });
         }
         return MainCtrl;
