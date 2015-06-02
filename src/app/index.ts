@@ -3,10 +3,10 @@
 /// <reference path="main/main.controller.ts" />
 /// <reference path="../app/components/navbar/navbar.controller.ts" />
 
-module voice {
+module chavo {
   'use strict';
 
-  angular.module('voice', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'restangular', 'ui.router', 'ngMaterial'])
+  angular.module('chavo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'restangular', 'ui.router', 'ngMaterial'])
     .controller('MainCtrl', MainCtrl)
     .controller('NavbarCtrl', NavbarCtrl)
 

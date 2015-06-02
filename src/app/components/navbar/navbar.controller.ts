@@ -1,4 +1,4 @@
-module voice {
+module chavo {
   'use strict';
 
   interface INavbarScope extends ng.IScope {

@@ -3,7 +3,7 @@
 describe('controllers', function(){
   var scope;
 
-  beforeEach(module('voice'));
+  beforeEach(module('chavo'));
 
   beforeEach(inject(function($rootScope) {
     scope = $rootScope.$new();
