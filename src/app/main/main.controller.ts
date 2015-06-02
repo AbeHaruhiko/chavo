@@ -22,9 +22,12 @@ module chavo {
   }
 
   export class MainCtrl {
+
+    awesomeThings = new Array<Thing>();
+
     /* @ngInject */
-    constructor ($scope: IMainScope) {
-      var awesomeThings = [
+    constructor (public $scope: IMainScope) {
+      var awesomes = [
       {
         'title': 'AngularJS',
         'url': 'https://angularjs.org/',
@@ -33,10 +36,8 @@ module chavo {
       }
     ];
 
-      $scope.awesomeThings = new Array<Thing>();
-
-      awesomeThings.forEach(function(awesomeThing: Thing) {
-        $scope.awesomeThings.push(awesomeThing);
+      awesomes.forEach((awesome: Thing) => {
+        this.awesomeThings.push(awesome);
       });
     }
   }

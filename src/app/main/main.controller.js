@@ -13,7 +13,10 @@ var chavo;
     })();
     var MainCtrl = (function () {
         function MainCtrl($scope) {
-            var awesomeThings = [
+            var _this = this;
+            this.$scope = $scope;
+            this.awesomeThings = new Array();
+            var awesomes = [
                 {
                     'title': 'AngularJS',
                     'url': 'https://angularjs.org/',
@@ -21,9 +24,8 @@ var chavo;
                     'logo': 'angular.png'
                 }
             ];
-            $scope.awesomeThings = new Array();
-            awesomeThings.forEach(function (awesomeThing) {
-                $scope.awesomeThings.push(awesomeThing);
+            awesomes.forEach(function (awesome) {
+                _this.awesomeThings.push(awesome);
             });
         }
         return MainCtrl;
