@@ -15,7 +15,8 @@ module chavo {
       .state('home', {
         url: '/',
         templateUrl: 'app/main/main.html',
-        controller: 'MainCtrl'
+        controller: 'MainCtrl',
+        controllerAs: 'main'
       });
 
     $urlRouterProvider.otherwise('/');
