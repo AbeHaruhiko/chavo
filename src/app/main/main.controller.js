@@ -23,6 +23,12 @@ var chavo;
                     'age': 2.6,
                     'icon': 'angular.png',
                     'createdAt': '2015-06-02'
+                }, {
+                    'description': 'ぱぱ！！',
+                    'author': 'あべさんのお子さん',
+                    'age': 2.6,
+                    'icon': 'angular.png',
+                    'createdAt': '2015-06-02'
                 }
             ];
             awesomes.forEach(function (awesome) {

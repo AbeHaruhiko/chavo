@@ -1,7 +1,16 @@
 <div layout="vertical" layout-fill>
 
-  <md-content>
+  <md-content flex>
     <header ng-include="'app/components/navbar/navbar.html'"></header>
+
+    <!-- <section class="jumbotron">
+      <h1>'Allo, 'Allo!</h1>
+      <p class="lead">
+        <img src="assets/images/yeoman.png" alt="I'm Yeoman"><br>
+        Always a pleasure scaffolding your apps.
+      </p>
+      <p><a class="btn" ng-href="#">Splendid!</a></p>
+    </section> -->
 
     <div class="voices" layout-align="center">
       <md-card ng-repeat="voice in main.voices | orderBy:'rank'">
