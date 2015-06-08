@@ -1,0 +1,23 @@
+{
+    "version": "1.5.0-alpha",
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "declaration": false,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "noLib": false,
+        "preserveConstEnums": true,
+        "suppressImplicitAnyIndexErrors": true
+    },
+    "filesGlob": [
+        "./**/*.ts",
+        "!./node_modules/**/*.ts"
+    ],
+    "files": [
+        "./bower_components/angular-ui-router/api/angular-ui-router.d.ts",
+        "./src/app/components/navbar/navbar.controller.ts",
+        "./src/app/index.ts",
+        "./src/app/main/main.controller.ts"
+    ]
+}

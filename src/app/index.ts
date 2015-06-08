@@ -6,7 +6,7 @@
 module chavo {
   'use strict';
 
-  angular.module('chavo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'restangular', 'ui.router', 'ngMaterial'])
+  angular.module('chavo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'restangular', 'ui.router', 'ui.bootstrap'])
     .controller('MainCtrl', MainCtrl)
     .controller('NavbarCtrl', NavbarCtrl)
 
@@ -15,8 +15,7 @@ module chavo {
       .state('home', {
         url: '/',
         templateUrl: 'app/main/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
+        controller: 'MainCtrl'
       });
 
     $urlRouterProvider.otherwise('/');
