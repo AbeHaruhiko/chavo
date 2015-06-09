@@ -18,7 +18,7 @@ var chavo;
             this.voices = new Array();
             var awesomes = [
                 {
-                    'description': 'ぱぱ！！',
+                    'description': '中華料理屋さんで。\n私「何食べたい？」',
                     'author': 'あべさんのお子さん',
                     'age': 2.6,
                     'icon': 'angular.png',
