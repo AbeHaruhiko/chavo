@@ -6,13 +6,15 @@
 }
 
 .thumbnail {
-  height: 200px;
 
   img.img-circle {
     width: 50px;
   }
 }
 
+.pre-line {
+    white-space: pre-line;
+}
 /* Do not remove this comments bellow. It's the markers used by gulp-inject to inject
    all your sass files automatically */
 // injector
