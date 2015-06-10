@@ -17,9 +17,13 @@ module chavo {
         templateUrl: 'app/main/main.html',
         controller: 'MainController',
         controllerAs: 'main'
+      })
+      .state('login', {
+        url: '/login',
+        templateUrl: 'app/login/login.html',
+        controller: 'LoginContoroller'
       });
 
     $urlRouterProvider.otherwise('/');
-  })
-;
+  });
 }
