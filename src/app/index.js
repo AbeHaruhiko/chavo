@@ -5,14 +5,14 @@ var chavo;
 (function (chavo) {
     'use strict';
     angular.module('chavo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'restangular', 'ui.router', 'ui.bootstrap'])
-        .controller('MainCtrl', chavo.MainCtrl)
-        .controller('NavbarCtrl', chavo.NavbarCtrl)
+        .controller('MainController', chavo.MainController)
+        .controller('NavbarController', chavo.NavbarController)
         .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('home', {
             url: '/',
             templateUrl: 'app/main/main.html',
-            controller: 'MainCtrl',
+            controller: 'MainController',
             controllerAs: 'main'
         });
         $urlRouterProvider.otherwise('/');

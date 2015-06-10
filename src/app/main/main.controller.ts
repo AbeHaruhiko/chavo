@@ -14,7 +14,7 @@ module chavo {
     voices: Voice[]
   }
 
-  export class MainCtrl {
+  export class MainController {
 
     voices = new Array<Voice>();
 

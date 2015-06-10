@@ -11,8 +11,8 @@ var chavo;
         }
         return Voice;
     })();
-    var MainCtrl = (function () {
-        function MainCtrl($scope) {
+    var MainController = (function () {
+        function MainController($scope) {
             var _this = this;
             this.$scope = $scope;
             this.voices = new Array();
@@ -35,7 +35,7 @@ var chavo;
                 _this.voices.push(awesome);
             });
         }
-        return MainCtrl;
+        return MainController;
     })();
-    chavo.MainCtrl = MainCtrl;
+    chavo.MainController = MainController;
 })(chavo || (chavo = {}));
