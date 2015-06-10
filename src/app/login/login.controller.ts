@@ -12,7 +12,7 @@ module chavo {
     }
 
     logOut() {
-      // Parse.User.logOut();
+      Parse.User.logOut();
     }
   }
 
