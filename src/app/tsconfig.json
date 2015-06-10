@@ -17,6 +17,7 @@
     "files": [
         "./components/navbar/navbar.controller.ts",
         "./index.ts",
+        "./login/login.controller.ts",
         "./main/main.controller.ts"
     ]
 }

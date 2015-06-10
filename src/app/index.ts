@@ -3,6 +3,8 @@
 /// <reference path="main/main.controller.ts" />
 /// <reference path="../app/components/navbar/navbar.controller.ts" />
 
+// Parse.initialize('FpENpUI2dIIOJu5J4UrssehUKwkB1afjOfEK92Zv', '1Wbddi5o4HemnLkhBCmHov121BuE8qS5d1jxPxKs');
+
 module chavo {
   'use strict';
 
