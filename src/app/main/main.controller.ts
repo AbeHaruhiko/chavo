@@ -2,7 +2,11 @@ module chavo {
   'use strict';
 
   class Voice {
-    constructor(public description: string, public author: string, public age: number, public icon: string, public createdAt: string) {
+    constructor(public description: string,
+      public author: string,
+      public age: number,
+      public icon: string,
+      public createdAt: string) {
     }
   }
 
@@ -23,7 +27,7 @@ module chavo {
           'age': 2.6,
           'icon': 'angular.png',
           'createdAt': '2015-06-02'
-        },{
+        }, {
           'description': 'ぱぱ！！',
           'author': 'あべさんのお子さん',
           'age': 2.6,
