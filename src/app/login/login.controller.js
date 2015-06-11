@@ -2,26 +2,27 @@ var chavo;
 (function (chavo) {
     'use strict';
     var LoginController = (function () {
-        function LoginController($scope, $state) {
+        function LoginController($scope, $state, $location, AuthService) {
             this.$scope = $scope;
             this.$state = $state;
+            this.$location = $location;
+            this.AuthService = AuthService;
         }
         LoginController.prototype.logIn = function (form) {
-            AuthService.logIn(form, {
+            var _this = this;
+            this.AuthService.logIn(form, {
                 success: function (user) {
-                    this.$scope.$apply(function () {
-                        $scope.currentUser = user;
-                        AuthService.currentUser = user;
+                    _this.$scope.$apply(function () {
                         if (!user.get('emailVerified')) {
-                            $state.go('login');
+                            this.$state.go('main');
                             return;
                         }
-                        $state.go('main');
+                        this.$state.go('main');
                     });
                 },
                 error: function (user, error) {
                     console.log("Unable to login:  " + error.code + " " + error.message);
-                    $location.path('/login');
+                    _this.$location.path('/login');
                 }
             });
         };

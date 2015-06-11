@@ -7,30 +7,28 @@ module chavo {
   export class LoginController {
 
     /* @ngInject */
-    constructor (public $scope: IMainScope, public $state: ng.ui.IState) {
+    constructor (public $scope: IMainScope, public $state: ng.ui.IState, public $location, public AuthService: AuthService) {
 
     }
 
     logIn(form) {
-          AuthService.logIn(form, {
-            success: function(user) {
-              this.$scope.$apply(function() {
-                $scope.currentUser = user;
-                AuthService.currentUser = user;
-                if (!user.get('emailVerified')) {
-                  $state.go('login');
-                  return;
-                }
-
-                $state.go('main');
-              });
-            },
-            error: function(user, error) {
-              console.log("Unable to login:  " + error.code + " " + error.message);
-              $location.path('/login');
+      this.AuthService.logIn(form, {
+        success: user => {
+          this.$scope.$apply(function() {
+            if (!user.get('emailVerified')) {
+              this.$state.go('main');
+              return;
             }
+
+            this.$state.go('main');
           });
-        };
+        },
+        error: (user, error) => {
+          console.log("Unable to login:  " + error.code + " " + error.message);
+          this.$location.path('/login');
+        }
+      });
+    };
 
     logOut() {
       Parse.User.logOut();
