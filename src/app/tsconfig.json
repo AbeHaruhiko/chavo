@@ -15,6 +15,7 @@
         "!./node_modules/**/*.ts"
     ],
     "files": [
+        "./auth/services/auth-service.ts",
         "./components/navbar/navbar.controller.ts",
         "./index.ts",
         "./login/login.controller.ts",
