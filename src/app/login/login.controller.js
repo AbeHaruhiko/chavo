@@ -17,7 +17,7 @@ var chavo;
                     });
                 },
                 error: function (user, error) {
-                    alert("Unable to sign up:  " + error.code + " " + error.message);
+                    alert('Unable to sign up:  ' + error.code + ' ' + error.message);
                 }
             });
         };
@@ -34,12 +34,11 @@ var chavo;
                     });
                 },
                 error: function (user, error) {
-                    console.log("Unable to login:  " + error.code + " " + error.message);
+                    console.log('Unable to login:  ' + error.code + ' ' + error.message);
                     _this.$location.path('/login');
                 }
             });
         };
-        ;
         LoginController.prototype.logOut = function () {
             this.AuthService.logOut();
         };

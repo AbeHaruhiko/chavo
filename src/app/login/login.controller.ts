@@ -11,7 +11,7 @@ module chavo {
 
     }
 
-    signUp(form: { name: string; password: string; }) {
+    signUp(form: { username: string; password: string; }) {
       this.AuthService.signUp(form, {
         success: (user: Parse.User) => {
           this.$scope.$apply(() => {
@@ -24,7 +24,7 @@ module chavo {
       });
     }
 
-    logIn(form: { name: string; password: string; }) {
+    logIn(form: { username: string; password: string; }) {
       this.AuthService.logIn(form, {
         success: (user: Parse.User) => {
           this.$scope.$apply(() => {
@@ -36,12 +36,12 @@ module chavo {
             this.$state.go('main');
           });
         },
-        error: (user:Parse.User, error: Parse.Error) => {
+        error: (user: Parse.User, error: Parse.Error) => {
           console.log('Unable to login:  ' + error.code + ' ' + error.message);
           this.$location.path('/login');
         }
       });
-    };
+    }
 
     logOut() {
       this.AuthService.logOut();

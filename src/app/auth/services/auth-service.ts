@@ -11,22 +11,22 @@ module chavo {
 
     }
 
-    signUp(form, callbacks) {
+    signUp(form: { username: string; password: string; }, callbacks: any) {
       var user = new Parse.User();
-      user.set("email", form.username);
-      user.set("username", form.username);
-      user.set("password", form.password);
+      user.set('email', form.username);
+      user.set('username', form.username);
+      user.set('password', form.password);
 
       user.signUp(null, callbacks);
     }
 
-    logIn(form, callbacks) {
+    logIn(form: { username: string; password: string; }, callbacks: any) {
       Parse.User.logIn(form.username, form.password, callbacks);
     }
 
     logOut() {
       Parse.User.logOut();
-      this.$state.go("home");
+      this.$state.go('home');
     }
   }
 }

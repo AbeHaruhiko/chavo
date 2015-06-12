@@ -7,9 +7,9 @@ var chavo;
         }
         AuthService.prototype.signUp = function (form, callbacks) {
             var user = new Parse.User();
-            user.set("email", form.username);
-            user.set("username", form.username);
-            user.set("password", form.password);
+            user.set('email', form.username);
+            user.set('username', form.username);
+            user.set('password', form.password);
             user.signUp(null, callbacks);
         };
         AuthService.prototype.logIn = function (form, callbacks) {
@@ -17,7 +17,7 @@ var chavo;
         };
         AuthService.prototype.logOut = function () {
             Parse.User.logOut();
-            this.$state.go("home");
+            this.$state.go('home');
         };
         return AuthService;
     })();

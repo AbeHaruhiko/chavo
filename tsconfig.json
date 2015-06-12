@@ -16,6 +16,7 @@
     ],
     "files": [
         "./bower_components/angular-ui-router/api/angular-ui-router.d.ts",
+        "./src/app/auth/services/auth-service.ts",
         "./src/app/components/navbar/navbar.controller.ts",
         "./src/app/index.ts",
         "./src/app/login/login.controller.ts",
