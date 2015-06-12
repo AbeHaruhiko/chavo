@@ -18,15 +18,15 @@ module chavo {
       user.set("password", form.password);
 
       user.signUp(null, callbacks);
-    };
+    }
 
     logIn(form, callbacks) {
       Parse.User.logIn(form.username, form.password, callbacks);
-    };
+    }
 
     logOut() {
       Parse.User.logOut();
       this.$state.go("home");
-    };
+    }
   }
 }

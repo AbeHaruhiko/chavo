@@ -8,16 +8,29 @@ var chavo;
             this.$location = $location;
             this.AuthService = AuthService;
         }
+        LoginController.prototype.signUp = function (form) {
+            var _this = this;
+            this.AuthService.signUp(form, {
+                success: function (user) {
+                    _this.$scope.$apply(function () {
+                        _this.$state.go('login');
+                    });
+                },
+                error: function (user, error) {
+                    alert("Unable to sign up:  " + error.code + " " + error.message);
+                }
+            });
+        };
         LoginController.prototype.logIn = function (form) {
             var _this = this;
             this.AuthService.logIn(form, {
                 success: function (user) {
                     _this.$scope.$apply(function () {
                         if (!user.get('emailVerified')) {
-                            this.$state.go('main');
+                            _this.$state.go('main');
                             return;
                         }
-                        this.$state.go('main');
+                        _this.$state.go('main');
                     });
                 },
                 error: function (user, error) {
@@ -28,7 +41,7 @@ var chavo;
         };
         ;
         LoginController.prototype.logOut = function () {
-            Parse.User.logOut();
+            this.AuthService.logOut();
         };
         return LoginController;
     })();

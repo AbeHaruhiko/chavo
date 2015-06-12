@@ -12,16 +12,13 @@ var chavo;
             user.set("password", form.password);
             user.signUp(null, callbacks);
         };
-        ;
         AuthService.prototype.logIn = function (form, callbacks) {
             Parse.User.logIn(form.username, form.password, callbacks);
         };
-        ;
         AuthService.prototype.logOut = function () {
             Parse.User.logOut();
             this.$state.go("home");
         };
-        ;
         return AuthService;
     })();
     chavo.AuthService = AuthService;
