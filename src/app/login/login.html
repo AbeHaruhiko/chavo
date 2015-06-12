@@ -1,6 +1,6 @@
 <h2>ログイン</h2>
 <form class="form-horizontal" ng-show="!$root.currentUser  || !$root.currentUser.get('emailVerified')" name="loginForm" novalidate>
-  <div  class="alert alert-info" ng-show="$root.currentUser && !$root.currentUser.get('emailVerified')">メールを送信しました。メールのURLクリック後、再度ログインしてください。</div>
+  <div  class="alert alert-info" ng-show="$root.currentUser && !$root.currentUser.get('emailVerified')">メールを送信しました。メールのURLクリック後、再度ログインしてください。</>
   <div class="form-group">
     <label for="email" class="col-sm-2 control-label">Email</label>
     <div class="col-sm-4">
@@ -20,10 +20,5 @@
     </div>
   </div>
 </form>
-
-<div ng-show="$root.currentUser  && $root.currentUser.get('emailVerified')">
-  <h2>{{currentUser.get('username')}} でログイン中です。</h2>
-  <button class="btn btn-default" ng-click="logOut()">Log out</button>
-</div>
 
 <pre>{{ $root.currentUser | json}}</pre>
