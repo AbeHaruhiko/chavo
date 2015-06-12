@@ -13,9 +13,13 @@
         <li><a ng-href="#">Contact</a></li>
       </ul>
 
-      <ul class="nav navbar-nav navbar-right">
-        <li>Current date: {{ date | date:'yyyy-MM-dd' }}</li>
-      </ul>
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control input-sm" name="username" placeholder="Username">
+          <input type="text" class="form-control input-sm" name="password" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-default input-sm">ログイン</button>
+      </form>
     </div>
   </div>
 </nav>
