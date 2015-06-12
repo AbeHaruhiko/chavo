@@ -3,7 +3,6 @@
 /// <reference path="login/login.controller.ts"/>
 /// <reference path="../app/components/navbar/navbar.controller.ts" />
 /// <reference path="./auth/services/auth-service.ts"/>
-Parse.initialize('FpENpUI2dIIOJu5J4UrssehUKwkB1afjOfEK92Zv', '1Wbddi5o4HemnLkhBCmHov121BuE8qS5d1jxPxKs');
 var chavo;
 (function (chavo) {
     'use strict';
@@ -32,8 +31,13 @@ var chavo;
             .state('login', {
             url: '/login',
             templateUrl: 'app/login/login.html',
-            controller: 'LoginController'
+            controller: 'LoginController',
+            controllerAs: 'login'
         });
         $urlRouterProvider.otherwise('/');
+    })
+        .run(function ($rootScope) {
+        Parse.initialize('FpENpUI2dIIOJu5J4UrssehUKwkB1afjOfEK92Zv', '1Wbddi5o4HemnLkhBCmHov121BuE8qS5d1jxPxKs');
+        $rootScope.currentUser = Parse.User.current();
     });
 })(chavo || (chavo = {}));

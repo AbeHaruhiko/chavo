@@ -1,6 +1,6 @@
-<div ng-show="Parse.User.current() && !Parse.User.current().get('emailVerified')">メールを送信しました。メールのURLクリック後、再度ログインしてください。</div>
 <h2>ログイン</h2>
-<form class="form-horizontal" ng-show="!Parse.User.current()  || !Parse.User.current() .get('emailVerified')" name="loginForm" novalidate>
+<form class="form-horizontal" ng-show="!$root.currentUser  || !$root.currentUser.get('emailVerified')" name="loginForm" novalidate>
+  <div  class="alert alert-info" ng-show="$root.currentUser && !$root.currentUser.get('emailVerified')">メールを送信しました。メールのURLクリック後、再度ログインしてください。</div>
   <div class="form-group">
     <label for="email" class="col-sm-2 control-label">Email</label>
     <div class="col-sm-4">
@@ -15,13 +15,15 @@
   </div>
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <button class="btn btn-default" ng-click="logIn(user)" ng-disabled="loginForm.email.$invalid">ログイン</button>
-      <button class="btn btn-default" ng-click="signUp(user)" ng-disabled="loginForm.email.$invalid">ユーザ登録</button>
+      <button class="btn btn-default" ng-click="login.logIn(user)" ng-disabled="loginForm.email.$invalid">ログイン</button>
+      <button class="btn btn-default" ng-click="login.signUp(user)" ng-disabled="loginForm.email.$invalid">ユーザ登録</button>
     </div>
   </div>
 </form>
 
-<div ng-show="Parse.User.current()  && Parse.User.current().get('emailVerified')">
+<div ng-show="$root.currentUser  && $root.currentUser.get('emailVerified')">
   <h2>{{currentUser.get('username')}} でログイン中です。</h2>
   <button class="btn btn-default" ng-click="logOut()">Log out</button>
 </div>
+
+<pre>{{ $root.currentUser | json}}</pre>

@@ -25,13 +25,7 @@ var chavo;
             var _this = this;
             this.AuthService.logIn(form, {
                 success: function (user) {
-                    _this.$scope.$apply(function () {
-                        if (!user.get('emailVerified')) {
-                            _this.$state.go('main');
-                            return;
-                        }
-                        _this.$state.go('main');
-                    });
+                    _this.$state.go('home');
                 },
                 error: function (user, error) {
                     console.log('Unable to login:  ' + error.code + ' ' + error.message);

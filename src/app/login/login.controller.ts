@@ -8,7 +8,6 @@ module chavo {
 
     /* @ngInject */
     constructor (public $scope: IMainScope, public $state: ng.ui.IStateService, public $location: ng.ILocationService, public AuthService: AuthService) {
-
     }
 
     signUp(form: { username: string; password: string; }) {
@@ -27,14 +26,7 @@ module chavo {
     logIn(form: { username: string; password: string; }) {
       this.AuthService.logIn(form, {
         success: (user: Parse.User) => {
-          this.$scope.$apply(() => {
-            if (!user.get('emailVerified')) {
-              this.$state.go('main');
-              return;
-            }
-
-            this.$state.go('main');
-          });
+          this.$state.go('home');
         },
         error: (user: Parse.User, error: Parse.Error) => {
           console.log('Unable to login:  ' + error.code + ' ' + error.message);
