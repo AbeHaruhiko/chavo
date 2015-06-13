@@ -2,13 +2,15 @@ module chavo {
   'use strict';
 
   interface INavbarScope extends ng.IScope {
-    date: Date
   }
 
   export class NavbarController {
     /* @ngInject */
-    constructor ($scope: INavbarScope) {
-      $scope.date = new Date();
+    constructor (public $scope: INavbarScope, public $rootScope: IChavoRootScope, public AuthService: AuthService) {
+    }
+
+    logOut() {
+      this.AuthService.logOut();
     }
   }
 

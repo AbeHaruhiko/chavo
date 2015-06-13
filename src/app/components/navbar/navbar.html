@@ -1,4 +1,4 @@
-<nav class="navbar navbar-fixed-top navbar-inverse" ng-controller="NavbarController">
+<nav class="navbar navbar-fixed-top navbar-inverse" ng-controller="NavbarController as navbar">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="http://chavo.parseapp.com">
@@ -13,56 +13,59 @@
         <li><a ng-href="#">Contact</a></li>
       </ul>
 
-      <!-- <form class="navbar-form navbar-right">
-        <div class="form-group">
-          <input type="text" class="form-control input-sm" name="username" placeholder="Username">
-          <input type="text" class="form-control input-sm" name="password" placeholder="Password">
-        </div>
-        <button type="submit" class="btn btn-default input-sm">ログイン</button>
-      </form> -->
+      <div ng-show="!$root.currentUser">
+        <form class="navbar-form navbar-right">
+          <div class="form-group">
+            <input type="text" class="form-control input-sm" name="username" placeholder="Username">
+            <input type="text" class="form-control input-sm" name="password" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-default input-sm">ログイン</button>
+        </form>
+      </div>
 
-
-      <ul class="nav navbar-nav navbar-right">
-        <li dropdown>
-          <a href="#" dropdown-toggle data-toggle="dropdown" role="button">
-            <span class="glyphicon glyphicon-user"></span> 
-            <strong>Nombre</strong>
-            <span class="glyphicon glyphicon-chevron-down"></span>
-          </a>
-          <ul class="dropdown-menu">
-            <li>
-              <div class="navbar-login">
-                <div class="row">
-                  <div class="col-lg-4">
-                    <p class="text-center">
-                      <span class="glyphicon glyphicon-user icon-size"></span>
-                    </p>
-                  </div>
-                  <div class="col-lg-8">
-                    <p class="text-left"><strong>Nombre Apellido</strong></p>
-                    <p class="text-left small">correoElectronico@email.com</p>
-                    <p class="text-left">
-                      <a href="#" class="btn btn-primary btn-block btn-sm">Actualizar Datos</a>
-                    </p>
+      <div ng-show="$root.currentUser">
+        <ul class="nav navbar-nav navbar-right">
+          <li dropdown>
+            <a href="#" dropdown-toggle data-toggle="dropdown" role="button">
+              <span class="glyphicon glyphicon-user"></span> 
+              <strong>{{$root.currentUser.getUsername()}}</strong>
+              <span class="glyphicon glyphicon-chevron-down"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <div class="navbar-login">
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <!-- <p class="text-center">
+                        <span class="glyphicon glyphicon-user icon-size"></span>
+                      </p> -->
+                      <img src="assets/images/ic_hal.jpg" class="icon-size"/>
+                    </div>
+                    <div class="col-lg-8">
+                      <p class="text-left"><strong>{{$root.currentUser.getUsername()}}</strong></p>
+                      <p class="text-left" ng-show="!$root.currentUser.get('emailVerified')">
+                          メールアドレスの確認が完了していません。メールを確認してURLをクリックしてください。
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </li>
-            <li class="divider"></li>
-            <li>
-              <div class="navbar-login navbar-login-session">
-                <div class="row">
-                  <div class="col-lg-12">
-                    <p>
-                      <a href="#" class="btn btn-danger btn-block">Cerrar Sesion</a>
-                    </p>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <div class="navbar-login navbar-login-session">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <p>
+                        <a href="#" class="btn btn-danger btn-block" ng-click="navbar.logOut()">ログアウト</a>
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </li>
-          </ul>
-        </li>
-      </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      <div ng-show="">
 
       <!-- <ul class="nav navbar-nav navbar-right">
         <li class="dropdown" dropdown>

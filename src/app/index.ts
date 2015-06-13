@@ -9,6 +9,10 @@
 module chavo {
   'use strict';
 
+  export interface IChavoRootScope extends ng.IRootScopeService {
+    currentUser: Parse.User;
+  }
+
   angular.module('chavo', [
     'ngAnimate',
     'ngCookies',
@@ -41,7 +45,7 @@ module chavo {
 
     $urlRouterProvider.otherwise('/');
   })
-  .run(function($rootScope) {
+  .run(function($rootScope: IChavoRootScope) {
     Parse.initialize('FpENpUI2dIIOJu5J4UrssehUKwkB1afjOfEK92Zv', '1Wbddi5o4HemnLkhBCmHov121BuE8qS5d1jxPxKs');
     $rootScope.currentUser = Parse.User.current();
   });

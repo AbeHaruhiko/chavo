@@ -26,27 +26,25 @@ body {
 
 
 
-.navbar-login
-{
+.navbar-login {
     width: 305px;
     padding: 10px;
     padding-bottom: 0px;
+
+    img {
+      width:
+    }
 }
 
-.navbar-login-session
-{
+.navbar-login-session {
     padding: 10px;
     padding-bottom: 0px;
     padding-top: 0px;
 }
 
-.icon-size
-{
-    font-size: 87px;
+.icon-size {
+    width: 87px;
 }
-
-
-
 
 
 /* Do not remove this comments bellow. It's the markers used by gulp-inject to inject

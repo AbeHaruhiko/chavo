@@ -2,8 +2,9 @@ var chavo;
 (function (chavo) {
     'use strict';
     var LoginController = (function () {
-        function LoginController($scope, $state, $location, AuthService) {
+        function LoginController($scope, $rootScope, $state, $location, AuthService) {
             this.$scope = $scope;
+            this.$rootScope = $rootScope;
             this.$state = $state;
             this.$location = $location;
             this.AuthService = AuthService;

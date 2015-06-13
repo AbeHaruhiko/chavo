@@ -7,7 +7,7 @@ module chavo {
   export class AuthService {
 
     /* @ngInject */
-    constructor (public $state: ng.ui.IStateService) {
+    constructor (public $state: ng.ui.IStateService, public $rootScope: IChavoRootScope) {
 
     }
 
@@ -21,12 +21,17 @@ module chavo {
     }
 
     logIn(form: { username: string; password: string; }, callbacks: any) {
-      Parse.User.logIn(form.username, form.password, callbacks);
+      Parse.User.logIn(form.username, form.password, callbacks)
+        .then((user: Parse.User) => {
+          this.$rootScope.currentUser = user;
+        });
     }
 
     logOut() {
-      Parse.User.logOut();
-      this.$state.go('home');
+      Parse.User.logOut()
+        .then(() => {
+          this.$rootScope.currentUser = null;
+        });
     }
   }
 }
