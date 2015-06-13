@@ -13,9 +13,9 @@ var chavo;
             user.set('password', form.password);
             user.signUp(null, callbacks);
         };
-        AuthService.prototype.logIn = function (form, callbacks) {
+        AuthService.prototype.logIn = function (authData, callbacks) {
             var _this = this;
-            Parse.User.logIn(form.username, form.password, callbacks)
+            Parse.User.logIn(authData.username, authData.password, callbacks)
                 .then(function (user) {
                 _this.$rootScope.currentUser = user;
             });

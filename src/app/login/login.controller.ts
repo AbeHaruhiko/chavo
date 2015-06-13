@@ -7,7 +7,11 @@ module chavo {
   export class LoginController {
 
     /* @ngInject */
-    constructor (public $scope: IMainScope, public $rootScope: IChavoRootScope, public $state: ng.ui.IStateService, public $location: ng.ILocationService, public AuthService: AuthService) {
+    constructor (public $scope: IMainScope,
+      public $rootScope: IChavoRootScope,
+      public $state: ng.ui.IStateService,
+      public $location: ng.ILocationService,
+      public AuthService: AuthService) {
     }
 
     signUp(form: { username: string; password: string; }) {
@@ -23,8 +27,8 @@ module chavo {
       });
     }
 
-    logIn(form: { username: string; password: string; }) {
-      this.AuthService.logIn(form, {
+    logIn(formData: { username: string; password: string; }) {
+      this.AuthService.logIn(formData, {
         success: (user: Parse.User) => {
           // this.$rootScope.currentUser = user;
           this.$state.go('home');

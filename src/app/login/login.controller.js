@@ -22,9 +22,9 @@ var chavo;
                 }
             });
         };
-        LoginController.prototype.logIn = function (form) {
+        LoginController.prototype.logIn = function (formData) {
             var _this = this;
-            this.AuthService.logIn(form, {
+            this.AuthService.logIn(formData, {
                 success: function (user) {
                     _this.$state.go('home');
                 },

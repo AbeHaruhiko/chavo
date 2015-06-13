@@ -20,8 +20,8 @@ module chavo {
       user.signUp(null, callbacks);
     }
 
-    logIn(form: { username: string; password: string; }, callbacks: any) {
-      Parse.User.logIn(form.username, form.password, callbacks)
+    logIn(authData: { username: string; password: string; }, callbacks: any) {
+      Parse.User.logIn(authData.username, authData.password, callbacks)
         .then((user: Parse.User) => {
           this.$rootScope.currentUser = user;
         });

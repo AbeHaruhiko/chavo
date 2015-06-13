@@ -2,11 +2,25 @@ var chavo;
 (function (chavo) {
     'use strict';
     var NavbarController = (function () {
-        function NavbarController($scope, $rootScope, AuthService) {
+        function NavbarController($scope, $rootScope, AuthService, $state, $location) {
             this.$scope = $scope;
             this.$rootScope = $rootScope;
             this.AuthService = AuthService;
+            this.$state = $state;
+            this.$location = $location;
         }
+        NavbarController.prototype.logIn = function (formData) {
+            var _this = this;
+            this.AuthService.logIn(formData, {
+                success: function (user) {
+                    _this.$state.go('home');
+                },
+                error: function (user, error) {
+                    console.log('Unable to login:  ' + error.code + ' ' + error.message);
+                    _this.$location.path('/login');
+                }
+            });
+        };
         NavbarController.prototype.logOut = function () {
             this.AuthService.logOut();
         };
