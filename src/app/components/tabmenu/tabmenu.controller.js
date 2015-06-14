@@ -6,8 +6,8 @@ var chavo;
             this.$scope = $scope;
             this.$rootScope = $rootScope;
             this.tabs = [
-                { title: 'Dynamic Title 1', content: 'Dynamic content 1' },
-                { title: 'Dynamic Title 2', content: 'Dynamic content 2', disabled: true }
+                { heading: 'Dynamic Title 1', route: 'home.all' },
+                { heading: 'Dynamic Title 2', route: 'home.myposts', disabled: true }
             ];
         }
         return TabmenuController;

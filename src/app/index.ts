@@ -39,6 +39,14 @@ module chavo {
         controller: 'MainController',
         controllerAs: 'main'
       })
+      .state('home.myposts', {
+        url: '/myposts',
+        templateUrl: 'app/main/main.myposts.html'
+      })
+      .state('home.all', {
+        url: '/all',
+        templateUrl: 'app/main/main.all.html'
+      })
       .state('login', {
         url: '/login',
         templateUrl: 'app/login/login.html',

@@ -3,24 +3,7 @@
   <div ng-include="'app/components/navbar/navbar.html'"></div>
   <div ng-include="'app/components/tabmenu/tabmenu.html'"></div>
 
-  <div class="row">
-    <div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3">
-      <div class="media-list">
-        <div class="media panel panel-default" ng-repeat="voice in main.voices | orderBy:'rank'">
-          <div class="media-left">
-            <a href="#">
-              <img class="media-object img-circle " ng-src="assets/images/{{voice.icon}}" alt="{{voice.author}}">
-            </a>
-          </div>
-          <div class="media-body">
-            <p class="text-right"><small>{{voice.createdAt}}</small></p>
-            <p class="pre-line">{{voice.description}}</p>
-            <p class="text-right"><small>{{voice.age}}歳</small></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <ui-view></ui-view>
 
   <hr>
 
