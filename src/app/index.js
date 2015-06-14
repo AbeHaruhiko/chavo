@@ -2,6 +2,7 @@
 /// <reference path="main/main.controller.ts" />
 /// <reference path="login/login.controller.ts"/>
 /// <reference path="../app/components/navbar/navbar.controller.ts" />
+/// <reference path="../app/components/tabmenu/tabmenu.controller.ts"/>
 /// <reference path="./auth/services/auth-service.ts"/>
 var chavo;
 (function (chavo) {
@@ -20,6 +21,7 @@ var chavo;
         .controller('MainController', chavo.MainController)
         .controller('LoginController', chavo.LoginController)
         .controller('NavbarController', chavo.NavbarController)
+        .controller('TabmenuController', chavo.TabmenuController)
         .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('home', {
