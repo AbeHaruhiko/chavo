@@ -11,8 +11,8 @@ module chavo {
     }
 
     tabs = [
-      { heading:'Dynamic Title 1', route: 'home.all'},
-      { heading:'Dynamic Title 2', route: 'home.myposts', disabled: true }
+      { heading:'すべて', route: 'home.all'},
+      { heading:'あなた', route: 'home.myposts', disabled: false }
     ];
 
 
