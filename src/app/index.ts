@@ -21,6 +21,7 @@ module chavo {
     'ngSanitize',
     'restangular',
     'ui.router',
+    'ui.router.tabs',
     'ui.bootstrap',
     'ui.validate'
     ])
