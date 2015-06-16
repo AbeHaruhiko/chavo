@@ -21,6 +21,7 @@
         "./src/app/components/tabmenu/tabmenu.controller.ts",
         "./src/app/index.ts",
         "./src/app/login/login.controller.ts",
+        "./src/app/main/main.all.controller.ts",
         "./src/app/main/main.controller.ts"
     ]
 }

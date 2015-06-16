@@ -1,5 +1,6 @@
 /// <reference path="../../.tmp/typings/tsd.d.ts" />
 /// <reference path="main/main.controller.ts" />
+/// <reference path="main/main.all.controller.ts" />
 /// <reference path="login/login.controller.ts"/>
 /// <reference path="../app/components/navbar/navbar.controller.ts" />
 /// <reference path="../app/components/tabmenu/tabmenu.controller.ts"/>
@@ -20,6 +21,7 @@ var chavo;
     ])
         .service('AuthService', chavo.AuthService)
         .controller('MainController', chavo.MainController)
+        .controller('hoge', hoge)
         .controller('LoginController', chavo.LoginController)
         .controller('NavbarController', chavo.NavbarController)
         .controller('TabmenuController', chavo.TabmenuController)
@@ -37,7 +39,9 @@ var chavo;
         })
             .state('home.all', {
             url: '/all',
-            templateUrl: 'app/main/main.all.html'
+            templateUrl: 'app/main/main.all.html',
+            controller: 'hoge',
+            controllerAs: 'main_all'
         })
             .state('login', {
             url: '/login',
