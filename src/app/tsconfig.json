@@ -20,7 +20,7 @@
         "./components/tabmenu/tabmenu.controller.ts",
         "./index.ts",
         "./login/login.controller.ts",
-        "./main/main.all.controller.ts",
+        "./main/all/main.all.controller.ts",
         "./main/main.controller.ts"
     ]
 }

@@ -1,7 +1,7 @@
 /// <reference path="../../.tmp/typings/tsd.d.ts" />
 
 /// <reference path="main/main.controller.ts" />
-/// <reference path="main/main.all.controller.ts" />
+/// <reference path="main/all/main.all.controller.ts" />
 /// <reference path="login/login.controller.ts"/>
 /// <reference path="../app/components/navbar/navbar.controller.ts" />
 /// <reference path="../app/components/tabmenu/tabmenu.controller.ts"/>
@@ -48,13 +48,13 @@ module chavo {
       })
       .state('home.all', {
         url: '/all',
-        templateUrl: 'app/main/main.all.html',
+        templateUrl: 'app/main/all/main.all.html',
         controller: 'MainAllController',
         controllerAs: 'main_all'
       })
       .state('home.compose', {
         url: '/compose',
-        templateUrl: 'app/main/main.compose.html',
+        templateUrl: 'app/main/compose/main.compose.html',
         // controller: 'MainComposeController',
         // controllerAs: 'main_compose'
       })
