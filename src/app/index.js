@@ -29,24 +29,28 @@ var chavo;
         .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('home', {
-            url: '/',
+            url: '',
             templateUrl: 'app/main/main.html',
             controller: 'MainController',
             controllerAs: 'main'
         })
             .state('home.myposts', {
-            url: 'myposts',
+            url: '/myposts',
             templateUrl: 'app/main/main.myposts.html'
         })
             .state('home.all', {
-            url: 'all',
+            url: '/all',
             templateUrl: 'app/main/main.all.html',
             controller: 'MainAllController',
             controllerAs: 'main_all'
         })
             .state('home.compose', {
-            url: 'compose',
+            url: '/compose',
             templateUrl: 'app/main/main.compose.html',
+        })
+            .state('settings', {
+            url: '/settings',
+            templateUrl: 'app/settings/settings.html',
         })
             .state('login', {
             url: '/login',
