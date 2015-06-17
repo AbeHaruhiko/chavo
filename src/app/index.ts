@@ -24,7 +24,8 @@ module chavo {
     'ui.router',
     'ui.router.tabs',
     'ui.bootstrap',
-    'ui.validate'
+    'ui.validate',
+    'toggle-switch'
     ])
     .service('AuthService',AuthService)
     .controller('MainController', MainController)
@@ -52,10 +53,10 @@ module chavo {
         controllerAs: 'main_all'
       })
       .state('home.compose', {
-        url: 'all',
+        url: 'compose',
         templateUrl: 'app/main/main.compose.html',
-        controller: '',
-        controllerAs: 'main_all'
+        // controller: 'MainComposeController',
+        // controllerAs: 'main_compose'
       })
       .state('login', {
         url: '/login',

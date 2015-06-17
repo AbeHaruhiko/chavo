@@ -17,11 +17,12 @@ var chavo;
         'ui.router',
         'ui.router.tabs',
         'ui.bootstrap',
-        'ui.validate'
+        'ui.validate',
+        'toggle-switch'
     ])
         .service('AuthService', chavo.AuthService)
         .controller('MainController', chavo.MainController)
-        .controller('MainAllController', MainAllController)
+        .controller('MainAllController', chavo.MainAllController)
         .controller('LoginController', chavo.LoginController)
         .controller('NavbarController', chavo.NavbarController)
         .controller('TabmenuController', chavo.TabmenuController)
@@ -44,10 +45,8 @@ var chavo;
             controllerAs: 'main_all'
         })
             .state('home.compose', {
-            url: 'all',
+            url: 'compose',
             templateUrl: 'app/main/main.compose.html',
-            controller: '',
-            controllerAs: 'main_all'
         })
             .state('login', {
             url: '/login',
