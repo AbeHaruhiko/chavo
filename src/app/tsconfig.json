@@ -21,6 +21,8 @@
         "./index.ts",
         "./login/login.controller.ts",
         "./main/all/main.all.controller.ts",
-        "./main/main.controller.ts"
+        "./main/main.controller.ts",
+        "./settings/settings.content.ts",
+        "./settings/settings.menu.ts"
     ]
 }

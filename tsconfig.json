@@ -22,6 +22,8 @@
         "./src/app/index.ts",
         "./src/app/login/login.controller.ts",
         "./src/app/main/main.all.controller.ts",
-        "./src/app/main/main.controller.ts"
+        "./src/app/main/main.controller.ts",
+        "./src/app/settings/settings.content.ts",
+        "./src/app/settings/settings.menu.ts"
     ]
 }

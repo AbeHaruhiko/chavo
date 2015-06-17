@@ -3,6 +3,8 @@
 /// <reference path="main/main.controller.ts" />
 /// <reference path="main/all/main.all.controller.ts" />
 /// <reference path="login/login.controller.ts"/>
+/// <reference path="settings/settings.menu.ts"/>
+/// <reference path="settings/settings.content.ts"/>
 /// <reference path="../app/components/navbar/navbar.controller.ts" />
 /// <reference path="../app/components/tabmenu/tabmenu.controller.ts"/>
 /// <reference path="./auth/services/auth-service.ts"/>
@@ -33,6 +35,8 @@ module chavo {
     .controller('LoginController', LoginController)
     .controller('NavbarController', NavbarController)
     .controller('TabmenuController', TabmenuController)
+    .controller('SettingsMenuController', SettingsMenuController)
+    .controller('SettingsContentController', SettingsContentController)
 
   .config(function ($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) {
     $stateProvider
@@ -61,6 +65,14 @@ module chavo {
       .state('settings', {
         url: '/settings',
         templateUrl: 'app/settings/settings.html',
+      })
+      .state('settings.profile', {
+        url: '/profile',
+        templateUrl: 'app/settings/settings.profile.html',
+      })
+      .state('settings.children', {
+        url: '/children',
+        templateUrl: 'app/settings/settings.children.html',
       })
       .state('login', {
         url: '/login',
