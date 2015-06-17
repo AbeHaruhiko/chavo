@@ -1,0 +1,9 @@
+<div>
+  <tabset class="tab-container" type="{{type}}" vertical="{{vertical}}" justified="{{justified}}">
+    <tab class="tab" ng-repeat="tab in tabs" active="tab.active" disable="tab.disabled" ng-click="go(tab)">
+      <tab-heading>
+        <span ng-bind-html="tab.heading"></span>
+      </tab-heading>
+    </tab>
+  </tabset>
+</div>

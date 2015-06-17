@@ -21,7 +21,7 @@ var chavo;
     ])
         .service('AuthService', chavo.AuthService)
         .controller('MainController', chavo.MainController)
-        .controller('hoge', hoge)
+        .controller('MainAllController', MainAllController)
         .controller('LoginController', chavo.LoginController)
         .controller('NavbarController', chavo.NavbarController)
         .controller('TabmenuController', chavo.TabmenuController)
@@ -34,13 +34,19 @@ var chavo;
             controllerAs: 'main'
         })
             .state('home.myposts', {
-            url: '/myposts',
+            url: 'myposts',
             templateUrl: 'app/main/main.myposts.html'
         })
             .state('home.all', {
-            url: '/all',
+            url: 'all',
             templateUrl: 'app/main/main.all.html',
-            controller: 'hoge',
+            controller: 'MainAllController',
+            controllerAs: 'main_all'
+        })
+            .state('home.compose', {
+            url: 'all',
+            templateUrl: 'app/main/main.compose.html',
+            controller: '',
             controllerAs: 'main_all'
         })
             .state('login', {

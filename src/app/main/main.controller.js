@@ -11,6 +11,7 @@ var chavo;
         }
         return Voice;
     })();
+    chavo.Voice = Voice;
     var MainController = (function () {
         function MainController($scope) {
             var _this = this;

@@ -12,7 +12,8 @@ module chavo {
 
     tabs = [
       { heading:'すべて', route: 'home.all'},
-      { heading:'あなた', route: 'home.myposts', disabled: false }
+      { heading:'あなた', route: 'home.myposts', disabled: false },
+      { heading:'<i class="fa fa-pencil"></i>', route: 'home.compose', disabled: false }
     ];
 
 

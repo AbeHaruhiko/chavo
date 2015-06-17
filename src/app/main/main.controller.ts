@@ -1,7 +1,7 @@
 module chavo {
   'use strict';
 
-  class Voice {
+  export class Voice {
     constructor(public description: string,
       public author: string,
       public age: number,
@@ -10,7 +10,7 @@ module chavo {
     }
   }
 
-  interface IMainScope extends ng.IScope {
+  export interface IMainScope extends ng.IScope {
     voices: Voice[]
   }
 

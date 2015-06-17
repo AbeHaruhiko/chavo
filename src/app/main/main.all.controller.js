@@ -1,18 +1,8 @@
 var chavo;
 (function (chavo) {
     'use strict';
-    var Voice = (function () {
-        function Voice(description, author, age, icon, createdAt) {
-            this.description = description;
-            this.author = author;
-            this.age = age;
-            this.icon = icon;
-            this.createdAt = createdAt;
-        }
-        return Voice;
-    })();
-    var hoge = (function () {
-        function hoge($scope) {
+    var MainAllController = (function () {
+        function MainAllController($scope) {
             var _this = this;
             this.$scope = $scope;
             this.voices = new Array();
@@ -30,7 +20,7 @@ var chavo;
                 }
             });
         }
-        return hoge;
+        return MainAllController;
     })();
-    chavo.hoge = hoge;
+    chavo.MainAllController = MainAllController;
 })(chavo || (chavo = {}));
