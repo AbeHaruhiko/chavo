@@ -29,7 +29,7 @@ module chavo {
     'ui.validate',
     'toggle-switch'
     ])
-    .service('AuthService',AuthService)
+    .service('AuthService', AuthService)
     .controller('MainController', MainController)
     .controller('MainAllController', MainAllController)
     .controller('LoginController', LoginController)
@@ -58,21 +58,21 @@ module chavo {
       })
       .state('home.compose', {
         url: '/compose',
-        templateUrl: 'app/main/compose/main.compose.html',
+        templateUrl: 'app/main/compose/main.compose.html'
         // controller: 'MainComposeController',
         // controllerAs: 'main_compose'
       })
       .state('settings', {
         url: '/settings',
-        templateUrl: 'app/settings/settings.html',
+        templateUrl: 'app/settings/settings.html'
       })
       .state('settings.profile', {
         url: '/profile',
-        templateUrl: 'app/settings/settings.profile.html',
+        templateUrl: 'app/settings/settings.profile.html'
       })
       .state('settings.children', {
         url: '/children',
-        templateUrl: 'app/settings/settings.children.html',
+        templateUrl: 'app/settings/settings.children.html'
       })
       .state('login', {
         url: '/login',

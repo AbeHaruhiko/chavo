@@ -11,8 +11,8 @@ module chavo {
     }
 
     menus = [
-      { title:'プロフィール', route: 'settings.profile'},
-      { title:'こどもの情報', route: 'settings.children'},
+      { title: 'プロフィール', route: 'settings.profile'},
+      { title: 'こどもの情報', route: 'settings.children'},
     ];
 
 
