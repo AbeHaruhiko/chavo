@@ -23,7 +23,9 @@
         "./src/app/login/login.controller.ts",
         "./src/app/main/main.all.controller.ts",
         "./src/app/main/main.controller.ts",
-        "./src/app/settings/settings.content.ts",
-        "./src/app/settings/settings.menu.ts"
+        "./src/app/settings/settings.content.controller.ts",
+        "./src/app/settings/settings.menu.controller.ts",
+        "./src/app/settings/settings.profile.controller.ts",
+        "./src/app/settings/settings.children.controller.ts"
     ]
 }

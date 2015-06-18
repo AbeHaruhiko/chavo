@@ -9,12 +9,5 @@ module chavo {
     constructor (public $scope: ISettingsContent,
       public $rootScope: IChavoRootScope) {
     }
-
-    menus = [
-      { title: 'プロフィール', route: 'settings.profile'},
-      { title: 'こどもの情報', route: 'settings.children'},
-    ];
-
-
   }
 }

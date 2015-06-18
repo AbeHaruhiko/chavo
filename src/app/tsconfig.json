@@ -22,7 +22,9 @@
         "./login/login.controller.ts",
         "./main/all/main.all.controller.ts",
         "./main/main.controller.ts",
-        "./settings/settings.content.ts",
-        "./settings/settings.menu.ts"
+        "./settings/settings.children.controller.ts",
+        "./settings/settings.content.controller.ts",
+        "./settings/settings.menu.controller.ts",
+        "./settings/settings.profile.controller.ts"
     ]
 }

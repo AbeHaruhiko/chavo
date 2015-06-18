@@ -2,8 +2,9 @@
 /// <reference path="main/main.controller.ts" />
 /// <reference path="main/all/main.all.controller.ts" />
 /// <reference path="login/login.controller.ts"/>
-/// <reference path="settings/settings.menu.ts"/>
-/// <reference path="settings/settings.content.ts"/>
+/// <reference path="settings/settings.menu.controller.ts"/>
+/// <reference path="settings/settings.content.controller.ts"/>
+/// <reference path="settings/settings.children.controller.ts"/>
 /// <reference path="../app/components/navbar/navbar.controller.ts" />
 /// <reference path="../app/components/tabmenu/tabmenu.controller.ts"/>
 /// <reference path="./auth/services/auth-service.ts"/>
@@ -30,6 +31,8 @@ var chavo;
         .controller('TabmenuController', chavo.TabmenuController)
         .controller('SettingsMenuController', chavo.SettingsMenuController)
         .controller('SettingsContentController', chavo.SettingsContentController)
+        .controller('SettingsProfileController', chavo.SettingsProfileController)
+        .controller('SettingsChildrenController', chavo.SettingsChildrenController)
         .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('home', {
@@ -50,19 +53,19 @@ var chavo;
         })
             .state('home.compose', {
             url: '/compose',
-            templateUrl: 'app/main/compose/main.compose.html',
+            templateUrl: 'app/main/compose/main.compose.html'
         })
             .state('settings', {
             url: '/settings',
-            templateUrl: 'app/settings/settings.html',
+            templateUrl: 'app/settings/settings.html'
         })
             .state('settings.profile', {
             url: '/profile',
-            templateUrl: 'app/settings/settings.profile.html',
+            templateUrl: 'app/settings/settings.profile.html'
         })
             .state('settings.children', {
             url: '/children',
-            templateUrl: 'app/settings/settings.children.html',
+            templateUrl: 'app/settings/settings.children.html'
         })
             .state('login', {
             url: '/login',
