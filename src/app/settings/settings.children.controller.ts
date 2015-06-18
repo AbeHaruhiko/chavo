@@ -11,7 +11,7 @@ module chavo {
     }
 
     children = [
-      { nickName: 'もも'},
+      { nickName: 'もも', birthDay: '2012/11/26', sex: 'female'},
       { nickName: 'あお'},
     ];
 

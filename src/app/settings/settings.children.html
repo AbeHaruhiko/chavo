@@ -1,6 +1,6 @@
 <div ng-controller="SettingsChildrenController as settings_children">
   <ul class="list-group">
-    <li class="list-group-item"><a><i class="fa fa-user-plus"> 追加</i></a></li>
-    <li class="list-group-item" ng-repeat="child in settings_children.children">{{child.nickName}}</li>
+    <li class="list-group-item text-right"><a><i class="fa fa-user-plus"> 追加</i></a></li>
+    <li class="list-group-item" ng-repeat="child in settings_children.children"><a>{{child.nickName}}　{{child.birthDay}}生まれ　{{child.sex}}</a></li>
   </ul>
 </div>
