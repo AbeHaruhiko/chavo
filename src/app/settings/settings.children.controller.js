@@ -6,7 +6,7 @@ var chavo;
             this.$scope = $scope;
             this.$rootScope = $rootScope;
             this.children = [
-                { nickName: 'もも' },
+                { nickName: 'もも', birthDay: '2012/11/26', sex: 2 },
                 { nickName: 'あお' },
             ];
         }
