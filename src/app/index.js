@@ -2,7 +2,7 @@
 /// <reference path="main/main.controller.ts" />
 /// <reference path="main/all/main.all.controller.ts" />
 /// <reference path="login/login.controller.ts"/>
-/// <reference path="settings/settings.menu.controller.ts"/>
+/// <reference path="settings/menu/settings.menu.controller.ts"/>
 /// <reference path="settings/settings.content.controller.ts"/>
 /// <reference path="settings/settings.children.controller.ts"/>
 /// <reference path="../app/components/navbar/navbar.controller.ts" />
