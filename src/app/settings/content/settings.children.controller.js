@@ -23,8 +23,8 @@ var chavo;
             this.children.push(new Child('あお', null, null));
             this.children.forEach(function (child) {
                 var years = moment().diff(moment(child.birthday), 'years');
-                var months = moment().diff(moment(child.birthday), 'months');
-                child.age = years + '歳' + months + 'ヶ月';
+                var months = moment().diff(moment(child.birthday), 'months') - (12 * years);
+                child.age = (years ? (years + '歳') : '') + (months ? (months + 'ヶ月') : '');
             });
         }
         return SettingsChildrenController;
