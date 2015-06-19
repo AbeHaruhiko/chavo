@@ -4,8 +4,8 @@
 /// <reference path="main/all/main.all.controller.ts" />
 /// <reference path="login/login.controller.ts"/>
 /// <reference path="settings/menu/settings.menu.controller.ts"/>
-/// <reference path="settings/settings.content.controller.ts"/>
-/// <reference path="settings/settings.children.controller.ts"/>
+/// <reference path="settings/content/settings.content.controller.ts"/>
+/// <reference path="settings/content/settings.children.controller.ts"/>
 /// <reference path="../app/components/navbar/navbar.controller.ts" />
 /// <reference path="../app/components/tabmenu/tabmenu.controller.ts"/>
 /// <reference path="./auth/services/auth-service.ts"/>
@@ -71,11 +71,11 @@ module chavo {
       })
       .state('settings.profile', {
         url: '/profile',
-        templateUrl: 'app/settings/settings.profile.html'
+        templateUrl: 'app/settings/content/settings.profile.html'
       })
       .state('settings.children', {
         url: '/children',
-        templateUrl: 'app/settings/settings.children.html'
+        templateUrl: 'app/settings/content/settings.children.html'
       })
       .state('login', {
         url: '/login',
