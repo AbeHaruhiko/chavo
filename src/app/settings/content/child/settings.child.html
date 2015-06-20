@@ -1,0 +1,32 @@
+<div ng-controller="SettingsChildController as settings_child">
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label for="nickName" class="col-sm-3 control-label">ニックネーム</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" id="nickName" placeholder="ニックネーム">
+      </div>
+      <!-- <div style="display:inline-block; min-height:290px;">
+        <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></datepicker>
+      </div> -->
+      <div class="col-md-6">
+        <p class="input-group">
+          <input type="text"
+              class="form-control"
+              datepicker-popup="yyyy-MM-dd"
+              ng-model="settings_child.dt"
+              is-open="datePickerOpen"
+              min-date="settings_child.minDate"
+              max-date="'2015-06-22'"
+              date-disabled="settings_child.disabled(date, mode)"
+              ng-required="true"
+              close-text="Close" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="settings_child.open($event)">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </button>
+          </span>
+        </p>
+      </div>
+    </div>
+  </form>
+</div>

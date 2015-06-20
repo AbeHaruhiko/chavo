@@ -4,7 +4,7 @@
       <a class="btn btn-default"><i class="fa fa-user-plus"> 追加</i></a>
     </li>
     <li class="list-group-item" ng-repeat="child in settings_children.children">
-      <a>
+      <a ng-click="settings_children.go(child)">
         <span ng-if="child.nickName">{{child.nickName}}</span>
         <div class="pull-right">
           <span ng-if="child.age">{{child.age}}</span>

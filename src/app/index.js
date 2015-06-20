@@ -4,7 +4,8 @@
 /// <reference path="login/login.controller.ts"/>
 /// <reference path="settings/menu/settings.menu.controller.ts"/>
 /// <reference path="settings/content/settings.content.controller.ts"/>
-/// <reference path="settings/content/settings.children.controller.ts"/>
+/// <reference path="settings/content/children/settings.children.controller.ts"/>
+/// <reference path="settings/content/child/settings.child.controller.ts"/>
 /// <reference path="../app/components/navbar/navbar.controller.ts" />
 /// <reference path="../app/components/tabmenu/tabmenu.controller.ts"/>
 /// <reference path="./auth/services/auth-service.ts"/>
@@ -33,6 +34,7 @@ var chavo;
         .controller('SettingsContentController', chavo.SettingsContentController)
         .controller('SettingsProfileController', chavo.SettingsProfileController)
         .controller('SettingsChildrenController', chavo.SettingsChildrenController)
+        .controller('SettingsChildController', chavo.SettingsChildController)
         .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('home', {
@@ -61,11 +63,15 @@ var chavo;
         })
             .state('settings.profile', {
             url: '/profile',
-            templateUrl: 'app/settings/content/settings.profile.html'
+            templateUrl: 'app/settings/content/profile/settings.profile.html'
         })
             .state('settings.children', {
             url: '/children',
-            templateUrl: 'app/settings/content/settings.children.html'
+            templateUrl: 'app/settings/content/children/settings.children.html'
+        })
+            .state('settings.child', {
+            url: '/children/:childId',
+            templateUrl: 'app/settings/content/child/settings.child.html'
         })
             .state('login', {
             url: '/login',

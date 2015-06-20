@@ -1,15 +1,6 @@
 module chavo {
   'use strict';
 
-  class Child {
-    constructor(public nickName: string,
-      public birthday: Date,
-      public sex: number,
-      public age?: string) {
-    }
-  }
-
-
   interface ISettingsChildren extends ng.IScope {
     children: Child[];
   }
@@ -20,15 +11,16 @@ module chavo {
 
     /* @ngInject */
     constructor (public $scope: ISettingsChildren,
-      public $rootScope: IChavoRootScope) {
+      public $rootScope: IChavoRootScope,
+      public $state: ng.ui.IStateService) {
 
         // this.children = [
         //   { nickName: 'もも', birthDay: '2012/11/26', sex: 2},
         //   { nickName: 'あお'},
         // ];
 
-        this.children.push(new Child('もも', moment('2012/11/26', 'YYYY/MM/DD').toDate(), 2));
-        this.children.push(new Child('あお', null, null));
+        this.children.push(new Child(1, 'もも', moment('2012/11/26', 'YYYY/MM/DD').toDate(), 2));
+        this.children.push(new Child(2, 'あお', null, null));
 
         // 月齢のセット
         this.children.forEach((child: Child) => {
@@ -41,6 +33,10 @@ module chavo {
 
     }
 
+    go(child: Child) {
+      this.$rootScope.targetChild = child;
+      this.$state.go('settings.child', { childId: child.id });
+    }
 
   }
 }
