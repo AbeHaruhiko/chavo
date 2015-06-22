@@ -17,9 +17,9 @@ var chavo;
             var _this = this;
             this.$scope = $scope;
             this.voices = new Array();
-            var Voice = Parse.Object.extend("Voice");
+            var Voice = Parse.Object.extend('Voice');
             var query = new Parse.Query(Voice);
-            query.descending("createdAt");
+            query.descending('createdAt');
             query.find({
                 success: function (results) {
                     _this.$scope.$apply(function () {
@@ -27,7 +27,7 @@ var chavo;
                     });
                 },
                 error: function (error) {
-                    alert("Error: " + error.code + " " + error.message);
+                    alert('Error: ' + error.code + ' ' + error.message);
                 }
             });
         }

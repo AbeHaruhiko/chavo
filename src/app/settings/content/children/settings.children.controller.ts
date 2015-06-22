@@ -2,7 +2,6 @@ module chavo {
   'use strict';
 
   interface ISettingsChildren extends ng.IScope {
-    children: Child[];
   }
 
   export class SettingsChildrenController {

@@ -13,15 +13,19 @@ module chavo {
 
   interface ISettingsChild extends ng.IScope {
     child: Child;
-    minDate: Date;
-    datePickerOpen: boolean;
-    formats: string[];
-    format: string;
-    dateOptions: { formatYear: string; startingDay: number }
-    dt: Date;
+    yearOfToday: string;
   }
 
   export class SettingsChildController {
+
+    public yearSelected: string;
+    public monthOfToday: string;
+    public dateOfToday: string;
+    public dropDownStatus: {
+      yearIsOpen: boolean,
+      monthIsOpen: boolean
+    };
+    public birthYears: number[];
 
     /* @ngInject */
     constructor (public $scope: ISettingsChild,
@@ -31,24 +35,23 @@ module chavo {
 
       console.log(this.$rootScope.targetChild);
 
-      this.$scope.minDate = $scope.minDate ? null : new Date();
+      // 登録済みの場合はその誕生日を表示。未登録なら今日を初期値。
+      var momentObj = (this.$rootScope.targetChild.birthday ? moment(this.$rootScope.targetChild.birthday) : moment());
+      this.yearSelected = momentObj.format('YYYY');
+      this.monthOfToday = momentObj.format('MM');
+      this.dateOfToday = momentObj.format('DD');
 
-      this.$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-      this.$scope.format = $scope.formats[0];
+      this.birthYears = new Array<number>();
+      for (let i = 1900; i < moment().year(); i++) {
+        this.birthYears.push(i);
+      }
 
-      this.$scope.dateOptions = {
-        formatYear: 'yy',
-        startingDay: 1
+      this.dropDownStatus = {
+        yearIsOpen: false,
+        monthIsOpen: false
       };
 
-      this.$scope.dt = new Date();
-    }
 
-    open ($event: UIEvent) {
-      $event.preventDefault();
-      $event.stopPropagation();
-
-      this.$scope.datePickerOpen = !this.$scope.datePickerOpen;
     }
   }
 }

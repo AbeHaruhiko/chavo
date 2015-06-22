@@ -19,20 +19,19 @@ var chavo;
             this.$state = $state;
             this.$stateParams = $stateParams;
             console.log(this.$rootScope.targetChild);
-            this.$scope.minDate = $scope.minDate ? null : new Date();
-            this.$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-            this.$scope.format = $scope.formats[0];
-            this.$scope.dateOptions = {
-                formatYear: 'yy',
-                startingDay: 1
+            var momentObj = (this.$rootScope.targetChild.birthday ? moment(this.$rootScope.targetChild.birthday) : moment());
+            this.yearSelected = momentObj.format('YYYY');
+            this.monthOfToday = momentObj.format('MM');
+            this.dateOfToday = momentObj.format('DD');
+            this.birthYears = new Array();
+            for (var i = 1900; i < moment().year(); i++) {
+                this.birthYears.push(i);
+            }
+            this.dropDownStatus = {
+                yearIsOpen: false,
+                monthIsOpen: false
             };
-            this.$scope.dt = new Date();
         }
-        SettingsChildController.prototype.open = function ($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-            this.$scope.datePickerOpen = !this.$scope.datePickerOpen;
-        };
         return SettingsChildController;
     })();
     chavo.SettingsChildController = SettingsChildController;

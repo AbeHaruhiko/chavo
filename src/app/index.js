@@ -63,15 +63,21 @@ var chavo;
         })
             .state('settings.profile', {
             url: '/profile',
-            templateUrl: 'app/settings/content/profile/settings.profile.html'
+            templateUrl: 'app/settings/content/profile/settings.profile.html',
+            controller: 'SettingsProfileController',
+            controllerAs: 'settings_profile'
         })
             .state('settings.children', {
             url: '/children',
-            templateUrl: 'app/settings/content/children/settings.children.html'
+            templateUrl: 'app/settings/content/children/settings.children.html',
+            controller: 'SettingsChildrenController',
+            controllerAs: 'settings_children'
         })
             .state('settings.child', {
             url: '/children/:childId',
-            templateUrl: 'app/settings/content/child/settings.child.html'
+            templateUrl: 'app/settings/content/child/settings.child.html',
+            controller: 'SettingsChildController',
+            controllerAs: 'settings_child'
         })
             .state('login', {
             url: '/login',
