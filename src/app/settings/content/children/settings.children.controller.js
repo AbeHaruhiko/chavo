@@ -11,8 +11,8 @@ var chavo;
             this.$rootScope = $rootScope;
             this.$state = $state;
             this.children = new Array();
-            this.children.push(new chavo.Child(1, 'もも', moment('2012/11/26', 'YYYY/MM/DD').toDate(), 2));
-            this.children.push(new chavo.Child(2, 'あお', null, null));
+            this.children.push(new chavo.Child(1, 'もも', moment('2012/11/26', 'YYYY/MM/DD').toDate(), chavo.GENDER.FEMALE));
+            this.children.push(new chavo.Child(2, 'あお'));
             this.children.forEach(function (child) {
                 var years = moment().diff(moment(child.birthday), 'years');
                 var months = moment().diff(moment(child.birthday), 'months') - (12 * years);

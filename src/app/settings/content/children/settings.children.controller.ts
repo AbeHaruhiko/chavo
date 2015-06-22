@@ -18,8 +18,8 @@ module chavo {
         //   { nickName: 'あお'},
         // ];
 
-        this.children.push(new Child(1, 'もも', moment('2012/11/26', 'YYYY/MM/DD').toDate(), 2));
-        this.children.push(new Child(2, 'あお', null, null));
+        this.children.push(new Child(1, 'もも', moment('2012/11/26', 'YYYY/MM/DD').toDate(), GENDER.FEMALE));
+        this.children.push(new Child(2, 'あお'));
 
         // 月齢のセット
         this.children.forEach((child: Child) => {

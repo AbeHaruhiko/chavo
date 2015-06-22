@@ -1,26 +1,54 @@
-  <form class="form-horizontal">
-    <div class="form-group">
-      <label for="nickName" class="col-sm-3 control-label">ニックネーム</label>
-      <div class="col-sm-9">
-        <input type="text" class="form-control" id="nickName" placeholder="ニックネーム">
-      </div>
+<form class="form-horizontal">
+  <div class="form-group">
+    <label for="nickName" class="col-sm-3 control-label">ニックネーム</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="nickName" placeholder="ニックネーム" value="{{ settings_child.$rootScope.targetChild.nickName }}"/>
     </div>
-    <div class="form-group">
-       <label  class="col-sm-3 control-label">生年月日</label>
-       <div class="col-sm-9">
-         <div class="btn-group" dropdown is-open="settings_child.dropDownStatus.yearIsOpen">
-           <button type="button"
-               class="btn btn-default dropdown-toggle"
-               dropdown-toggle
-               ng-disabled="disabled"
-               ng-click="toggleDropdown($event)">
-             {{ settings_child.yearSelected }} <span class="caret"></span>
-           </button>
-           <ul class="dropdown-menu" role="menu">
-             <li ng-repeat="year in settings_child.birthYears"><a href="#">{{year}}</a></li>
-           </ul>
-         </div>
-         年
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label">生年月日</label>
+    <div class="col-sm-9">
+      <div class="btn-group" dropdown is-open="settings_child.dropDownStatus.yearIsOpen">
+        <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
+          {{ settings_child.yearSelected }} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li ng-repeat="year in settings_child.birthYears"><a ng-click="settings_child.yearSelected = year">{{year}}</a></li>
+        </ul>
       </div>
+      年
+      <div class="btn-group" dropdown is-open="settings_child.dropDownStatus.monthIsOpen">
+        <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
+          {{ settings_child.monthSelected }} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li ng-repeat="month in settings_child.birthMonths"><a ng-click="settings_child.monthSelected = month">{{month}}</a></li>
+        </ul>
+      </div>
+      年
+      <div class="btn-group" dropdown is-open="settings_child.dropDownStatus.dateIsOpen">
+        <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
+          {{ settings_child.dateSelected }} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li ng-repeat="date in settings_child.birthDates"><a ng-click="settings_child.dateSelected = date">{{date}}</a></li>
+        </ul>
+      </div>
+      年
     </div>
-  </form>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label">性別</label>
+    <div class="col-sm-9">
+      <label class="radio-inline">
+        <input type="radio" name="gender" id="male" value="0" ng-model="settings_child.$rootScope.targetChild.gender"> 男の子
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="gender" id="femail" value="1" ng-model="settings_child.$rootScope.targetChild.gender"> 女の子
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="gender" id="none" value="2" ng-model="settings_child.$rootScope.targetChild.gender"> その他・未設定
+      </label>
+    </div>
+  </div>
+</form>
