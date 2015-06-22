@@ -28,7 +28,7 @@ module chavo {
     public monthSelected: string;
     public dateSelected: string;
 
-    // DropDownの開閉状態
+    // dropDownの開閉状態
     public dropDownStatus: {
       yearIsOpen: boolean;
       monthIsOpen: boolean;
@@ -55,14 +55,14 @@ module chavo {
       this.dateSelected = momentObj.format('DD');
 
       this.birthYears = new Array<number>();
-      for (let i = 1900; i <= moment().year(); i++) {
+      for (var i = 1900; i <= moment().year(); i++) {
         this.birthYears.push(i);
       }
 
       this.birthMonths = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
       this.birthDates = new Array<number>();
-      for (let i = 1; i <= 31; i++) {
+      for (i = 1; i <= 31; i++) {
         this.birthDates.push(i);
       }
 
