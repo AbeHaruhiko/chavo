@@ -2,9 +2,9 @@ var chavo;
 (function (chavo) {
     'use strict';
     var Child = (function () {
-        function Child(id, nickName, birthday, gender, age) {
+        function Child(dispOrder, nickName, birthday, gender, age) {
             if (gender === void 0) { gender = GENDER.OTHER; }
-            this.id = id;
+            this.dispOrder = dispOrder;
             this.nickName = nickName;
             this.birthday = birthday;
             this.gender = gender;

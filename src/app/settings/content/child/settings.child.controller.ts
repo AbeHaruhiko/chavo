@@ -2,7 +2,7 @@ module chavo {
   'use strict';
 
   export class Child {
-    constructor(public id: number,
+    constructor(public dispOrder: number,
         public nickName?: string,
         public birthday?: Date,
         public gender: GENDER = GENDER.OTHER,

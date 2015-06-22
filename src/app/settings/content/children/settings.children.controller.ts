@@ -18,8 +18,22 @@ module chavo {
         //   { nickName: 'あお'},
         // ];
 
-        this.children.push(new Child(1, 'もも', moment('2012/11/26', 'YYYY/MM/DD').toDate(), GENDER.FEMALE));
-        this.children.push(new Child(2, 'あお'));
+        var ParseChild = Parse.Object.extend('Child');
+        var query = new Parse.Query(ParseChild);
+    		query.ascending('dispOrder');
+    		query.find({
+    		  error: function(error: Parse.Error) {
+    		    console.log('Error: ' + error.code + ' ' + error.message);
+    		  }
+    		}).then((results: Parse.Object[]) =>{
+          results.forEach(child => {
+            this.children.push(new Child(child.get('dispOrder'), child.get('nickName'), null, child.get('gender')));
+          });
+        });
+
+
+        // this.children.push(new Child(1, 'もも', moment('2012/11/26', 'YYYY/MM/DD').toDate(), GENDER.FEMALE));
+        // this.children.push(new Child(2, 'あお'));
 
         // 月齢のセット
         this.children.forEach((child: Child) => {
@@ -34,7 +48,7 @@ module chavo {
 
     go(child: Child) {
       this.$rootScope.targetChild = child;
-      this.$state.go('settings.child', { childId: child.id });
+      this.$state.go('settings.child', { childId: child.dispOrder });
     }
 
   }
