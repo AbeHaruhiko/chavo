@@ -45,6 +45,35 @@ var chavo;
                 dateIsOpen: false
             };
         }
+        SettingsChildController.prototype.saveChildData = function () {
+            var _this = this;
+            var dispOrder = 0;
+            var ParseChild = Parse.Object.extend('Child');
+            var query = new Parse.Query(ParseChild);
+            query.descending('dispOrder');
+            query.first({
+                success: function (result) {
+                    if (result && result.get('dispOrder')) {
+                        dispOrder = result.get('dispOrder');
+                    }
+                },
+                error: function (error) {
+                    alert('Error: ' + error.code + ' ' + error.message);
+                }
+            }).then(function () {
+                var child = new ParseChild();
+                child.set('dispOrder', dispOrder + 1);
+                child.set('nickName', _this.$rootScope.targetChild.nickName);
+                child.set('gender', _this.$rootScope.targetChild.gender);
+                return child.save({
+                    error: function (error) {
+                        console.log('Error: ' + error.code + ' ' + error.message);
+                    }
+                });
+            }).then(function () {
+                console.log('ほぞんしました');
+            });
+        };
         return SettingsChildController;
     })();
     chavo.SettingsChildController = SettingsChildController;

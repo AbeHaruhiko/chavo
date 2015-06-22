@@ -3,10 +3,10 @@ module chavo {
 
   export class Child {
     constructor(public id: number,
-      public nickName?: string,
-      public birthday?: Date,
-      public gender: GENDER = GENDER.OTHER,
-      public age?: string) {
+        public nickName?: string,
+        public birthday?: Date,
+        public gender: GENDER = GENDER.OTHER,
+        public age?: string) {
     }
   }
 
@@ -71,7 +71,42 @@ module chavo {
         monthIsOpen: false,
         dateIsOpen: false
       };
+    }
 
+    saveChildData() {
+
+      // idの付与
+      var dispOrder: number = 0;
+      var ParseChild = Parse.Object.extend('Child');
+      var query = new Parse.Query(ParseChild);
+  		query.descending('dispOrder');
+  		query.first({
+  		  success: (result: Parse.Object) => {
+          if (result && result.get('dispOrder')) {
+            dispOrder = result.get('dispOrder');
+          }
+  		  },
+  		  error: function(error: Parse.Error) {
+  		    alert('Error: ' + error.code + ' ' + error.message);
+  		  }
+  		}).then(() =>{
+
+        var child = new ParseChild();
+
+        child.set('dispOrder', dispOrder + 1);
+        child.set('nickName', this.$rootScope.targetChild.nickName);
+        child.set('gender', this.$rootScope.targetChild.gender);
+
+        return child.save({
+    		  error: function(error: Parse.Error) {
+    		    console.log('Error: ' + error.code + ' ' + error.message);
+    		  }
+    		});
+
+      }).then(() => {
+
+        console.log('ほぞんしました');
+      });
 
     }
   }

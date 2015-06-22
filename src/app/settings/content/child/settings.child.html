@@ -4,7 +4,7 @@
       <div class="form-group">
         <label for="nickName" class="col-sm-3 control-label">ニックネーム</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="nickName" placeholder="ニックネーム" value="{{ settings_child.$rootScope.targetChild.nickName }}"/>
+          <input type="text" class="form-control" id="nickName" placeholder="ニックネーム" ng-model="settings_child.$rootScope.targetChild.nickName"/>
         </div>
       </div>
       <div class="form-group">
@@ -53,7 +53,7 @@
           </label>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary pull-right">保存</button>
+      <button type="button" class="btn btn-primary pull-right" ng-click="settings_child.saveChildData()">保存</button>
     </form>
   </div>
 </div>
