@@ -89,7 +89,7 @@ module chavo {
   		  error: function(error: Parse.Error) {
   		    alert('Error: ' + error.code + ' ' + error.message);
   		  }
-  		}).then(() =>{
+  		}).then(() => {
 
         var child = new ParseChild();
 

@@ -25,8 +25,8 @@ module chavo {
     		  error: function(error: Parse.Error) {
     		    console.log('Error: ' + error.code + ' ' + error.message);
     		  }
-    		}).then((results: Parse.Object[]) =>{
-          results.forEach(child => {
+    		}).then((results: Parse.Object[]) => {
+          results.forEach((child: Parse.Object) => {
             this.children.push(new Child(child.get('dispOrder'), child.get('nickName'), null, child.get('gender')));
           });
         });
