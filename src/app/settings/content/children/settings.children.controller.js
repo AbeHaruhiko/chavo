@@ -21,7 +21,9 @@ var chavo;
                 }
             }).then(function (results) {
                 results.forEach(function (child) {
-                    _this.children.push(new chavo.Child(child.get('dispOrder'), child.get('nickName'), null, child.get('gender')));
+                    _this.$scope.$apply(function () {
+                        _this.children.push(new chavo.Child(child.get('dispOrder'), child.get('nickName'), null, child.get('gender')));
+                    });
                 });
             });
             this.children.forEach(function (child) {

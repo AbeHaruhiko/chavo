@@ -27,7 +27,9 @@ module chavo {
     		  }
     		}).then((results: Parse.Object[]) => {
           results.forEach((child: Parse.Object) => {
-            this.children.push(new Child(child.get('dispOrder'), child.get('nickName'), null, child.get('gender')));
+            this.$scope.$apply(() => {
+              this.children.push(new Child(child.get('dispOrder'), child.get('nickName'), null, child.get('gender')));
+            });
           });
         });
 
