@@ -3,7 +3,11 @@ var chavo;
     'use strict';
     var Child = (function () {
         function Child(dispOrder, nickName, birthday, gender, age) {
+            if (dispOrder === void 0) { dispOrder = 0; }
+            if (nickName === void 0) { nickName = null; }
+            if (birthday === void 0) { birthday = null; }
             if (gender === void 0) { gender = GENDER.OTHER; }
+            if (age === void 0) { age = null; }
             this.dispOrder = dispOrder;
             this.nickName = nickName;
             this.birthday = birthday;
@@ -26,10 +30,10 @@ var chavo;
             this.$state = $state;
             this.$stateParams = $stateParams;
             console.log(this.$rootScope.targetChild);
-            var momentObj = (this.$rootScope.targetChild.birthday ? moment(this.$rootScope.targetChild.birthday) : moment());
+            var momentObj = (this.$rootScope.targetChild && this.$rootScope.targetChild.birthday ? moment(this.$rootScope.targetChild.birthday) : moment());
             this.yearSelected = momentObj.format('YYYY');
-            this.monthSelected = momentObj.format('MM');
-            this.dateSelected = momentObj.format('DD');
+            this.monthSelected = momentObj.format('M');
+            this.dateSelected = momentObj.format('D');
             this.birthYears = new Array();
             for (var i = 1900; i <= moment().year(); i++) {
                 this.birthYears.push(i);
@@ -45,8 +49,33 @@ var chavo;
                 dateIsOpen: false
             };
         }
+        SettingsChildController.prototype.getInputBirthday = function () {
+            return moment({ year: this.yearSelected,
+                months: +this.monthSelected - 1,
+                date: this.dateSelected })
+                .toDate();
+        };
         SettingsChildController.prototype.saveChildData = function () {
             var _this = this;
+            if (this.$rootScope.targetChild.dispOrder > 0) {
+                var ParseChild = Parse.Object.extend('Child');
+                var query = new Parse.Query(ParseChild);
+                query.equalTo('dispOrder', this.$rootScope.targetChild.dispOrder);
+                query.first().then(function (child) {
+                    child.set('dispOrder', _this.$rootScope.targetChild.dispOrder);
+                    child.set('nickName', _this.$rootScope.targetChild ? _this.$rootScope.targetChild.nickName : null);
+                    child.set('birthday', _this.getInputBirthday());
+                    child.set('gender', +_this.$rootScope.targetChild.gender);
+                    return child.save({
+                        error: function (child, error) {
+                            console.log('Error: ' + error.code + ' ' + error.message);
+                        }
+                    });
+                }).then(function () {
+                    console.log('ほぞんしました');
+                });
+                return;
+            }
             var dispOrder = 0;
             var ParseChild = Parse.Object.extend('Child');
             var query = new Parse.Query(ParseChild);
@@ -63,10 +92,11 @@ var chavo;
             }).then(function () {
                 var child = new ParseChild();
                 child.set('dispOrder', dispOrder + 1);
-                child.set('nickName', _this.$rootScope.targetChild.nickName);
-                child.set('gender', _this.$rootScope.targetChild.gender);
+                child.set('nickName', _this.$rootScope.targetChild ? _this.$rootScope.targetChild.nickName : null);
+                child.set('birthday', _this.getInputBirthday());
+                child.set('gender', +_this.$rootScope.targetChild.gender);
                 return child.save({
-                    error: function (error) {
+                    error: function (child, error) {
                         console.log('Error: ' + error.code + ' ' + error.message);
                     }
                 });

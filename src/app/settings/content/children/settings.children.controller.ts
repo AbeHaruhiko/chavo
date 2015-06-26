@@ -28,7 +28,7 @@ module chavo {
     		}).then((results: Parse.Object[]) => {
           results.forEach((child: Parse.Object) => {
             this.$scope.$apply(() => {
-              this.children.push(new Child(child.get('dispOrder'), child.get('nickName'), null, child.get('gender')));
+              this.children.push(new Child(child.get('dispOrder'), child.get('nickName'), child.get('birthday'), child.get('gender')));
             });
           });
         });
@@ -49,9 +49,9 @@ module chavo {
     }
 
     go(child: Child) {
+      child = child ? child : new Child();
       this.$rootScope.targetChild = child;
       this.$state.go('settings.child', { childId: child.dispOrder });
     }
-
   }
 }

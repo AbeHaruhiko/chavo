@@ -22,7 +22,7 @@ var chavo;
             }).then(function (results) {
                 results.forEach(function (child) {
                     _this.$scope.$apply(function () {
-                        _this.children.push(new chavo.Child(child.get('dispOrder'), child.get('nickName'), null, child.get('gender')));
+                        _this.children.push(new chavo.Child(child.get('dispOrder'), child.get('nickName'), child.get('birthday'), child.get('gender')));
                     });
                 });
             });
@@ -33,6 +33,7 @@ var chavo;
             });
         }
         SettingsChildrenController.prototype.go = function (child) {
+            child = child ? child : new chavo.Child();
             this.$rootScope.targetChild = child;
             this.$state.go('settings.child', { childId: child.dispOrder });
         };

@@ -1,7 +1,7 @@
 <div>
   <ul class="list-group">
     <li class="list-group-item text-right">
-      <a class="btn btn-default"><i class="fa fa-user-plus"> 追加</i></a>
+      <a class="btn btn-default" ng-click="settings_children.go(null)"><i class="fa fa-user-plus"> 追加</i></a>
     </li>
     <li class="list-group-item" ng-repeat="child in settings_children.children">
       <a ng-click="settings_children.go(child)">
