@@ -27,7 +27,7 @@
               <li ng-repeat="month in settings_child.birthMonths"><a ng-click="settings_child.monthSelected = month">{{month}}</a></li>
             </ul>
           </div>
-          年
+          月
           <div class="btn-group" dropdown is-open="settings_child.dropDownStatus.dateIsOpen">
             <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
               {{ settings_child.dateSelected }} <span class="caret"></span>
@@ -36,7 +36,7 @@
               <li ng-repeat="date in settings_child.birthDates"><a ng-click="settings_child.dateSelected = date">{{date}}</a></li>
             </ul>
           </div>
-          年
+          日
         </div>
       </div>
       <div class="form-group">
@@ -49,7 +49,7 @@
             <input type="radio" name="gender" id="femail" value="1" ng-model="settings_child.$rootScope.targetChild.gender"> 女の子
           </label>
           <label class="radio-inline">
-            <input type="radio" name="gender" id="none" value="2" ng-model="settings_child.$rootScope.targetChild.gender"> その他・未設定
+            <input type="radio" name="gender" id="none" value="2" ng-model="settings_child.$rootScope.targetChild.gender"> その他・設定しない
           </label>
         </div>
       </div>
