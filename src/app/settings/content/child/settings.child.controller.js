@@ -52,6 +52,9 @@ var chavo;
             };
         }
         SettingsChildController.prototype.getInputBirthday = function () {
+            if (this.$rootScope.targetChild.unableBirthday) {
+                return null;
+            }
             return moment({ year: this.yearSelected,
                 months: +this.monthSelected - 1,
                 date: this.dateSelected })

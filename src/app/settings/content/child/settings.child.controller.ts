@@ -75,6 +75,10 @@ module chavo {
     }
 
     private getInputBirthday(): Date {
+      if (this.$rootScope.targetChild.unableBirthday) {
+        return null;
+      }
+      
       return moment({ year: this.yearSelected,
           months: +this.monthSelected - 1, /* month index begins from 0. '+' casts string to number. */
           date: this.dateSelected })
@@ -107,6 +111,7 @@ module chavo {
           console.log('ほぞんしました');
         });
       } else {
+        // 未登録のこども情報の新規登録
 
         // id付与のために現時点の最大値を取得する。
         var dispOrder: number = 0;

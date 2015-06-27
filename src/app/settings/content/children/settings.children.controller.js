@@ -3,10 +3,6 @@ var chavo;
     'use strict';
     var SettingsChildrenController = (function () {
         function SettingsChildrenController($scope, $rootScope, $state) {
-            // this.children = [
-            //   { nickName: 'もも', birthDay: '2012/11/26', sex: 2},
-            //   { nickName: 'あお'},
-            // ];
             var _this = this;
             this.$scope = $scope;
             this.$rootScope = $rootScope;
@@ -20,16 +16,13 @@ var chavo;
                     console.log('Error: ' + error.code + ' ' + error.message);
                 }
             }).then(function (results) {
-                results.forEach(function (child) {
+                results.forEach(function (parseChild) {
+                    var years = moment().diff(moment(parseChild.get('birthday')), 'years');
+                    var months = moment().diff(moment(parseChild.get('birthday')), 'months') - (12 * years);
                     _this.$scope.$apply(function () {
-                        _this.children.push(new chavo.Child(child.get('dispOrder'), child.get('nickName'), child.get('birthday'), child.get('gender')));
+                        _this.children.push(new chavo.Child(parseChild.get('dispOrder'), parseChild.get('nickName'), parseChild.get('birthday'), parseChild.get('gender'), (years ? (years + '歳') : '') + (months ? (months + 'ヶ月') : '')));
                     });
                 });
-            });
-            this.children.forEach(function (child) {
-                var years = moment().diff(moment(child.birthday), 'years');
-                var months = moment().diff(moment(child.birthday), 'months') - (12 * years);
-                child.age = (years ? (years + '歳') : '') + (months ? (months + 'ヶ月') : '');
             });
         }
         SettingsChildrenController.prototype.go = function (child) {
