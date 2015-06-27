@@ -22,6 +22,7 @@
         "./src/app/index.ts",
         "./src/app/login/login.controller.ts",
         "./src/app/main/all/main.all.controller.ts",
+        "./src/app/main/compose/main.compose.controller.ts",
         "./src/app/main/main.controller.ts",
         "./src/app/settings/content/child/settings.child.controller.ts",
         "./src/app/settings/content/children/settings.children.controller.ts",

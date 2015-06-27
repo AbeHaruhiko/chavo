@@ -51,15 +51,6 @@ var chavo;
                 dateIsOpen: false
             };
         }
-        SettingsChildController.prototype.getInputBirthday = function () {
-            if (this.$rootScope.targetChild.unableBirthday) {
-                return null;
-            }
-            return moment({ year: this.yearSelected,
-                months: +this.monthSelected - 1,
-                date: this.dateSelected })
-                .toDate();
-        };
         SettingsChildController.prototype.saveChildData = function () {
             var _this = this;
             if (this.$rootScope.targetChild.dispOrder > 0) {
@@ -82,8 +73,8 @@ var chavo;
             }
             else {
                 var dispOrder = 0;
-                var ParseChild = Parse.Object.extend('Child');
-                var query = new Parse.Query(ParseChild);
+                ParseChild = Parse.Object.extend('Child');
+                query = new Parse.Query(ParseChild);
                 query.descending('dispOrder');
                 query.first({
                     success: function (result) {
@@ -109,6 +100,15 @@ var chavo;
                     console.log('ほぞんしました');
                 });
             }
+        };
+        SettingsChildController.prototype.getInputBirthday = function () {
+            if (this.$rootScope.targetChild.unableBirthday) {
+                return null;
+            }
+            return moment({ year: this.yearSelected,
+                months: +this.monthSelected - 1,
+                date: this.dateSelected })
+                .toDate();
         };
         return SettingsChildController;
     })();

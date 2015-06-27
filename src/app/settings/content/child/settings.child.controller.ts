@@ -74,17 +74,6 @@ module chavo {
       };
     }
 
-    private getInputBirthday(): Date {
-      if (this.$rootScope.targetChild.unableBirthday) {
-        return null;
-      }
-      
-      return moment({ year: this.yearSelected,
-          months: +this.monthSelected - 1, /* month index begins from 0. '+' casts string to number. */
-          date: this.dateSelected })
-        .toDate();
-    }
-
     public saveChildData() {
 
       if (this.$rootScope.targetChild.dispOrder > 0) {
@@ -97,7 +86,7 @@ module chavo {
 
           child.set('dispOrder', this.$rootScope.targetChild.dispOrder);
           child.set('nickName', this.$rootScope.targetChild ? this.$rootScope.targetChild.nickName : null);
-          child.set('birthday', this.getInputBirthday())
+          child.set('birthday', this.getInputBirthday());
           child.set('gender', +this.$rootScope.targetChild.gender); /* gender is number. '+' casts string to number. */
 
           return child.save({
@@ -115,8 +104,8 @@ module chavo {
 
         // id付与のために現時点の最大値を取得する。
         var dispOrder: number = 0;
-        var ParseChild = Parse.Object.extend('Child');
-        var query = new Parse.Query(ParseChild);
+        ParseChild = Parse.Object.extend('Child');
+        query = new Parse.Query(ParseChild);
     		query.descending('dispOrder');
     		query.first({
     		  success: (result: Parse.Object) => {
@@ -133,7 +122,7 @@ module chavo {
 
           child.set('dispOrder', dispOrder + 1);
           child.set('nickName', this.$rootScope.targetChild ? this.$rootScope.targetChild.nickName : null);
-          child.set('birthday', this.getInputBirthday())
+          child.set('birthday', this.getInputBirthday());
           child.set('gender', +this.$rootScope.targetChild.gender); /* gender is number. '+' casts string to number. */
 
           return child.save({
@@ -147,6 +136,17 @@ module chavo {
           console.log('ほぞんしました');
         });
       }
+    }
+
+    private getInputBirthday(): Date {
+      if (this.$rootScope.targetChild.unableBirthday) {
+        return null;
+      }
+
+      return moment({ year: this.yearSelected,
+          months: +this.monthSelected - 1, /* month index begins from 0. '+' casts string to number. */
+          date: this.dateSelected })
+        .toDate();
     }
   }
 }

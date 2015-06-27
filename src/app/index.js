@@ -1,6 +1,7 @@
 /// <reference path="../../.tmp/typings/tsd.d.ts" />
 /// <reference path="main/main.controller.ts" />
 /// <reference path="main/all/main.all.controller.ts" />
+/// <reference path="main/compose/main.compose.controller.ts" />
 /// <reference path="login/login.controller.ts"/>
 /// <reference path="settings/menu/settings.menu.controller.ts"/>
 /// <reference path="settings/content/settings.content.controller.ts"/>
@@ -27,6 +28,7 @@ var chavo;
         .service('AuthService', chavo.AuthService)
         .controller('MainController', chavo.MainController)
         .controller('MainAllController', chavo.MainAllController)
+        .controller('MainComposeController', chavo.MainComposeController)
         .controller('LoginController', chavo.LoginController)
         .controller('NavbarController', chavo.NavbarController)
         .controller('TabmenuController', chavo.TabmenuController)
@@ -55,7 +57,9 @@ var chavo;
         })
             .state('home.compose', {
             url: '/compose',
-            templateUrl: 'app/main/compose/main.compose.html'
+            templateUrl: 'app/main/compose/main.compose.html',
+            controller: 'MainComposeController',
+            controllerAs: 'main_compose'
         })
             .state('settings', {
             url: '/settings',

@@ -21,6 +21,7 @@
         "./index.ts",
         "./login/login.controller.ts",
         "./main/all/main.all.controller.ts",
+        "./main/compose/main.compose.controller.ts",
         "./main/main.controller.ts",
         "./settings/content/child/settings.child.controller.ts",
         "./settings/content/children/settings.children.controller.ts",
