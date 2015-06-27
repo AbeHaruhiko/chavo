@@ -2,17 +2,19 @@ var chavo;
 (function (chavo) {
     'use strict';
     var Child = (function () {
-        function Child(dispOrder, nickName, birthday, gender, age) {
+        function Child(dispOrder, nickName, birthday, gender, age, unableBirthday) {
             if (dispOrder === void 0) { dispOrder = 0; }
             if (nickName === void 0) { nickName = null; }
             if (birthday === void 0) { birthday = null; }
             if (gender === void 0) { gender = GENDER.OTHER; }
             if (age === void 0) { age = null; }
+            if (unableBirthday === void 0) { unableBirthday = true; }
             this.dispOrder = dispOrder;
             this.nickName = nickName;
             this.birthday = birthday;
             this.gender = gender;
             this.age = age;
+            this.unableBirthday = unableBirthday;
         }
         return Child;
     })();
@@ -74,35 +76,36 @@ var chavo;
                 }).then(function () {
                     console.log('ほぞんしました');
                 });
-                return;
             }
-            var dispOrder = 0;
-            var ParseChild = Parse.Object.extend('Child');
-            var query = new Parse.Query(ParseChild);
-            query.descending('dispOrder');
-            query.first({
-                success: function (result) {
-                    if (result && result.get('dispOrder')) {
-                        dispOrder = result.get('dispOrder');
+            else {
+                var dispOrder = 0;
+                var ParseChild = Parse.Object.extend('Child');
+                var query = new Parse.Query(ParseChild);
+                query.descending('dispOrder');
+                query.first({
+                    success: function (result) {
+                        if (result && result.get('dispOrder')) {
+                            dispOrder = result.get('dispOrder');
+                        }
+                    },
+                    error: function (error) {
+                        alert('Error: ' + error.code + ' ' + error.message);
                     }
-                },
-                error: function (error) {
-                    alert('Error: ' + error.code + ' ' + error.message);
-                }
-            }).then(function () {
-                var child = new ParseChild();
-                child.set('dispOrder', dispOrder + 1);
-                child.set('nickName', _this.$rootScope.targetChild ? _this.$rootScope.targetChild.nickName : null);
-                child.set('birthday', _this.getInputBirthday());
-                child.set('gender', +_this.$rootScope.targetChild.gender);
-                return child.save({
-                    error: function (child, error) {
-                        console.log('Error: ' + error.code + ' ' + error.message);
-                    }
+                }).then(function () {
+                    var child = new ParseChild();
+                    child.set('dispOrder', dispOrder + 1);
+                    child.set('nickName', _this.$rootScope.targetChild ? _this.$rootScope.targetChild.nickName : null);
+                    child.set('birthday', _this.getInputBirthday());
+                    child.set('gender', +_this.$rootScope.targetChild.gender);
+                    return child.save({
+                        error: function (child, error) {
+                            console.log('Error: ' + error.code + ' ' + error.message);
+                        }
+                    });
+                }).then(function () {
+                    console.log('ほぞんしました');
                 });
-            }).then(function () {
-                console.log('ほぞんしました');
-            });
+            }
         };
         return SettingsChildController;
     })();

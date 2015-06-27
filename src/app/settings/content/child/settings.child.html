@@ -11,7 +11,7 @@
         <label class="col-sm-3 control-label">生年月日</label>
         <div class="col-sm-9">
           <div class="btn-group" dropdown is-open="settings_child.dropDownStatus.yearIsOpen">
-            <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
+            <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle ng-disabled="settings_child.$rootScope.targetChild.unableBirthday">
               {{ settings_child.yearSelected }} <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
@@ -20,7 +20,7 @@
           </div>
           年
           <div class="btn-group" dropdown is-open="settings_child.dropDownStatus.monthIsOpen">
-            <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
+            <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle ng-disabled="settings_child.$rootScope.targetChild.unableBirthday">
               {{ settings_child.monthSelected }} <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
@@ -29,7 +29,7 @@
           </div>
           月
           <div class="btn-group" dropdown is-open="settings_child.dropDownStatus.dateIsOpen">
-            <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
+            <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle ng-disabled="settings_child.$rootScope.targetChild.unableBirthday">
               {{ settings_child.dateSelected }} <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
@@ -37,6 +37,10 @@
             </ul>
           </div>
           日
+          <span id="unableBirthday">
+            <input type="checkbox"
+                ng-model="settings_child.$rootScope.targetChild.unableBirthday"/> 登録しない
+          </span>
         </div>
       </div>
       <div class="form-group">
@@ -49,7 +53,7 @@
             <input type="radio" name="gender" id="femail" value="1" ng-model="settings_child.$rootScope.targetChild.gender"> 女の子
           </label>
           <label class="radio-inline">
-            <input type="radio" name="gender" id="none" value="2" ng-model="settings_child.$rootScope.targetChild.gender"> その他・設定しない
+            <input type="radio" name="gender" id="none" value="2" ng-model="settings_child.$rootScope.targetChild.gender"> その他・登録しない
           </label>
         </div>
       </div>

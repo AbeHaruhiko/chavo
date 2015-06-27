@@ -6,7 +6,8 @@ module chavo {
         public nickName: string = null,
         public birthday: Date = null,
         public gender: GENDER = GENDER.OTHER,
-        public age: string = null) {
+        public age: string = null,
+        public unableBirthday: boolean = true) {
     }
   }
 
@@ -105,43 +106,42 @@ module chavo {
 
           console.log('ほぞんしました');
         });
-        return;
-      }
+      } else {
 
-      // id付与のために現時点の最大値を取得する。
-      var dispOrder: number = 0;
-      var ParseChild = Parse.Object.extend('Child');
-      var query = new Parse.Query(ParseChild);
-  		query.descending('dispOrder');
-  		query.first({
-  		  success: (result: Parse.Object) => {
-          if (result && result.get('dispOrder')) {
-            dispOrder = result.get('dispOrder');
-          }
-  		  },
-  		  error: function(error: Parse.Error) {
-  		    alert('Error: ' + error.code + ' ' + error.message);
-  		  }
-  		}).then(() => {
-
-        var child = new ParseChild();
-
-        child.set('dispOrder', dispOrder + 1);
-        child.set('nickName', this.$rootScope.targetChild ? this.$rootScope.targetChild.nickName : null);
-        child.set('birthday', this.getInputBirthday())
-        child.set('gender', +this.$rootScope.targetChild.gender); /* gender is number. '+' casts string to number. */
-
-        return child.save({
-    		  error: function(child: Child, error: Parse.Error) {
-    		    console.log('Error: ' + error.code + ' ' + error.message);
+        // id付与のために現時点の最大値を取得する。
+        var dispOrder: number = 0;
+        var ParseChild = Parse.Object.extend('Child');
+        var query = new Parse.Query(ParseChild);
+    		query.descending('dispOrder');
+    		query.first({
+    		  success: (result: Parse.Object) => {
+            if (result && result.get('dispOrder')) {
+              dispOrder = result.get('dispOrder');
+            }
+    		  },
+    		  error: function(error: Parse.Error) {
+    		    alert('Error: ' + error.code + ' ' + error.message);
     		  }
-    		});
+    		}).then(() => {
 
-      }).then(() => {
+          var child = new ParseChild();
 
-        console.log('ほぞんしました');
-      });
+          child.set('dispOrder', dispOrder + 1);
+          child.set('nickName', this.$rootScope.targetChild ? this.$rootScope.targetChild.nickName : null);
+          child.set('birthday', this.getInputBirthday())
+          child.set('gender', +this.$rootScope.targetChild.gender); /* gender is number. '+' casts string to number. */
 
+          return child.save({
+      		  error: function(child: Child, error: Parse.Error) {
+      		    console.log('Error: ' + error.code + ' ' + error.message);
+      		  }
+      		});
+
+        }).then(() => {
+
+          console.log('ほぞんしました');
+        });
+      }
     }
   }
 }
