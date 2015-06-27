@@ -3,7 +3,8 @@ module chavo {
 
   export class MainComposeController {
 
-    children = new Array<Child>();
+    public children = new Array<Child>();
+    public wordsAuthor: Child;
 
     /* @ngInject */
     constructor (public $scope: IMainScope) {
@@ -23,13 +24,11 @@ module chavo {
           // ヶ月（誕生日からの月数 - 年齢分の月数）
           var months = moment().diff(moment(parseChild.get('birthday')), 'months') - (12 * years);
 
-          this.$scope.$apply(() => {
-            this.children.push(new Child(parseChild.get('dispOrder'),
-                parseChild.get('nickName'),
-                parseChild.get('birthday'),
-                parseChild.get('gender'),
-                (years ? (years + '歳') : '') + (months ? (months + 'ヶ月') : '')));
-          });
+          this.children.push(new Child(parseChild.get('dispOrder'),
+              parseChild.get('nickName'),
+              parseChild.get('birthday'),
+              parseChild.get('gender'),
+              (years ? (years + '歳') : '') + (months ? (months + 'ヶ月') : '')));
         });
       });
     }

@@ -10,10 +10,10 @@
             だれのことばを記録しますか？
             <div class="btn-group" dropdown is-open="main_compose.dropDownStatus.wordsAuthorIsOpen">
               <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
-                {{ main_compose.wordsAuthor }} <span class="caret"></span>
+                {{ main_compose.wordsAuthor.nickName || 'こどもを選ぶ' }} <span class="caret"></span>
               </button>
               <ul class="dropdown-menu">
-                <li ng-repeat="child in main_compose.children"><a ng-click="main_compose.wordsAuthorSelected = child">{{child.nickName}}</a></li>
+                <li ng-repeat="child in main_compose.children"><a ng-click="main_compose.wordsAuthor = child">{{child.nickName}}</a></li>
               </ul>
             </div>
           </div>
