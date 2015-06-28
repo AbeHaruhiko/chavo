@@ -33,9 +33,9 @@ var chavo;
             this.$stateParams = $stateParams;
             console.log(this.$rootScope.targetChild);
             var momentObj = (this.$rootScope.targetChild && this.$rootScope.targetChild.birthday ? moment(this.$rootScope.targetChild.birthday) : moment());
-            this.yearSelected = momentObj.format('YYYY');
-            this.monthSelected = momentObj.format('M');
-            this.dateSelected = momentObj.format('D');
+            this.yearSelected = momentObj.year();
+            this.monthSelected = momentObj.month();
+            this.dateSelected = momentObj.date();
             this.birthYears = new Array();
             for (var i = 1900; i <= moment().year(); i++) {
                 this.birthYears.push(i);
@@ -106,7 +106,7 @@ var chavo;
                 return null;
             }
             return moment({ year: this.yearSelected,
-                months: +this.monthSelected - 1,
+                months: this.monthSelected - 1,
                 date: this.dateSelected })
                 .toDate();
         };

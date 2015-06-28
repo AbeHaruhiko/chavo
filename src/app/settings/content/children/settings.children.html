@@ -7,10 +7,10 @@
       <a ng-click="settings_children.go(child)">
         <span ng-if="child.nickName">{{child.nickName}}</span>
         <div class="pull-right">
-          <span ng-if="child.age">{{child.age}}</span>
           <!-- <span ng-if="child.birthday">{{child.birthday + '生まれ'}}</span> -->
-          <span ng-if="child.sex ===  1">男の子<!--<i class="fa fa-male">--></i></span>
-          <span ng-if="child.sex ===  2">女の子<!--<i class="fa fa-female">--></i></span>
+          <span ng-if="child.age">{{ '（' + child.age + '）'}}</span>
+          <span ng-if="child.gender ===  0">男の子</span>
+          <span ng-if="child.gender ===  1">女の子</span>
         </div>
       </a>
     </li>

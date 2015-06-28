@@ -25,9 +25,9 @@ module chavo {
   export class SettingsChildController {
 
     // 生年月日の選択値
-    public yearSelected: string;
-    public monthSelected: string;
-    public dateSelected: string;
+    public yearSelected: number;
+    public monthSelected: number;
+    public dateSelected: number;
 
     // dropDownの開閉状態
     public dropDownStatus: {
@@ -51,9 +51,9 @@ module chavo {
 
       // 登録済みの場合はその誕生日を表示。未登録なら今日を初期値。
       var momentObj = (this.$rootScope.targetChild && this.$rootScope.targetChild.birthday ? moment(this.$rootScope.targetChild.birthday) : moment());
-      this.yearSelected = momentObj.format('YYYY');
-      this.monthSelected = momentObj.format('M');
-      this.dateSelected = momentObj.format('D');
+      this.yearSelected = momentObj.year();
+      this.monthSelected = momentObj.month();
+      this.dateSelected = momentObj.date();
 
       this.birthYears = new Array<number>();
       for (var i = 1900; i <= moment().year(); i++) {
@@ -144,7 +144,7 @@ module chavo {
       }
 
       return moment({ year: this.yearSelected,
-          months: +this.monthSelected - 1, /* month index begins from 0. '+' casts string to number. */
+          months: this.monthSelected - 1, /* month index begins from 0. */
           date: this.dateSelected })
         .toDate();
     }

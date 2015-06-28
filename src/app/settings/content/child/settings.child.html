@@ -9,33 +9,24 @@
       </div>
       <div class="form-group">
         <label class="col-sm-3 control-label">生年月日</label>
-        <div class="col-sm-9">
-          <div class="btn-group" dropdown is-open="settings_child.dropDownStatus.yearIsOpen">
-            <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle ng-disabled="settings_child.$rootScope.targetChild.unableBirthday">
-              {{ settings_child.yearSelected }} <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <li ng-repeat="year in settings_child.birthYears"><a ng-click="settings_child.yearSelected = year">{{year}}</a></li>
-            </ul>
-          </div>
+        <div class="col-sm-9 form-inline">
+          <select class="form-control"
+              ng-model="settings_child.yearSelected"
+              ng-options="year for year in settings_child.birthYears"
+              ng-disabled="settings_child.$rootScope.targetChild.unableBirthday">
+          </select>
           年
-          <div class="btn-group" dropdown is-open="settings_child.dropDownStatus.monthIsOpen">
-            <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle ng-disabled="settings_child.$rootScope.targetChild.unableBirthday">
-              {{ settings_child.monthSelected }} <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <li ng-repeat="month in settings_child.birthMonths"><a ng-click="settings_child.monthSelected = month">{{month}}</a></li>
-            </ul>
-          </div>
+          <select class="form-control"
+              ng-model="settings_child.monthSelected"
+              ng-options="month for month in settings_child.birthMonths"
+              ng-disabled="settings_child.$rootScope.targetChild.unableBirthday">
+          </select>
           月
-          <div class="btn-group" dropdown is-open="settings_child.dropDownStatus.dateIsOpen">
-            <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle ng-disabled="settings_child.$rootScope.targetChild.unableBirthday">
-              {{ settings_child.dateSelected }} <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <li ng-repeat="date in settings_child.birthDates"><a ng-click="settings_child.dateSelected = date">{{date}}</a></li>
-            </ul>
-          </div>
+          <select class="form-control"
+              ng-model="settings_child.dateSelected"
+              ng-options="date for date in settings_child.birthDates"
+              ng-disabled="settings_child.$rootScope.targetChild.unableBirthday">
+          </select>
           日
           <span id="unableBirthday">
             <input type="checkbox"
