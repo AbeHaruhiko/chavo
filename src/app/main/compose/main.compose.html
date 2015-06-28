@@ -8,7 +8,7 @@
           </div>
           <div class="form-group">
             だれのことばを記録しますか？
-            <div class="btn-group" dropdown is-open="main_compose.dropDownStatus.wordsAuthorIsOpen">
+            <div class="btn-group btn-group-sm" dropdown is-open="main_compose.dropDownStatus.wordsAuthorIsOpen">
               <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
                 {{ main_compose.wordsAuthor.nickName || '指定しない' }} <span class="caret"></span>
               </button>
@@ -23,14 +23,24 @@
                 </li>
               </ul>
             </div>
-            <div class="form-group form-inline">
-              <input type="text" class="form-control input-sm" ng-model="main_compose.wordsAuthor.nickName">
-              <input type="text" class="form-control input-sm" ng-model="main_compose.wordsAuthor.ageYears">歳
-              <input type="text" class="form-control input-sm" ng-model="main_compose.wordsAuthor.ageMonths">ヶ月
-              <select class="form-control input-sm" ng-model="main_compose.wordsAuthor.gender" ng-options="gender.value as gender.label for gender in main_compose.genderList">
-              </select>
-              <!-- <span ng-if="main_compose.wordsAuthor.gender ===  0">男の子
-              <span ng-if="main_compose.wordsAuthor.gender ===  1">女の子 -->
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-3">
+                  <input type="text" class="form-control input-sm" ng-model="main_compose.wordsAuthor.nickName">
+                </div>
+                <div class="col-md-1">
+                  <input type="text" class="form-control input-sm text-center" ng-model="main_compose.wordsAuthor.ageYears">
+                </div>
+                <p class="form-control-static inline">歳</p>
+                <div class="col-sm-1">
+                  <input type="text" class="form-control input-sm" ng-model="main_compose.wordsAuthor.ageMonths">
+                </div>
+                <p class="form-control-static">ヶ月</p>
+                <div class="col-sm-2">
+                  <select class="form-control input-sm" ng-model="main_compose.wordsAuthor.gender" ng-options="gender.value as gender.label for gender in main_compose.genderList">
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
           <div class="form-group">
