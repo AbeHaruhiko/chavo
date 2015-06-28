@@ -9,6 +9,8 @@ module chavo {
     /* @ngInject */
     constructor (public $scope: IMainScope) {
 
+      this.children.push(new Child(0, '指定しない', null, null, null));
+
       var ParseChild = Parse.Object.extend('Child');
       var query = new Parse.Query(ParseChild);
   		query.ascending('dispOrder');

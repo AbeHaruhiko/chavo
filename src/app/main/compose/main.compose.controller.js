@@ -6,6 +6,7 @@ var chavo;
             var _this = this;
             this.$scope = $scope;
             this.children = new Array();
+            this.children.push(new chavo.Child(0, '指定しない', null, null, null));
             var ParseChild = Parse.Object.extend('Child');
             var query = new Parse.Query(ParseChild);
             query.ascending('dispOrder');
