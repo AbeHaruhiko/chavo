@@ -5,10 +5,14 @@ module chavo {
 
     public children = new Array<Child>();
     public wordsAuthor: Child;
+    public genderList = [ { label: '男の子', value: GENDER.MALE },
+        { label: '女の子', value: GENDER.FEMALE },
+        { label: 'その他・表示しない', value: GENDER.OTHER } ];
 
     /* @ngInject */
     constructor (public $scope: IMainScope) {
 
+      //
       this.children.push(new Child(0, '指定しない', null, null, null));
 
       var ParseChild = Parse.Object.extend('Child');
