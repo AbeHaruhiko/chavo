@@ -8,7 +8,8 @@
         <span ng-if="child.nickName">{{child.nickName}}</span>
         <div class="pull-right">
           <!-- <span ng-if="child.birthday">{{child.birthday + '生まれ'}}</span> -->
-          <span ng-if="child.age">{{ '（' + child.age + '）'}}</span>
+          <span ng-if="child.ageYears">{{ child.ageYears + '歳' }}</span>
+          <span ng-if="child.ageMonths">{{ child.ageMonths + 'ヶ月' }}</span>
           <span ng-if="child.gender ===  0">男の子</span>
           <span ng-if="child.gender ===  1">女の子</span>
         </div>

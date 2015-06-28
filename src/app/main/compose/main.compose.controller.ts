@@ -26,15 +26,18 @@ module chavo {
         results.forEach((parseChild: Parse.Object) => {
 
           // 年齢
-          var years = moment().diff(moment(parseChild.get('birthday')), 'years');
+          var years: string = '' + moment().diff(moment(parseChild.get('birthday')), 'years');
           // ヶ月（誕生日からの月数 - 年齢分の月数）
-          var months = moment().diff(moment(parseChild.get('birthday')), 'months') - (12 * years);
+          var months: string = '' + (moment().diff(moment(parseChild.get('birthday')), 'months') - (12 * +years));
 
-          this.children.push(new Child(parseChild.get('dispOrder'),
-              parseChild.get('nickName'),
-              parseChild.get('birthday'),
-              parseChild.get('gender'),
-              (years ? (years + '歳') : '') + (months ? (months + 'ヶ月') : '')));
+          this.$scope.$apply(() => {
+            this.children.push(new Child(parseChild.get('dispOrder'),
+                parseChild.get('nickName'),
+                parseChild.get('birthday'),
+                parseChild.get('gender'),
+                years ? years : null,
+                months ? months : null));
+          });
         });
       });
     }

@@ -6,7 +6,8 @@ module chavo {
         public nickName: string = null,
         public birthday: Date = null,
         public gender: GENDER = GENDER.OTHER,
-        public age: string = null,
+        public ageYears: string = null,
+        public ageMonths: string = null,
         public unableBirthday: boolean = true) {
     }
   }

@@ -2,18 +2,20 @@ var chavo;
 (function (chavo) {
     'use strict';
     var Child = (function () {
-        function Child(dispOrder, nickName, birthday, gender, age, unableBirthday) {
+        function Child(dispOrder, nickName, birthday, gender, ageYears, ageMonths, unableBirthday) {
             if (dispOrder === void 0) { dispOrder = 0; }
             if (nickName === void 0) { nickName = null; }
             if (birthday === void 0) { birthday = null; }
             if (gender === void 0) { gender = GENDER.OTHER; }
-            if (age === void 0) { age = null; }
+            if (ageYears === void 0) { ageYears = null; }
+            if (ageMonths === void 0) { ageMonths = null; }
             if (unableBirthday === void 0) { unableBirthday = true; }
             this.dispOrder = dispOrder;
             this.nickName = nickName;
             this.birthday = birthday;
             this.gender = gender;
-            this.age = age;
+            this.ageYears = ageYears;
+            this.ageMonths = ageMonths;
             this.unableBirthday = unableBirthday;
         }
         return Child;
