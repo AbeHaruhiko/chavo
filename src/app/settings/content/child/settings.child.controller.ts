@@ -144,7 +144,7 @@ module chavo {
       }
 
       return moment({ year: this.yearSelected,
-          months: this.monthSelected - 1, /* month index begins from 0. */
+          months: this.monthSelected,
           date: this.dateSelected })
         .toDate();
     }

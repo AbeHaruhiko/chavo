@@ -106,7 +106,7 @@ var chavo;
                 return null;
             }
             return moment({ year: this.yearSelected,
-                months: this.monthSelected - 1,
+                months: this.monthSelected,
                 date: this.dateSelected })
                 .toDate();
         };
