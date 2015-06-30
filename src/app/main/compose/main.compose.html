@@ -7,7 +7,7 @@
             <textarea class="form-control" rows="3" placeholder="こどもの名言・迷言、一発ネタ、何気ない一言、泣かされた言葉、なんでも記録しましょう！"></textarea>
           </div>
           <div class="form-group">
-            だれのことばを記録しますか？
+            だれのセリフを記録しますか？
             <div class="btn-group btn-group-sm" dropdown is-open="main_compose.dropDownStatus.wordsAuthorIsOpen">
               <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
                 {{ main_compose.wordsAuthor.nickName || '指定しない' }} <span class="caret"></span>
@@ -23,20 +23,20 @@
                 </li>
               </ul>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="wordsAuthor">
               <div class="row">
-                <div class="col-sm-3">
+                <div class="col-xs-2">
                   <input type="text" class="form-control input-sm" ng-model="main_compose.wordsAuthor.nickName">
                 </div>
-                <div class="col-md-1">
-                  <input type="text" class="form-control input-sm text-center" ng-model="main_compose.wordsAuthor.ageYears">
+                <div class="col-xs-4">
+                  <div class="input-group">
+                    <input id="words-author-age-years" type="text" class="form-control input-sm text-right" ng-model="main_compose.wordsAuthor.ageYears">
+                    <div class="input-group-addon">歳</div>
+                    <input id="words-author-age-months" type="text" class="form-control input-sm text-right" ng-model="main_compose.wordsAuthor.ageMonths">
+                    <div class="input-group-addon">ヶ月</div>
+                  </div>
                 </div>
-                <p class="form-control-static inline">歳</p>
-                <div class="col-sm-1">
-                  <input type="text" class="form-control input-sm" ng-model="main_compose.wordsAuthor.ageMonths">
-                </div>
-                <p class="form-control-static">ヶ月</p>
-                <div class="col-sm-2">
+                <div class="col-xs-3">
                   <select class="form-control input-sm" ng-model="main_compose.wordsAuthor.gender" ng-options="gender.value as gender.label for gender in main_compose.genderList">
                   </select>
                 </div>

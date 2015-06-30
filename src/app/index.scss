@@ -54,6 +54,10 @@ body {
   margin-left: 28px;
 }
 
+#words-author-age-years, #words-author-age-months {
+  width: 36px;
+}
+
 /* Do not remove this comments bellow. It's the markers used by gulp-inject to inject
    all your sass files automatically */
 // injector
