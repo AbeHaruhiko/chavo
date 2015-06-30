@@ -10,12 +10,12 @@
             だれのセリフを記録しますか？
             <div class="btn-group btn-group-sm" dropdown is-open="main_compose.dropDownStatus.wordsAuthorIsOpen">
               <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
-                {{ main_compose.wordsAuthor.nickName || '指定しない' }} <span class="caret"></span>
+                {{ main_compose.wordsAuthorSelected.nickName || '指定しない' }} <span class="caret"></span>
               </button>
               <ul class="dropdown-menu">
+                <li><a>指定しない</a></li>
                 <li ng-repeat="child in main_compose.children">
-                  <a ng-click="main_compose.wordsAuthor = child">
-                    {{child.nickName}}
+                  <a ng-click="main_compose.onSelectWordsAuthor(child)">{{child.nickName}}
                     <span ng-if="child.age">{{child.age}}</span>
                     <span ng-if="child.gender ===  0">男の子</span>
                     <span ng-if="child.gender ===  1">女の子</span>

@@ -4,7 +4,8 @@ module chavo {
   export class MainComposeController {
 
     public children = new Array<Child>();
-    public wordsAuthor: Child;
+    public wordsAuthorSelected: Child;  // ドロップダウン表示用
+    public wordsAuthor: Child;          // ユーザ手入力用
     public genderList = [ { label: '男の子', value: GENDER.MALE },
         { label: '女の子', value: GENDER.FEMALE },
         { label: '非表示', value: GENDER.OTHER } ];
@@ -13,7 +14,7 @@ module chavo {
     constructor (public $scope: IMainScope) {
 
       //
-      this.children.push(new Child(0, '指定しない', null, null, null));
+      // this.children.push(new Child(0, '指定しない', null, null, null));
 
       var ParseChild = Parse.Object.extend('Child');
       var query = new Parse.Query(ParseChild);
@@ -40,6 +41,11 @@ module chavo {
           });
         });
       });
+    }
+
+    public onSelectWordsAuthor(child: Child): void {
+      this.wordsAuthorSelected = child; // ドロップダウン表示用
+      this.wordsAuthor = angular.copy(child); // ユーザ手入力用
     }
   }
 

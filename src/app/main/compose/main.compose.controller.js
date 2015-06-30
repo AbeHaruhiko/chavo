@@ -3,13 +3,14 @@ var chavo;
     'use strict';
     var MainComposeController = (function () {
         function MainComposeController($scope) {
+            //
+            // this.children.push(new Child(0, '指定しない', null, null, null));
             var _this = this;
             this.$scope = $scope;
             this.children = new Array();
             this.genderList = [{ label: '男の子', value: chavo.GENDER.MALE },
                 { label: '女の子', value: chavo.GENDER.FEMALE },
                 { label: '非表示', value: chavo.GENDER.OTHER }];
-            this.children.push(new chavo.Child(0, '指定しない', null, null, null));
             var ParseChild = Parse.Object.extend('Child');
             var query = new Parse.Query(ParseChild);
             query.ascending('dispOrder');
@@ -27,6 +28,10 @@ var chavo;
                 });
             });
         }
+        MainComposeController.prototype.onSelectWordsAuthor = function (child) {
+            this.wordsAuthorSelected = child;
+            this.wordsAuthor = angular.copy(child);
+        };
         return MainComposeController;
     })();
     chavo.MainComposeController = MainComposeController;
