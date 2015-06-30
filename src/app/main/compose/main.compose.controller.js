@@ -3,8 +3,6 @@ var chavo;
     'use strict';
     var MainComposeController = (function () {
         function MainComposeController($scope) {
-            //
-            // this.children.push(new Child(0, '指定しない', null, null, null));
             var _this = this;
             this.$scope = $scope;
             this.children = new Array();
@@ -31,6 +29,9 @@ var chavo;
         MainComposeController.prototype.onSelectWordsAuthor = function (child) {
             this.wordsAuthorSelected = child;
             this.wordsAuthor = angular.copy(child);
+        };
+        MainComposeController.prototype.submit = function () {
+            var Voice = Parse.Object.extend('Voice');
         };
         return MainComposeController;
     })();

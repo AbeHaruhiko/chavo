@@ -1,32 +1,6 @@
 var chavo;
 (function (chavo) {
     'use strict';
-    var Child = (function () {
-        function Child(dispOrder, nickName, birthday, gender, ageYears, ageMonths, unableBirthday) {
-            if (dispOrder === void 0) { dispOrder = 0; }
-            if (nickName === void 0) { nickName = null; }
-            if (birthday === void 0) { birthday = null; }
-            if (gender === void 0) { gender = GENDER.OTHER; }
-            if (ageYears === void 0) { ageYears = null; }
-            if (ageMonths === void 0) { ageMonths = null; }
-            if (unableBirthday === void 0) { unableBirthday = true; }
-            this.dispOrder = dispOrder;
-            this.nickName = nickName;
-            this.birthday = birthday;
-            this.gender = gender;
-            this.ageYears = ageYears;
-            this.ageMonths = ageMonths;
-            this.unableBirthday = unableBirthday;
-        }
-        return Child;
-    })();
-    chavo.Child = Child;
-    (function (GENDER) {
-        GENDER[GENDER["MALE"] = 0] = "MALE";
-        GENDER[GENDER["FEMALE"] = 1] = "FEMALE";
-        GENDER[GENDER["OTHER"] = 2] = "OTHER";
-    })(chavo.GENDER || (chavo.GENDER = {}));
-    var GENDER = chavo.GENDER;
     var SettingsChildController = (function () {
         function SettingsChildController($scope, $rootScope, $state, $stateParams) {
             this.$scope = $scope;

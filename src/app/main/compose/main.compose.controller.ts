@@ -13,9 +13,6 @@ module chavo {
     /* @ngInject */
     constructor (public $scope: IMainScope) {
 
-      //
-      // this.children.push(new Child(0, '指定しない', null, null, null));
-
       var ParseChild = Parse.Object.extend('Child');
       var query = new Parse.Query(ParseChild);
   		query.ascending('dispOrder');
@@ -43,9 +40,18 @@ module chavo {
       });
     }
 
+    /**
+    * 発言者ドロップダウンでの発言者選択時
+    */
     public onSelectWordsAuthor(child: Child): void {
       this.wordsAuthorSelected = child; // ドロップダウン表示用
-      this.wordsAuthor = angular.copy(child); // ユーザ手入力用
+      this.wordsAuthor = angular.copy(child); // ユーザ手入力用にディープコピー
+    }
+
+    public submit() {
+
+      var Voice = Parse.Object.extend('Voice');
+
     }
   }
 
