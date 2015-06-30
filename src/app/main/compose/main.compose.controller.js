@@ -26,12 +26,15 @@ var chavo;
                 });
             });
         }
-        MainComposeController.prototype.onSelectWordsAuthor = function (child) {
-            this.wordsAuthorSelected = child;
-            this.wordsAuthor = angular.copy(child);
+        MainComposeController.prototype.onSelectVoiceAuthor = function (child) {
+            this.voiceAuthorSelected = child;
+            this.voiceAuthor = angular.copy(child);
         };
         MainComposeController.prototype.submit = function () {
-            var Voice = Parse.Object.extend('Voice');
+            var ParseVoice = Parse.Object.extend('Voice');
+            var voice = new ParseVoice();
+            voice.set('description', this.voice.description);
+            voice.save();
         };
         return MainComposeController;
     })();

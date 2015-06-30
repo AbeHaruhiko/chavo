@@ -4,11 +4,13 @@ module chavo {
   export class MainComposeController {
 
     public children = new Array<Child>();
-    public wordsAuthorSelected: Child;  // ドロップダウン表示用
-    public wordsAuthor: Child;          // ユーザ手入力用
+    public voiceAuthorSelected: Child;  // ドロップダウン表示用
+    public voiceAuthor: Child;          // ユーザ手入力用
     public genderList = [ { label: '男の子', value: GENDER.MALE },
         { label: '女の子', value: GENDER.FEMALE },
         { label: '非表示', value: GENDER.OTHER } ];
+
+    public voice: Voice;
 
     /* @ngInject */
     constructor (public $scope: IMainScope) {
@@ -43,15 +45,17 @@ module chavo {
     /**
     * 発言者ドロップダウンでの発言者選択時
     */
-    public onSelectWordsAuthor(child: Child): void {
-      this.wordsAuthorSelected = child; // ドロップダウン表示用
-      this.wordsAuthor = angular.copy(child); // ユーザ手入力用にディープコピー
+    public onSelectVoiceAuthor(child: Child): void {
+      this.voiceAuthorSelected = child; // ドロップダウン表示用
+      this.voiceAuthor = angular.copy(child); // ユーザ手入力用にディープコピー
     }
 
     public submit() {
 
-      var Voice = Parse.Object.extend('Voice');
-
+      var ParseVoice = Parse.Object.extend('Voice');
+      var voice = new ParseVoice();
+      voice.set('description', this.voice.description);
+      voice.save();
     }
   }
 
