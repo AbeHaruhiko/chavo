@@ -4,20 +4,15 @@
       <div class="panel-body">
         <form name="formCompose">
           <div class="form-group" ng-class="{ 'has-error': formCompose.description.$dirty && !main_compose.voice.description }">
-            <textarea
-                name="description"
-                ng-model="main_compose.voice.description"
-                class="form-control"
-                rows="3"
-                placeholder="こどもの名言・迷言、一発ネタ、何気ない一言、泣かされたセリフ、なんでも記録しよう！"
-                required>
+            <textarea name="description" ng-model="main_compose.voice.description" class="form-control" rows="3" placeholder="こどもの名言・迷言、一発ネタ、何気ない一言、泣かされたセリフ、なんでも記録しよう！" required>
             </textarea>
           </div>
           <div class="form-group">
             だれのセリフを記録しますか？
             <div class="btn-group btn-group-sm" dropdown is-open="main_compose.dropDownStatus.voiceAuthorIsOpen">
               <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
-                {{ main_compose.voiceAuthorSelected.nickName || '指定しない' }} <span class="caret"></span>
+                {{ main_compose.voiceAuthorSelected.nickName || '指定しない' }}
+                <span class="caret"></span>
               </button>
               <ul class="dropdown-menu">
                 <li><a>指定しない</a></li>
@@ -30,37 +25,30 @@
                 </li>
               </ul>
             </div>
-            <div class="form-group">
-              <div class="row">
-                <div class="col-xs-2">
-                  <input type="text" class="form-control input-sm" ng-model="main_compose.voiceAuthor.nickName">
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-xs-2">
+                <input type="text" class="form-control input-sm" ng-model="main_compose.voiceAuthor.nickName">
+              </div>
+              <div class="col-xs-4">
+                <div class="input-group">
+                  <input id="voice-author-age-years" type="text" class="form-control input-sm text-right" ng-model="main_compose.voiceAuthor.ageYears">
+                  <div class="input-group-addon">歳</div>
+                  <input id="voice-author-age-months" type="text" class="form-control input-sm text-right" ng-model="main_compose.voiceAuthor.ageMonths">
+                  <div class="input-group-addon">ヶ月</div>
                 </div>
-                <div class="col-xs-4">
-                  <div class="input-group">
-                    <input id="voice-author-age-years" type="text" class="form-control input-sm text-right" ng-model="main_compose.voiceAuthor.ageYears">
-                    <div class="input-group-addon">歳</div>
-                    <input id="voice-author-age-months" type="text" class="form-control input-sm text-right" ng-model="main_compose.voiceAuthor.ageMonths">
-                    <div class="input-group-addon">ヶ月</div>
-                  </div>
-                </div>
-                <div class="col-xs-3">
-                  <select class="form-control input-sm" ng-model="main_compose.voiceAuthor.gender" ng-options="gender.value as gender.label for gender in main_compose.genderList">
-                  </select>
-                </div>
+              </div>
+              <div class="col-xs-3">
+                <select class="form-control input-sm" ng-model="main_compose.voiceAuthor.gender" ng-options="gender.value as gender.label for gender in main_compose.genderList">
+                </select>
               </div>
             </div>
           </div>
           <div class="form-group">
-            <toggle-switch
-              ng-model="switchStatus"
-              on-label="公開"
-              off-label="非公開">
+            <toggle-switch ng-model="switchStatus" on-label="公開" off-label="非公開">
             </toggle-switch>
-            <button
-                type="button"
-                class="btn btn-primary pull-right"
-                ng-click="main_compose.submit()"
-                ng-disabled="!main_compose.voice.description">送信</button>
+            <button type="button" class="btn btn-primary pull-right" ng-click="main_compose.submit()" ng-disabled="!main_compose.voice.description">送信</button>
           </div>
         </form>
       </div>
