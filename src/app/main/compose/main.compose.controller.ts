@@ -4,7 +4,6 @@ module chavo {
   export class MainComposeController {
 
     public children = new Array<Child>();
-    public voiceAuthorSelected: Child;  // ドロップダウン表示用
     public voiceAuthor: Child;          // ユーザ手入力用
     public genderList = [{ label: '男の子', value: GENDER.MALE },
       { label: '女の子', value: GENDER.FEMALE },
@@ -46,14 +45,17 @@ module chavo {
     * 発言者ドロップダウンでの発言者選択時
     */
     public onSelectVoiceAuthor(child: Child): void {
-      this.voiceAuthorSelected = child; // ドロップダウン表示用
       this.voiceAuthor = angular.copy(child); // ユーザ手入力用にディープコピー
+    }
+
+    public clearVoiceAuthor(): void {
+      this.voiceAuthor = null;
     }
 
     public submit() {
 
       if (!this.voice.description) {
-        
+
       }
       var ParseVoice = Parse.Object.extend('Voice');
       var voice = new ParseVoice();

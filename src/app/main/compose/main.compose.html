@@ -11,11 +11,11 @@
             だれのセリフを記録しますか？
             <div class="btn-group btn-group-sm" dropdown is-open="main_compose.dropDownStatus.voiceAuthorIsOpen">
               <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
-                {{ main_compose.voiceAuthorSelected.nickName || '指定しない' }}
+                {{ 'こどもを選択' }}
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu">
-                <li><a>指定しない</a></li>
+                <li><a ng-click="main_compose.clearVoiceAuthor()">クリアする</a></li>
                 <li ng-repeat="child in main_compose.children">
                   <a ng-click="main_compose.onSelectVoiceAuthor(child)">{{child.nickName}}
                     <span ng-if="child.age">{{child.age}}</span>

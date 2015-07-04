@@ -27,8 +27,10 @@ var chavo;
             });
         }
         MainComposeController.prototype.onSelectVoiceAuthor = function (child) {
-            this.voiceAuthorSelected = child;
             this.voiceAuthor = angular.copy(child);
+        };
+        MainComposeController.prototype.clearVoiceAuthor = function () {
+            this.voiceAuthor = null;
         };
         MainComposeController.prototype.submit = function () {
             if (!this.voice.description) {
