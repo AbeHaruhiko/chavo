@@ -8,10 +8,7 @@ var chavo;
             this.$state = $state;
             this.$stateParams = $stateParams;
             console.log(this.$rootScope.targetChild);
-            var momentObj = (this.$rootScope.targetChild && this.$rootScope.targetChild.birthday ? moment(this.$rootScope.targetChild.birthday) : moment());
-            this.yearSelected = momentObj.year();
-            this.monthSelected = momentObj.month();
-            this.dateSelected = momentObj.date();
+            this.initBirthday();
             this.birthYears = new Array();
             for (var i = 1900; i <= moment().year(); i++) {
                 this.birthYears.push(i);
@@ -21,11 +18,6 @@ var chavo;
             for (i = 1; i <= 31; i++) {
                 this.birthDates.push(i);
             }
-            this.dropDownStatus = {
-                yearIsOpen: false,
-                monthIsOpen: false,
-                dateIsOpen: false
-            };
         }
         SettingsChildController.prototype.saveChildData = function () {
             var _this = this;
@@ -77,6 +69,16 @@ var chavo;
                 });
             }
         };
+        SettingsChildController.prototype.initBirthday = function () {
+            if (this.$rootScope.targetChild.unableBirthday) {
+                this.yearSelected = null;
+                this.monthSelected = null;
+                this.dateSelected = null;
+            }
+            else {
+                this.setBirthday();
+            }
+        };
         SettingsChildController.prototype.getInputBirthday = function () {
             if (this.$rootScope.targetChild.unableBirthday) {
                 return null;
@@ -85,6 +87,13 @@ var chavo;
                 months: this.monthSelected,
                 date: this.dateSelected })
                 .toDate();
+        };
+        SettingsChildController.prototype.setBirthday = function () {
+            var momentObj = (this.$rootScope.targetChild && this.$rootScope.targetChild.birthday
+                ? moment(this.$rootScope.targetChild.birthday) : moment());
+            this.yearSelected = momentObj.year();
+            this.monthSelected = momentObj.month();
+            this.dateSelected = momentObj.date();
         };
         return SettingsChildController;
     })();

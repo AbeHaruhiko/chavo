@@ -5,7 +5,7 @@
     </li>
     <li class="list-group-item" ng-repeat="child in settings_children.children">
       <a ng-click="settings_children.go(child)">
-        <span ng-if="child.nickName">{{child.nickName}}</span>
+        <span>{{child.nickName || '（未登録）'}}</span>
         <div class="pull-right">
           <!-- <span ng-if="child.birthday">{{child.birthday + '生まれ'}}</span> -->
           <span ng-if="child.ageYears">{{ child.ageYears + '歳' }}</span>

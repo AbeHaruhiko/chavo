@@ -24,10 +24,12 @@ module chavo {
   		}).then((results: Parse.Object[]) => {
         results.forEach((parseChild: Parse.Object) => {
 
-          // 年齢
-          var years: string = '' + moment().diff(moment(parseChild.get('birthday')), 'years');
-          // ヶ月（誕生日からの月数 - 年齢分の月数）
-          var months: string = '' + (moment().diff(moment(parseChild.get('birthday')), 'months') - (12 * +years));
+          if (parseChild.get('birthday')) {
+            // 年齢
+            var years: string = '' + moment().diff(moment(parseChild.get('birthday')), 'years');
+            // ヶ月（誕生日からの月数 - 年齢分の月数）
+            var months: string = '' + (moment().diff(moment(parseChild.get('birthday')), 'months') - (12 * +years));
+          }
 
           this.$scope.$apply(() => {
             this.children.push(new Child(parseChild.get('dispOrder'),
@@ -35,7 +37,8 @@ module chavo {
                 parseChild.get('birthday'),
                 parseChild.get('gender'),
                 years ? years : null,
-                months ? months : null));
+                months ? months : null,
+                !parseChild.get('birthday')));    // 誕生日が保存されていたらunableBirthdayはfalse, 未登録ならtrueとする。
           });
         });
       });

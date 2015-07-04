@@ -13,13 +13,6 @@ module chavo {
     public monthSelected: number;
     public dateSelected: number;
 
-    // dropDownの開閉状態
-    public dropDownStatus: {
-      yearIsOpen: boolean;
-      monthIsOpen: boolean;
-      dateIsOpen: boolean;
-    };
-
     // 選択肢
     public birthYears: number[];
     public birthMonths: number[];
@@ -33,11 +26,7 @@ module chavo {
 
       console.log(this.$rootScope.targetChild);
 
-      // 登録済みの場合はその誕生日を表示。未登録なら今日を初期値。
-      var momentObj = (this.$rootScope.targetChild && this.$rootScope.targetChild.birthday ? moment(this.$rootScope.targetChild.birthday) : moment());
-      this.yearSelected = momentObj.year();
-      this.monthSelected = momentObj.month();
-      this.dateSelected = momentObj.date();
+      this.initBirthday();
 
       this.birthYears = new Array<number>();
       for (var i = 1900; i <= moment().year(); i++) {
@@ -50,12 +39,6 @@ module chavo {
       for (i = 1; i <= 31; i++) {
         this.birthDates.push(i);
       }
-
-      this.dropDownStatus = {
-        yearIsOpen: false,
-        monthIsOpen: false,
-        dateIsOpen: false
-      };
     }
 
     public saveChildData() {
@@ -122,6 +105,16 @@ module chavo {
       }
     }
 
+    public initBirthday() {
+      if (this.$rootScope.targetChild.unableBirthday) {
+        this.yearSelected = null;
+        this.monthSelected = null;
+        this.dateSelected = null;
+      } else {
+        this.setBirthday();
+      }
+    }
+
     private getInputBirthday(): Date {
       if (this.$rootScope.targetChild.unableBirthday) {
         return null;
@@ -131,6 +124,15 @@ module chavo {
           months: this.monthSelected,
           date: this.dateSelected })
         .toDate();
+    }
+
+    private setBirthday(): void {
+      // 登録済みの場合はその誕生日を表示。未登録なら今日を初期値。
+      var momentObj = (this.$rootScope.targetChild && this.$rootScope.targetChild.birthday
+          ? moment(this.$rootScope.targetChild.birthday) : moment());
+      this.yearSelected = momentObj.year();
+      this.monthSelected = momentObj.month();
+      this.dateSelected = momentObj.date();
     }
   }
 }

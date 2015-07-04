@@ -14,23 +14,27 @@
               ng-model="settings_child.yearSelected"
               ng-options="year for year in settings_child.birthYears"
               ng-disabled="settings_child.$rootScope.targetChild.unableBirthday">
+              <option value="">--</option>
           </select>
           年
           <select class="form-control"
               ng-model="settings_child.monthSelected"
               ng-options="month for month in settings_child.birthMonths"
               ng-disabled="settings_child.$rootScope.targetChild.unableBirthday">
+            <option value="">--</option>
           </select>
           月
           <select class="form-control"
               ng-model="settings_child.dateSelected"
               ng-options="date for date in settings_child.birthDates"
               ng-disabled="settings_child.$rootScope.targetChild.unableBirthday">
+            <option value="">--</option>
           </select>
           日
           <span id="unableBirthday">
             <input type="checkbox"
-                ng-model="settings_child.$rootScope.targetChild.unableBirthday"/> 登録しない
+                ng-model="settings_child.$rootScope.targetChild.unableBirthday"
+                ng-change="settings_child.initBirthday()"/> 登録しない
           </span>
         </div>
       </div>
