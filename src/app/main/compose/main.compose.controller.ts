@@ -6,23 +6,23 @@ module chavo {
     public children = new Array<Child>();
     public voiceAuthorSelected: Child;  // ドロップダウン表示用
     public voiceAuthor: Child;          // ユーザ手入力用
-    public genderList = [ { label: '男の子', value: GENDER.MALE },
-        { label: '女の子', value: GENDER.FEMALE },
-        { label: '非表示', value: GENDER.OTHER } ];
+    public genderList = [{ label: '男の子', value: GENDER.MALE },
+      { label: '女の子', value: GENDER.FEMALE },
+      { label: '非表示', value: GENDER.OTHER }];
 
     public voice: Voice;
 
     /* @ngInject */
-    constructor (public $scope: IMainScope) {
+    constructor(public $scope: IMainScope) {
 
       var ParseChild = Parse.Object.extend('Child');
       var query = new Parse.Query(ParseChild);
-  		query.ascending('dispOrder');
-  		query.find({
-  		  error: function(error: Parse.Error) {
-  		    console.log('Error: ' + error.code + ' ' + error.message);
-  		  }
-  		}).then((results: Parse.Object[]) => {
+      query.ascending('dispOrder');
+      query.find({
+        error: function(error: Parse.Error) {
+          console.log('Error: ' + error.code + ' ' + error.message);
+        }
+      }).then((results: Parse.Object[]) => {
         results.forEach((parseChild: Parse.Object) => {
 
           // 年齢
@@ -32,11 +32,11 @@ module chavo {
 
           this.$scope.$apply(() => {
             this.children.push(new Child(parseChild.get('dispOrder'),
-                parseChild.get('nickName'),
-                parseChild.get('birthday'),
-                parseChild.get('gender'),
-                years ? years : null,
-                months ? months : null));
+              parseChild.get('nickName'),
+              parseChild.get('birthday'),
+              parseChild.get('gender'),
+              years ? years : null,
+              months ? months : null));
           });
         });
       });
@@ -52,10 +52,23 @@ module chavo {
 
     public submit() {
 
+      if (!this.voice.description) {
+        
+      }
       var ParseVoice = Parse.Object.extend('Voice');
       var voice = new ParseVoice();
       voice.set('description', this.voice.description);
-      voice.save();
+      voice.set('gender', this.voiceAuthor.gender);
+      voice.set('nickName', this.voiceAuthor.nickName);
+      voice.set('ageYears', this.voiceAuthor.ageYears);
+      voice.set('ageMonths', this.voiceAuthor.ageMonths);
+      voice.save({
+        error: function(voice: Voice, error: Parse.Error) {
+          console.log('Error: ' + error.code + ' ' + error.message);
+        }
+      }).then(() => {
+        console.log('ほぞんしました');
+      });
     }
   }
 

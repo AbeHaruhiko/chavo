@@ -31,10 +31,22 @@ var chavo;
             this.voiceAuthor = angular.copy(child);
         };
         MainComposeController.prototype.submit = function () {
+            if (!this.voice.description) {
+            }
             var ParseVoice = Parse.Object.extend('Voice');
             var voice = new ParseVoice();
             voice.set('description', this.voice.description);
-            voice.save();
+            voice.set('gender', this.voiceAuthor.gender);
+            voice.set('nickName', this.voiceAuthor.nickName);
+            voice.set('ageYears', this.voiceAuthor.ageYears);
+            voice.set('ageMonths', this.voiceAuthor.ageMonths);
+            voice.save({
+                error: function (voice, error) {
+                    console.log('Error: ' + error.code + ' ' + error.message);
+                }
+            }).then(function () {
+                console.log('ほぞんしました');
+            });
         };
         return MainComposeController;
     })();
