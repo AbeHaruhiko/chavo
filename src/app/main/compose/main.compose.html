@@ -17,7 +17,7 @@
               <ul class="dropdown-menu">
                 <li><a ng-click="main_compose.clearVoiceAuthor()">クリアする</a></li>
                 <li ng-repeat="child in main_compose.children">
-                  <a ng-click="main_compose.onSelectVoiceAuthor(child)">{{child.nickName}}
+                  <a ng-click="main_compose.onSelectVoiceAuthor(child)">{{ child.nickName || '（未登録）'}}
                     <span ng-if="child.age">{{child.age}}</span>
                     <span ng-if="child.gender ===  0">男の子</span>
                     <span ng-if="child.gender ===  1">女の子</span>
