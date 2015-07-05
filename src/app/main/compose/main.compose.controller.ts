@@ -66,6 +66,7 @@ module chavo {
       voice.set('nickName', this.voiceAuthor.nickName);
       voice.set('ageYears', this.voiceAuthor.ageYears);
       voice.set('ageMonths', this.voiceAuthor.ageMonths);
+      voice.set('user', Parse.User.current());
       var voiceACL = new Parse.ACL(Parse.User.current());
       if (this.voiceIsPublic) {
         voiceACL.setPublicReadAccess(true);

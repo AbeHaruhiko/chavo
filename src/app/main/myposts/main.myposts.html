@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3">
+    <div class="media-list">
+      <div class="media panel panel-default" ng-repeat="voice in main_myposts.voices">
+        <div class="media-left">
+          <a href="#">
+            <!-- <img class="media-object img-circle " ng-src="assets/images/{{voice.icon}}" alt="{{voice.get('author')}}"> -->
+          </a>
+        </div>
+        <div class="media-body">
+          <p class="text-right"><small>{{voice.get('createdAt')}}</small></p>
+          <p class="pre-line">{{voice.get('description')}}</p>
+          <!-- <p class="text-right"><small>{{voice.get('age')}}歳</small></p> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

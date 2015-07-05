@@ -1,6 +1,7 @@
 /// <reference path="../../.tmp/typings/tsd.d.ts" />
 /// <reference path="main/main.controller.ts" />
 /// <reference path="main/all/main.all.controller.ts" />
+/// <reference path="main/myposts/main.myposts.controller.ts" />
 /// <reference path="main/compose/main.compose.controller.ts" />
 /// <reference path="login/login.controller.ts"/>
 /// <reference path="settings/menu/settings.menu.controller.ts"/>
@@ -28,6 +29,7 @@ var chavo;
         .service('AuthService', chavo.AuthService)
         .controller('MainController', chavo.MainController)
         .controller('MainAllController', chavo.MainAllController)
+        .controller('MainMyPostsController', chavo.MainMyPostsController)
         .controller('MainComposeController', chavo.MainComposeController)
         .controller('LoginController', chavo.LoginController)
         .controller('NavbarController', chavo.NavbarController)
@@ -47,7 +49,9 @@ var chavo;
         })
             .state('home.myposts', {
             url: '/myposts',
-            templateUrl: 'app/main/main.myposts.html'
+            templateUrl: 'app/main/myposts/main.myposts.html',
+            controller: 'MainMyPostsController',
+            controllerAs: 'main_myposts'
         })
             .state('home.all', {
             url: '/all',
