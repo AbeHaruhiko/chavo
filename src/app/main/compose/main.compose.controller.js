@@ -9,6 +9,7 @@ var chavo;
             this.genderList = [{ label: '男の子', value: chavo.GENDER.MALE },
                 { label: '女の子', value: chavo.GENDER.FEMALE },
                 { label: '非表示', value: chavo.GENDER.OTHER }];
+            this.voiceIsPublic = false;
             var ParseChild = Parse.Object.extend('Child');
             var query = new Parse.Query(ParseChild);
             query.ascending('dispOrder');
@@ -35,8 +36,6 @@ var chavo;
             this.voiceAuthor = null;
         };
         MainComposeController.prototype.submit = function () {
-            if (!this.voice.description) {
-            }
             var ParseVoice = Parse.Object.extend('Voice');
             var voice = new ParseVoice();
             voice.set('description', this.voice.description);
@@ -44,6 +43,11 @@ var chavo;
             voice.set('nickName', this.voiceAuthor.nickName);
             voice.set('ageYears', this.voiceAuthor.ageYears);
             voice.set('ageMonths', this.voiceAuthor.ageMonths);
+            var voiceACL = new Parse.ACL(Parse.User.current());
+            if (this.voiceIsPublic) {
+                voiceACL.setPublicReadAccess(true);
+            }
+            voice.setACL(voiceACL);
             voice.save({
                 error: function (voice, error) {
                     console.log('Error: ' + error.code + ' ' + error.message);

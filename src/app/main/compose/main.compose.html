@@ -46,7 +46,7 @@
             </div>
           </div>
           <div class="form-group">
-            <toggle-switch ng-model="switchStatus" on-label="公開" off-label="非公開">
+            <toggle-switch ng-model="main_compose.voiceIsPublic" on-label="公開" off-label="非公開">
             </toggle-switch>
             <button type="button" class="btn btn-primary pull-right" ng-click="main_compose.submit()" ng-disabled="!main_compose.voice.description">送信</button>
           </div>

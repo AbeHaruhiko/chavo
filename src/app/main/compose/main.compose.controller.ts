@@ -11,6 +11,8 @@ module chavo {
 
     public voice: Voice;
 
+    public voiceIsPublic: boolean = false;
+
     /* @ngInject */
     constructor(public $scope: IMainScope) {
 
@@ -45,8 +47,8 @@ module chavo {
     }
 
     /**
-    * 発言者ドロップダウンでの発言者選択時
-    */
+     * 発言者ドロップダウンでの発言者選択時
+     */
     public onSelectVoiceAuthor(child: Child): void {
       this.voiceAuthor = angular.copy(child); // ユーザ手入力用にディープコピー
     }
@@ -57,9 +59,6 @@ module chavo {
 
     public submit() {
 
-      if (!this.voice.description) {
-
-      }
       var ParseVoice = Parse.Object.extend('Voice');
       var voice = new ParseVoice();
       voice.set('description', this.voice.description);
@@ -67,6 +66,11 @@ module chavo {
       voice.set('nickName', this.voiceAuthor.nickName);
       voice.set('ageYears', this.voiceAuthor.ageYears);
       voice.set('ageMonths', this.voiceAuthor.ageMonths);
+      var voiceACL = new Parse.ACL(Parse.User.current());
+      if (this.voiceIsPublic) {
+        voiceACL.setPublicReadAccess(true);
+      }
+      voice.setACL(voiceACL);  // 本人のRead, Write
       voice.save({
         error: function(voice: Voice, error: Parse.Error) {
           console.log('Error: ' + error.code + ' ' + error.message);
