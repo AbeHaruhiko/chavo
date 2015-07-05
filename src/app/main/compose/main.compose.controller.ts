@@ -63,7 +63,7 @@ module chavo {
       var voice = new ParseVoice();
       voice.set('description', this.voice.description);
       voice.set('gender', this.voiceAuthor.gender);
-      voice.set('nickName', this.voiceAuthor.nickName);
+      voice.set('author', this.voiceAuthor.nickName);
       voice.set('ageYears', this.voiceAuthor.ageYears);
       voice.set('ageMonths', this.voiceAuthor.ageMonths);
       voice.set('user', Parse.User.current());
