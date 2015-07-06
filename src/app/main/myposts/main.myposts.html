@@ -8,9 +8,9 @@
           </a>
         </div>
         <div class="media-body">
-          <p class="text-right"><small>{{voice.get('createdAt')}}</small></p>
-          <p class="pre-line">{{voice.get('description')}}</p>
-          <!-- <p class="text-right"><small>{{voice.get('age')}}歳</small></p> -->
+          <p class="text-right"><small>{{ voice.createdAt }}</small></p>
+          <p class="pre-line">{{ voice.description }}</p>
+          <p class="text-right"><small>{{ voice.author }} {{ voice.age }} {{ voice.gender }}</small></p>
         </div>
       </div>
     </div>
