@@ -20,9 +20,9 @@ var chavo;
                 }
             });
         };
-        LoginController.prototype.signUpWithFacebook = function () {
+        LoginController.prototype.loginWithFacebook = function () {
             var _this = this;
-            this.AuthService.signUpWithFacebook({
+            this.AuthService.loginWithFacebook({
                 success: function (user) {
                     _this.$rootScope.currentUser = Parse.User.current();
                     FB.api('/me', 'GET', function (response) {

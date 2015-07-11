@@ -27,8 +27,8 @@ module chavo {
       });
     }
 
-    public signUpWithFacebook() {
-      this.AuthService.signUpWithFacebook({
+    public loginWithFacebook() {
+      this.AuthService.loginWithFacebook({
         success: (user: Parse.User) => {
 
           this.$rootScope.currentUser = Parse.User.current();

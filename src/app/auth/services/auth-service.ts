@@ -1,7 +1,7 @@
 module chavo {
   'use strict';
 
-  interface IMainScope extends ng.IScope {
+  interface IMainScope extends angular.IScope {
   }
 
   export class AuthService {
@@ -20,7 +20,7 @@ module chavo {
       user.signUp(null, callbacks);
     }
 
-    signUpWithFacebook(callbacks: any) {
+    loginWithFacebook(callbacks: any) {
       Parse.FacebookUtils.logIn(null, callbacks);
     }
 
