@@ -17,7 +17,7 @@
 module chavo {
   'use strict';
 
-  export interface IChavoRootScope extends ng.IRootScopeService {
+  export interface IChavoRootScope extends angular.IRootScopeService {
     currentUser: Parse.User;
     targetChild: Child;
   }

@@ -13,6 +13,7 @@ var chavo;
             var _this = this;
             this.AuthService.signUp(form, {
                 success: function (user) {
+                    _this.$rootScope.currentUser = Parse.User.current();
                     _this.$state.go('home');
                 },
                 error: function (user, error) {
@@ -24,7 +25,12 @@ var chavo;
             var _this = this;
             Parse.FacebookUtils.logIn('public_profile, email', {
                 success: function (user) {
-                    _this.$state.go('home');
+                    _this.$rootScope.currentUser = Parse.User.current();
+                    FB.api('/me', 'GET', function (response) {
+                        console.log('Successful login for: ' + response.name);
+                        user.setUsername(response.name);
+                        _this.$state.go('home');
+                    });
                 },
                 error: function (user, error) {
                     alert('User cancelled the Facebook login or did not fully authorize.');
@@ -35,6 +41,7 @@ var chavo;
             var _this = this;
             this.AuthService.logIn(formData, {
                 success: function (user) {
+                    _this.$rootScope.currentUser = Parse.User.current();
                     _this.$state.go('home');
                 },
                 error: function (user, error) {

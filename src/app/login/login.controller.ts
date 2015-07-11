@@ -1,7 +1,7 @@
 module chavo {
   'use strict';
 
-  interface IMainScope extends ng.IScope {
+  interface IMainScope extends angular.IScope {
   }
 
   export class LoginController {
@@ -9,14 +9,15 @@ module chavo {
     /* @ngInject */
     constructor (public $scope: IMainScope,
       public $rootScope: IChavoRootScope,
-      public $state: ng.ui.IStateService,
-      public $location: ng.ILocationService,
+      public $state: angular.ui.IStateService,
+      public $location: angular.ILocationService,
       public AuthService: AuthService) {
     }
 
     signUp(form: { username: string; password: string; }) {
       this.AuthService.signUp(form, {
         success: (user: Parse.User) => {
+          this.$rootScope.currentUser = Parse.User.current();
           this.$state.go('home');
         },
         error: (user: Parse.User, error: Parse.Error) => {
@@ -28,12 +29,14 @@ module chavo {
     public signUpWithFacebook() {
       Parse.FacebookUtils.logIn('public_profile, email', {
         success: (user: Parse.User) => {
-          /*if (!user.existed()) {
-            alert('User signed up and logged in through Facebook!');
-          } else {
-            alert('User logged in through Facebook!');
-          }*/
-          this.$state.go('home');
+
+          this.$rootScope.currentUser = Parse.User.current();
+          FB.api('/me', 'GET', (response: any) => {
+                console.log('Successful login for: ' + response.name);
+                user.setUsername(response.name);
+                this.$state.go('home');
+          });
+
 
         },
         error: (user: Parse.User, error: Parse.Error) => {
@@ -45,7 +48,7 @@ module chavo {
     logIn(formData: { username: string; password: string; }) {
       this.AuthService.logIn(formData, {
         success: (user: Parse.User) => {
-          // this.$rootScope.currentUser = user;
+          this.$rootScope.currentUser = Parse.User.current();
           this.$state.go('home');
         },
         error: (user: Parse.User, error: Parse.Error) => {
