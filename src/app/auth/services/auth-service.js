@@ -13,6 +13,9 @@ var chavo;
             user.set('password', form.password);
             user.signUp(null, callbacks);
         };
+        AuthService.prototype.signUpWithFacebook = function (callbacks) {
+            Parse.FacebookUtils.logIn(null, callbacks);
+        };
         AuthService.prototype.logIn = function (authData, callbacks) {
             var _this = this;
             Parse.User.logIn(authData.username, authData.password, callbacks)

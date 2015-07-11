@@ -17,7 +17,8 @@ module chavo {
     signUp(form: { username: string; password: string; }) {
       this.AuthService.signUp(form, {
         success: (user: Parse.User) => {
-          this.$rootScope.currentUser = Parse.User.current();
+          // authService でセットしているのでここではコメントアウト
+          /*this.$rootScope.currentUser = Parse.User.current();*/
           this.$state.go('home');
         },
         error: (user: Parse.User, error: Parse.Error) => {
@@ -27,7 +28,7 @@ module chavo {
     }
 
     public signUpWithFacebook() {
-      Parse.FacebookUtils.logIn(null, {
+      this.AuthService.signUpWithFacebook({
         success: (user: Parse.User) => {
 
           this.$rootScope.currentUser = Parse.User.current();
@@ -48,7 +49,8 @@ module chavo {
     logIn(formData: { username: string; password: string; }) {
       this.AuthService.logIn(formData, {
         success: (user: Parse.User) => {
-          this.$rootScope.currentUser = Parse.User.current();
+          // authService でセットしているのでここではコメントアウト
+          /*this.$rootScope.currentUser = Parse.User.current();*/
           this.$state.go('home');
         },
         error: (user: Parse.User, error: Parse.Error) => {

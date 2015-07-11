@@ -20,6 +20,10 @@ module chavo {
       user.signUp(null, callbacks);
     }
 
+    signUpWithFacebook(callbacks: any) {
+      Parse.FacebookUtils.logIn(null, callbacks);
+    }
+
     logIn(authData: { username: string; password: string; }, callbacks: any) {
       Parse.User.logIn(authData.username, authData.password, callbacks)
         .then((user: Parse.User) => {

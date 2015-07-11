@@ -13,7 +13,6 @@ var chavo;
             var _this = this;
             this.AuthService.signUp(form, {
                 success: function (user) {
-                    _this.$rootScope.currentUser = Parse.User.current();
                     _this.$state.go('home');
                 },
                 error: function (user, error) {
@@ -23,7 +22,7 @@ var chavo;
         };
         LoginController.prototype.signUpWithFacebook = function () {
             var _this = this;
-            Parse.FacebookUtils.logIn(null, {
+            this.AuthService.signUpWithFacebook({
                 success: function (user) {
                     _this.$rootScope.currentUser = Parse.User.current();
                     FB.api('/me', 'GET', function (response) {
@@ -41,7 +40,6 @@ var chavo;
             var _this = this;
             this.AuthService.logIn(formData, {
                 success: function (user) {
-                    _this.$rootScope.currentUser = Parse.User.current();
                     _this.$state.go('home');
                 },
                 error: function (user, error) {
