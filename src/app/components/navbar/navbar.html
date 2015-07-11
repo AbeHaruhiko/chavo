@@ -25,7 +25,7 @@
           </li>
           <li dropdown>
             <a href="#" dropdown-toggle data-toggle="dropdown" role="button">
-              <span class="glyphicon glyphicon-warning-sign text-danger" ng-show="!$root.currentUser.get('emailVerified')"></span> 
+              <span class="glyphicon glyphicon-warning-sign text-danger" ng-show="!$root.currentUser.get('authData').facebook && !$root.currentUser.get('emailVerified')"></span> 
               <span class="glyphicon glyphicon-user"></span> 
               <strong>{{$root.currentUser.getUsername()}}</strong>
               <span class="glyphicon glyphicon-chevron-down"></span>
@@ -42,7 +42,7 @@
                     </div>
                     <div class="col-lg-8">
                       <p class="text-left"><strong>{{$root.currentUser.getUsername()}}</strong></p>
-                      <p class="text-left " ng-show="!$root.currentUser.get('emailVerified')">
+                      <p class="text-left " ng-show="!$root.currentUser.get('authData').facebook && !$root.currentUser.get('emailVerified')">
                           <alert type="danger">メールアドレスの確認が完了していません。メールを確認してURLをクリックしてください。</alert>
                       </p>
                     </div>
