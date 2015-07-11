@@ -13,12 +13,21 @@ var chavo;
             var _this = this;
             this.AuthService.signUp(form, {
                 success: function (user) {
-                    _this.$scope.$apply(function () {
-                        _this.$state.go('login');
-                    });
+                    _this.$state.go('home');
                 },
                 error: function (user, error) {
                     alert('Unable to sign up:  ' + error.code + ' ' + error.message);
+                }
+            });
+        };
+        LoginController.prototype.signUpWithFacebook = function () {
+            var _this = this;
+            Parse.FacebookUtils.logIn('public_profile, email', {
+                success: function (user) {
+                    _this.$state.go('home');
+                },
+                error: function (user, error) {
+                    alert('User cancelled the Facebook login or did not fully authorize.');
                 }
             });
         };

@@ -105,8 +105,25 @@ module chavo {
 
     $urlRouterProvider.otherwise('/');
   })
-  .run(function($rootScope: IChavoRootScope) {
+  .run(function($rootScope: IChavoRootScope, $window: any) {
     Parse.initialize('FpENpUI2dIIOJu5J4UrssehUKwkB1afjOfEK92Zv', '1Wbddi5o4HemnLkhBCmHov121BuE8qS5d1jxPxKs');
     $rootScope.currentUser = Parse.User.current();
+
+    // facebook準備
+    $window.fbAsyncInit = function() {
+        Parse.FacebookUtils.init({
+          appId      : '1461215587529753',
+          xfbml      : true,
+          version    : 'v2.4'
+        });
+      };
+
+      (function(d: Document, s: string, id: string){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) { return; }
+         js = d.createElement(s); js.id = id;
+         js.src = '//connect.facebook.net/en_US/sdk.js';
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
   });
 }

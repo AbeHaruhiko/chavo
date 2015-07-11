@@ -13,7 +13,7 @@ var chavo;
             query.find({
                 success: function (results) {
                     results.forEach(function (voice) {
-                        _this.voices.push(new chavo.Voice(voice.get('description'), voice.get('author'), (voice.get('ageYears') && voice.get('ageMonths')) ? (voice.get('ageYears') + '歳' + voice.get('ageMonths') + 'ヶ月') : '', voice.get('gender') == 0 ? '男の子' : voice.get('gender') == 1 ? '女の子' : '', null, moment(voice.createdAt).format('YYYY/MM/DD').toString()));
+                        _this.voices.push(new chavo.Voice(voice.get('description'), voice.get('author'), (voice.get('ageYears') && voice.get('ageMonths')) ? (voice.get('ageYears') + '歳' + voice.get('ageMonths') + 'ヶ月') : '', voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '', null, moment(voice.createdAt).format('YYYY/MM/DD').toString()));
                     });
                     _this.$scope.$apply();
                 },
