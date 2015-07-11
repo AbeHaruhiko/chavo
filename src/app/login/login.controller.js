@@ -23,7 +23,7 @@ var chavo;
         };
         LoginController.prototype.signUpWithFacebook = function () {
             var _this = this;
-            Parse.FacebookUtils.logIn('public_profile, email', {
+            Parse.FacebookUtils.logIn(null, {
                 success: function (user) {
                     _this.$rootScope.currentUser = Parse.User.current();
                     FB.api('/me', 'GET', function (response) {

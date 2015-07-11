@@ -27,7 +27,7 @@ module chavo {
     }
 
     public signUpWithFacebook() {
-      Parse.FacebookUtils.logIn('public_profile, email', {
+      Parse.FacebookUtils.logIn(null, {
         success: (user: Parse.User) => {
 
           this.$rootScope.currentUser = Parse.User.current();
