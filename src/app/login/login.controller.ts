@@ -30,36 +30,7 @@ module chavo {
     }
 
     loginWithFacebook() {
-      this.AuthService.loginWithFacebook({
-        success: (user: Parse.User) => {
-
-          this.$rootScope.currentUser = Parse.User.current();
-
-
-          this.$q.all([
-            this.FacebookService.api('/me'),
-            this.FacebookService.api('/' + user.get('authData').facebook.id + '/picture')
-          ])
-          .then((response: any[]) => {
-            this.$rootScope.currentUser.setUsername(response[0].name);
-            this.$rootScope.currentUser.set('iconUrl', response[1].data.url);
-            this.$rootScope.currentUser.save({
-                error: (user: Parse.User, error: Parse.Error) => {
-                  console.error(error.code + ":" + error.message);
-                }
-              },
-              null,
-              null
-            )
-            .then(() => {
-              this.$state.go('home');
-            });
-          });
-        },
-        error: (user: Parse.User, error: Parse.Error) => {
-          alert('User cancelled the Facebook login or did not fully authorize.');
-        }
-      });
+      this.FacebookService.loginWithFacebookAndGoHome();
     }
 
     logIn(formData: { username: string; password: string; }) {

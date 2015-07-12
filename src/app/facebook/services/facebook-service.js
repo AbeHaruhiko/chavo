@@ -2,9 +2,12 @@ var chavo;
 (function (chavo) {
     'use strict';
     var FacebookService = (function () {
-        function FacebookService($q, $rootScope) {
+        function FacebookService($q, $rootScope, AuthService, $state, FacebookService) {
             this.$q = $q;
             this.$rootScope = $rootScope;
+            this.AuthService = AuthService;
+            this.$state = $state;
+            this.FacebookService = FacebookService;
         }
         FacebookService.prototype.api = function () {
             var _this = this;
@@ -30,6 +33,33 @@ var chavo;
             };
             FB.api.apply(FB, args);
             return deferred.promise;
+        };
+        FacebookService.prototype.loginWithFacebookAndGoHome = function () {
+            var _this = this;
+            this.AuthService.loginWithFacebook({
+                success: function (user) {
+                    _this.$rootScope.currentUser = Parse.User.current();
+                    _this.$q.all([
+                        _this.FacebookService.api('/me'),
+                        _this.FacebookService.api('/' + user.get('authData').facebook.id + '/picture')
+                    ])
+                        .then(function (response) {
+                        _this.$rootScope.currentUser.setUsername(response[0].name);
+                        _this.$rootScope.currentUser.set('iconUrl', response[1].data.url);
+                        _this.$rootScope.currentUser.save({
+                            error: function (user, error) {
+                                console.error(error.code + ":" + error.message);
+                            }
+                        }, null, null)
+                            .then(function () {
+                            _this.$state.go('home');
+                        });
+                    });
+                },
+                error: function (user, error) {
+                    alert('User cancelled the Facebook login or did not fully authorize.');
+                }
+            });
         };
         return FacebookService;
     })();
