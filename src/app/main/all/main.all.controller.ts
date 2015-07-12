@@ -23,7 +23,7 @@ module chavo {
               voice.get('author'),
               (voice.get('ageYears') && voice.get('ageMonths')) ? (voice.get('ageYears') + '歳' + voice.get('ageMonths') + 'ヶ月') : '',
               voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '',
-              null,
+              voice.get('user').get('iconUrl'),
               moment(voice.createdAt).format('YYYY/MM/DD').toString()
             ));
           });

@@ -11,6 +11,7 @@
 /// <reference path="../app/components/navbar/navbar.controller.ts" />
 /// <reference path="../app/components/tabmenu/tabmenu.controller.ts"/>
 /// <reference path="./auth/services/auth-service.ts"/>
+/// <reference path="./facebook/services/facebook-service.ts"/>
 var chavo;
 (function (chavo) {
     'use strict';
@@ -27,6 +28,7 @@ var chavo;
         'toggle-switch'
     ])
         .service('AuthService', chavo.AuthService)
+        .service('FacebookService', chavo.FacebookService)
         .controller('MainController', chavo.MainController)
         .controller('MainAllController', chavo.MainAllController)
         .controller('MainMyPostsController', chavo.MainMyPostsController)

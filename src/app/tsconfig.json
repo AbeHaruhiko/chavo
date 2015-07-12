@@ -18,6 +18,7 @@
         "./auth/services/auth-service.ts",
         "./components/navbar/navbar.controller.ts",
         "./components/tabmenu/tabmenu.controller.ts",
+        "./facebook/services/facebook-service.ts",
         "./index.ts",
         "./login/login.controller.ts",
         "./main/all/main.all.controller.ts",

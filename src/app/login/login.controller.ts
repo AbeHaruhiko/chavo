@@ -11,7 +11,9 @@ module chavo {
       public $rootScope: IChavoRootScope,
       public $state: angular.ui.IStateService,
       public $location: angular.ILocationService,
-      public AuthService: AuthService) {
+      public AuthService: AuthService,
+      public $q: angular.IQService,
+      public FacebookService: FacebookService) {
     }
 
     signUp(form: { username: string; password: string; }) {
@@ -27,18 +29,32 @@ module chavo {
       });
     }
 
-    public loginWithFacebook() {
+    loginWithFacebook() {
       this.AuthService.loginWithFacebook({
         success: (user: Parse.User) => {
 
           this.$rootScope.currentUser = Parse.User.current();
-          FB.api('/me', 'GET', (response: any) => {
-                console.log('Successful login for: ' + response.name);
-                user.setUsername(response.name);
-                this.$state.go('home');
+
+
+          this.$q.all([
+            this.FacebookService.api('/me'),
+            this.FacebookService.api('/' + user.get('authData').facebook.id + '/picture')
+          ])
+          .then((response: any[]) => {
+            this.$rootScope.currentUser.setUsername(response[0].name);
+            this.$rootScope.currentUser.set('iconUrl', response[1].data.url);
+            this.$rootScope.currentUser.save({
+                error: (user: Parse.User, error: Parse.Error) => {
+                  console.error(error.code + ":" + error.message);
+                }
+              },
+              null,
+              null
+            )
+            .then(() => {
+              this.$state.go('home');
+            });
           });
-
-
         },
         error: (user: Parse.User, error: Parse.Error) => {
           alert('User cancelled the Facebook login or did not fully authorize.');

@@ -2,12 +2,14 @@ var chavo;
 (function (chavo) {
     'use strict';
     var LoginController = (function () {
-        function LoginController($scope, $rootScope, $state, $location, AuthService) {
+        function LoginController($scope, $rootScope, $state, $location, AuthService, $q, FacebookService) {
             this.$scope = $scope;
             this.$rootScope = $rootScope;
             this.$state = $state;
             this.$location = $location;
             this.AuthService = AuthService;
+            this.$q = $q;
+            this.FacebookService = FacebookService;
         }
         LoginController.prototype.signUp = function (form) {
             var _this = this;
@@ -25,10 +27,21 @@ var chavo;
             this.AuthService.loginWithFacebook({
                 success: function (user) {
                     _this.$rootScope.currentUser = Parse.User.current();
-                    FB.api('/me', 'GET', function (response) {
-                        console.log('Successful login for: ' + response.name);
-                        user.setUsername(response.name);
-                        _this.$state.go('home');
+                    _this.$q.all([
+                        _this.FacebookService.api('/me'),
+                        _this.FacebookService.api('/' + user.get('authData').facebook.id + '/picture')
+                    ])
+                        .then(function (response) {
+                        _this.$rootScope.currentUser.setUsername(response[0].name);
+                        _this.$rootScope.currentUser.set('iconUrl', response[1].data.url);
+                        _this.$rootScope.currentUser.save({
+                            error: function (user, error) {
+                                console.error(error.code + ":" + error.message);
+                            }
+                        }, null, null)
+                            .then(function () {
+                            _this.$state.go('home');
+                        });
                     });
                 },
                 error: function (user, error) {

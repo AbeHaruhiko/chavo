@@ -12,6 +12,7 @@
 /// <reference path="../app/components/navbar/navbar.controller.ts" />
 /// <reference path="../app/components/tabmenu/tabmenu.controller.ts"/>
 /// <reference path="./auth/services/auth-service.ts"/>
+/// <reference path="./facebook/services/facebook-service.ts"/>
 
 
 module chavo {
@@ -35,6 +36,7 @@ module chavo {
     'toggle-switch'
     ])
     .service('AuthService', AuthService)
+    .service('FacebookService', FacebookService)
     .controller('MainController', MainController)
     .controller('MainAllController', MainAllController)
     .controller('MainMyPostsController', MainMyPostsController)
@@ -111,19 +113,19 @@ module chavo {
 
     // facebook準備
     $window.fbAsyncInit = function() {
-        Parse.FacebookUtils.init({
-          appId      : '1461215587529753',
-          xfbml      : true,
-          version    : 'v2.4'
-        });
-      };
+      Parse.FacebookUtils.init({
+        appId      : '1461215587529753',
+        xfbml      : true,
+        version    : 'v2.4'
+      });
+    };
 
-      (function(d: Document, s: string, id: string){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) { return; }
-         js = d.createElement(s); js.id = id;
-         js.src = '//connect.facebook.net/en_US/sdk.js';
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));
+    (function(d: Document, s: string, id: string){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) { return; }
+      js = d.createElement(s); js.id = id;
+      js.src = '//connect.facebook.net/en_US/sdk.js';
+      fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
   });
 }
