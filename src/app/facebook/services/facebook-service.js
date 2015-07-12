@@ -2,12 +2,11 @@ var chavo;
 (function (chavo) {
     'use strict';
     var FacebookService = (function () {
-        function FacebookService($q, $rootScope, AuthService, $state, FacebookService) {
+        function FacebookService($q, $rootScope, AuthService, $state) {
             this.$q = $q;
             this.$rootScope = $rootScope;
             this.AuthService = AuthService;
             this.$state = $state;
-            this.FacebookService = FacebookService;
         }
         FacebookService.prototype.api = function () {
             var _this = this;
@@ -40,8 +39,8 @@ var chavo;
                 success: function (user) {
                     _this.$rootScope.currentUser = Parse.User.current();
                     _this.$q.all([
-                        _this.FacebookService.api('/me'),
-                        _this.FacebookService.api('/' + user.get('authData').facebook.id + '/picture')
+                        _this.api('/me'),
+                        _this.api('/' + user.get('authData').facebook.id + '/picture')
                     ])
                         .then(function (response) {
                         _this.$rootScope.currentUser.setUsername(response[0].name);

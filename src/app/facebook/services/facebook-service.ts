@@ -14,8 +14,7 @@ module chavo {
       public $q: ng.IQService,
       public $rootScope: IChavoRootScope,
       public AuthService: AuthService,
-      public $state: angular.ui.IStateService,
-      public FacebookService: FacebookService
+      public $state: angular.ui.IStateService
       ) {
 
     }
@@ -49,8 +48,8 @@ module chavo {
 
 
           this.$q.all([
-            this.FacebookService.api('/me'),
-            this.FacebookService.api('/' + user.get('authData').facebook.id + '/picture')
+            this.api('/me'),
+            this.api('/' + user.get('authData').facebook.id + '/picture')
           ])
           .then((response: any[]) => {
             this.$rootScope.currentUser.setUsername(response[0].name);
