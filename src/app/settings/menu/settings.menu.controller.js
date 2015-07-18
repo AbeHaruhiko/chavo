@@ -10,6 +10,9 @@ var chavo;
                 { title: 'こどもの情報', route: 'settings.children' },
             ];
         }
+        SettingsMenuController.prototype.isActive = function (menuName) {
+            return menuName === this.activeMenu;
+        };
         return SettingsMenuController;
     })();
     chavo.SettingsMenuController = SettingsMenuController;

@@ -5,6 +5,9 @@ module chavo {
   }
 
   export class SettingsMenuController {
+
+    public activeMenu: string;
+
     /* @ngInject */
     constructor (public $scope: ISettingsMenu,
       public $rootScope: IChavoRootScope) {
@@ -15,6 +18,9 @@ module chavo {
       { title: 'こどもの情報', route: 'settings.children'},
     ];
 
+    public isActive(menuName: string) {
+      return menuName === this.activeMenu;
+    }
 
   }
 }
