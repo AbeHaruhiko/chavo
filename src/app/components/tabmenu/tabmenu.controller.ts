@@ -1,7 +1,7 @@
 module chavo {
   'use strict';
 
-  interface ITabMenuScope extends ng.IScope {
+  interface ITabMenuScope extends angular.IScope {
   }
 
   export class TabmenuController {

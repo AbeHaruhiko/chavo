@@ -91,9 +91,7 @@ var chavo;
         })
             .state('login', {
             url: '/login',
-            templateUrl: 'app/login/login.html',
-            controller: 'LoginController',
-            controllerAs: 'login'
+            templateUrl: 'app/login/login.html'
         });
         $urlRouterProvider.otherwise('/');
     })

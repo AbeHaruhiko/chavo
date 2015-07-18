@@ -1,7 +1,7 @@
 module chavo {
   'use strict';
 
-  export interface IMainScope extends ng.IScope {
+  export interface IMainScope extends angular.IScope {
   }
 
   export class MainController {

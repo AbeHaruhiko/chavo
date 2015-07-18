@@ -19,6 +19,7 @@
         "./src/app/auth/services/auth-service.ts",
         "./src/app/components/navbar/navbar.controller.ts",
         "./src/app/components/tabmenu/tabmenu.controller.ts",
+        "./src/app/facebook/services/facebook-service.ts",
         "./src/app/index.ts",
         "./src/app/login/login.controller.ts",
         "./src/app/main/all/main.all.controller.ts",

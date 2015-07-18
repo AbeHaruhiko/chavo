@@ -14,7 +14,8 @@ module chavo {
       public $q: ng.IQService,
       public $rootScope: IChavoRootScope,
       public AuthService: AuthService,
-      public $state: angular.ui.IStateService
+      public $state: angular.ui.IStateService,
+      public $timeout: angular.ITimeoutService
       ) {
 
     }
@@ -30,9 +31,6 @@ module chavo {
           deferred.reject(response);
         } else {
           deferred.resolve(response);
-        }
-        if (!this.$rootScope.$$phase) {
-          this.$rootScope.$apply();
         }
       };
 
@@ -52,11 +50,14 @@ module chavo {
             this.api('/' + user.get('authData').facebook.id + '/picture')
           ])
           .then((response: any[]) => {
-            this.$rootScope.currentUser.setUsername(response[0].name);
+            this.$timeout(() => {
+              this.$rootScope.currentUser.setUsername(response[0].name);
+            });
+            this.$rootScope.$apply();
             this.$rootScope.currentUser.set('iconUrl', response[1].data.url);
             this.$rootScope.currentUser.save({
                 error: (user: Parse.User, error: Parse.Error) => {
-                  console.error(error.code + ":" + error.message);
+                  console.error(error.code + ':' + error.message);
                 }
               },
               null,
