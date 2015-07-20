@@ -45,27 +45,19 @@ var chavo;
         $stateProvider
             .state('home', {
             url: '',
-            templateUrl: 'app/main/main.html',
-            controller: 'MainController',
-            controllerAs: 'main'
+            templateUrl: 'app/main/main.html'
         })
             .state('home.myposts', {
             url: '/myposts',
-            templateUrl: 'app/main/myposts/main.myposts.html',
-            controller: 'MainMyPostsController',
-            controllerAs: 'main_myposts'
+            templateUrl: 'app/main/myposts/main.myposts.html'
         })
             .state('home.all', {
             url: '/all',
-            templateUrl: 'app/main/all/main.all.html',
-            controller: 'MainAllController',
-            controllerAs: 'main_all'
+            templateUrl: 'app/main/all/main.all.html'
         })
             .state('home.compose', {
             url: '/compose',
-            templateUrl: 'app/main/compose/main.compose.html',
-            controller: 'MainComposeController',
-            controllerAs: 'main_compose'
+            templateUrl: 'app/main/compose/main.compose.html'
         })
             .state('settings', {
             url: '/settings',
@@ -73,21 +65,15 @@ var chavo;
         })
             .state('settings.profile', {
             url: '/profile',
-            templateUrl: 'app/settings/content/profile/settings.profile.html',
-            controller: 'SettingsProfileController',
-            controllerAs: 'settings_profile'
+            templateUrl: 'app/settings/content/profile/settings.profile.html'
         })
             .state('settings.children', {
             url: '/children',
-            templateUrl: 'app/settings/content/children/settings.children.html',
-            controller: 'SettingsChildrenController',
-            controllerAs: 'settings_children'
+            templateUrl: 'app/settings/content/children/settings.children.html'
         })
             .state('settings.child', {
             url: '/children/:childId',
-            templateUrl: 'app/settings/content/child/settings.child.html',
-            controller: 'SettingsChildController',
-            controllerAs: 'settings_child'
+            templateUrl: 'app/settings/content/child/settings.child.html'
         })
             .state('login', {
             url: '/login',
