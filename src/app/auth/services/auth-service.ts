@@ -15,6 +15,7 @@ module chavo {
       var user = new Parse.User();
       user.set('email', form.username);
       user.set('username', form.username);
+      user.set('nickname', form.username);  // 初期値では、userid, email, nicknameはすべてメールアドレス。メールアドレスとパスワードのみで登録させたいため。
       user.set('password', form.password);
 
       user.signUp(null, callbacks);

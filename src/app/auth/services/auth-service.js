@@ -10,6 +10,7 @@ var chavo;
             var user = new Parse.User();
             user.set('email', form.username);
             user.set('username', form.username);
+            user.set('nickname', form.username);
             user.set('password', form.password);
             user.signUp(null, callbacks);
         };
