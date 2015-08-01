@@ -12,9 +12,9 @@ body {
 .media {
   padding: 16px;
 
-  img.img-circle {
-    width: 50px;
-  }
+  // img.img-circle {
+  //   width: 50px;
+  // }
 }
 
 .pre-line {
@@ -43,7 +43,7 @@ body {
 }
 
 .icon-size {
-    width: 87px;
+    width: 40px;
 }
 
 #tabmenu {
@@ -56,6 +56,18 @@ body {
 
 #words-author-age-years, #words-author-age-months {
   width: 36px;
+}
+
+// 投稿記事
+.posted-voice {
+  // これがないとCARDが繋がる
+  margin-bottom: 24px;
+  // mdl-cardのmin-heightが200pxなので邪魔。
+  min-height: 120px;
+
+  .avatar {
+    margin: 16px;
+  }
 }
 
 /* Do not remove this comments bellow. It's the markers used by gulp-inject to inject

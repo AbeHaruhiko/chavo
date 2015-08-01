@@ -1,10 +1,10 @@
 <div ng-controller="MainMyPostsController as main_myposts" class="row">
-  <div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3">
+  <!-- <div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3">
     <div class="media-list">
       <div class="media panel panel-default" ng-repeat="voice in main_myposts.voices">
         <div class="media-left">
           <a href="#">
-            <!-- <img class="media-object img-circle " ng-src="assets/images/{{voice.icon}}" alt="{{voice.get('author')}}"> -->
+            <img class="media-object img-circle " ng-src="assets/images/{{voice.icon}}" alt="{{voice.get('author')}}">
           </a>
         </div>
         <div class="media-body">
@@ -14,5 +14,44 @@
         </div>
       </div>
     </div>
+  </div> -->
+
+
+
+  <!-- <div class="mdl-card mdl-shadow--4dp posted-voice" ng-repeat="voice in main_myposts.voices">
+        <a href="#">
+          <img class="media-object img-circle icon-size"  ng-src="assets/images/ic_hal.jpg" alt="{{voice.get('author')}}">
+        </a>
+        <div class="text-right"><small>{{ voice.createdAt }}</small></div>
+        <div class="">{{ voice.description }}</div>
+        <div class="text-right"><small>{{ voice.author }} {{ voice.age }} {{ voice.gender }}</small></div>
+  </div> -->
+
+
+  <!-- <div class="mdl-card mdl-shadow--4dp posted-voice" ng-repeat="voice in main_myposts.voices">
+    <div class="mdl-card__media">
+      <img class="media-object img-circle icon-size avatar"  ng-src="assets/images/ic_hal.jpg" alt="{{voice.get('author')}}"/>
+      <div class="mdl-card__supporting-text">{{ voice.createdAt }}</div>
+    </div>
+    <div class="mdl-card__supporting-text">{{ voice.description }}</div>
+  </div> -->
+
+  <div class="mdl-grid" ng-repeat="voice in main_myposts.voices">
+    <div class="mdl-cell mdl-cell--3-col">
+    </div>
+    <div class="mdl-card mdl-cell mdl-cell--6-col mdl-shadow--4dp posted-voice">
+      <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+        <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+          <img class="media-object img-circle icon-size avatar"  ng-src="assets/images/ic_hal.jpg" alt="{{voice.get('author')}}"/>
+        </div>
+        <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+          <div class="mdl-card__supporting-text"><div>{{ voice.author }}</div><div>{{ voice.createdAt }}</div></div>
+          <div class="mdl-card__supporting-text">{{ voice.description }}</div>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
+
+
 </div>
