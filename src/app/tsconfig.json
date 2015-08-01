@@ -27,7 +27,6 @@
         "./main/myposts/main.myposts.controller.ts",
         "./model/Child.ts",
         "./model/GENDER.ts",
-        "./model/Object.ts",
         "./model/Profile.ts",
         "./model/Voice.ts",
         "./settings/content/child/settings.child.controller.ts",
