@@ -2,9 +2,10 @@ module chavo {
   'use strict';
 
   export class Profile {
-    constructor(public nickname: string,
+    constructor(public username: string,
       public email: string,
-      public password: string) {
+      public password: string,
+      public icon: string) {
     }
   }
 }

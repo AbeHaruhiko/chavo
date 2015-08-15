@@ -11,11 +11,10 @@ module chavo {
 
     }
 
-    signUp(form: { username: string; password: string; }, callbacks: any) {
+    signUp(form: { username: string; email: string; password: string; }, callbacks: any) {
       var user = new Parse.User();
-      user.set('email', form.username);
       user.set('username', form.username);
-      user.set('nickname', form.username);  // 初期値では、userid, email, nicknameはすべてメールアドレス。メールアドレスとパスワードのみで登録させたいため。
+      user.set('email', form.email);
       user.set('password', form.password);
 
       user.signUp(null, callbacks);

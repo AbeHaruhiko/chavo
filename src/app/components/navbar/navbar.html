@@ -59,7 +59,7 @@
             <a href="#" dropdown-toggle data-toggle="dropdown" role="button">
               <span class="glyphicon glyphicon-warning-sign text-danger" ng-show="!$root.currentUser.get('authData').facebook && !$root.currentUser.get('emailVerified')"></span> 
               <span class="glyphicon glyphicon-user"></span> 
-              <strong>{{$root.currentUser.get('nickname')}}</strong>
+              <strong>{{$root.currentUser.get('username')}}</strong>
               <span class="glyphicon glyphicon-chevron-down"></span>
             </a>
             <ul class="dropdown-menu">
@@ -73,7 +73,7 @@
                       <img src="assets/images/ic_hal.jpg" class="icon-size"/>
                     </div>
                     <div class="col-lg-8">
-                      <p class="text-left"><strong>{{$root.currentUser.get('nickname')}}</strong></p>
+                      <p class="text-left"><strong>{{$root.currentUser.get('username')}}</strong></p>
                       <p class="text-left " ng-show="!$root.currentUser.get('authData').facebook && !$root.currentUser.get('emailVerified')">
                           <alert type="danger">メールアドレスの確認が完了していません。メールを確認してURLをクリックしてください。</alert>
                       </p>

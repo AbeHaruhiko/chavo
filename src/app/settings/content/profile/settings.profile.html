@@ -2,9 +2,13 @@
   <div class="panel-body">
     <form class="form-horizontal">
       <div class="form-group">
+        <input id="photo-selector" type="file"/>
+      </div>
+      <img ng-src="settings_profile.profile.icon" id="member-photo"/>
+      <div class="form-group">
         <label for="username" class="col-sm-3 control-label">ユーザ名</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="nickname" placeholder="ユーザ名" ng-model="settings_profile.profile.nickname"/>
+          <input type="text" class="form-control" id="username" placeholder="ユーザ名" ng-model="settings_profile.profile.username"/>
         </div>
       </div>
       <div class="form-group">

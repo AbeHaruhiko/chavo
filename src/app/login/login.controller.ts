@@ -16,7 +16,7 @@ module chavo {
       public FacebookService: FacebookService) {
     }
 
-    signUp(form: { username: string; password: string; }) {
+    signUp(form: { username: string; email: string; password: string; }) {
       this.AuthService.signUp(form, {
         success: (user: Parse.User) => {
           // authService でセットしているのでここではコメントアウト
@@ -42,7 +42,7 @@ module chavo {
         },
         error: (user: Parse.User, error: Parse.Error) => {
           console.log('Unable to login:  ' + error.code + ' ' + error.message);
-          this.$location.path('/login');
+          this.$state.go('login');
         }
       });
     }

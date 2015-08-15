@@ -8,9 +8,8 @@ var chavo;
         }
         AuthService.prototype.signUp = function (form, callbacks) {
             var user = new Parse.User();
-            user.set('email', form.username);
             user.set('username', form.username);
-            user.set('nickname', form.username);
+            user.set('email', form.email);
             user.set('password', form.password);
             user.signUp(null, callbacks);
         };

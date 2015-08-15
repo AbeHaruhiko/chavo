@@ -33,7 +33,7 @@ var chavo;
                 },
                 error: function (user, error) {
                     console.log('Unable to login:  ' + error.code + ' ' + error.message);
-                    _this.$location.path('/login');
+                    _this.$state.go('login');
                 }
             });
         };
