@@ -18,45 +18,45 @@ module chavo {
             null,
             null);
 
-            // ファイルインプットの設定
-            var fileSelector: any = angular.element("#photo-selector");
-            fileSelector.fileinput({"uploadUrl": "dummy", "dropZoneEnabled": false});
+        // ファイルインプットの設定
+        var fileSelector: any = angular.element("#photo-selector");
+        fileSelector.fileinput({"uploadUrl": "dummy", "dropZoneEnabled": false});
 
-            // アップロード直前のイベントでParseに送る。（bootstrap-file-inputによるアップロードは失敗する。）
-            fileSelector.on("filepreupload", function(event, data, previewId, index) {
+        // アップロード直前のイベントでParseに送る。（bootstrap-file-inputによるアップロードは失敗する。）
+        fileSelector.on("filepreupload", (event, data, previewId, index) => {
 
-              if (data.files.length > 0) {
-                var file = data.files[0];
-                var name = "photo.jpg";
+          if (data.files.length > 0) {
+            var file = data.files[0];
+            var name = "photo.jpg";
 
-                var parseFile = new Parse.File(name, file);
-                parseFile.save().then(function() {
+            var parseFile = new Parse.File(name, file);
+            parseFile.save().then(() => {
 
-                  this.$rootScopes.currentMember.set("icon", parseFile);
-                  this.$rootScopes.currentMember.save().then(() => {
+              this.$rootScope.currentUser.set("icon", parseFile);
+              this.$rootScope.currentUser.save().then(() => {
 
-                    var profilePhoto = this.$rootScopes.currentMember.get("icon");
+                var profilePhoto = this.$rootScope.currentUser.get("icon");
 
-                    $scope.$apply(function() {
-                      this.profile.icon = profilePhoto.url();
-                    });
-
-                    // プレビュー消す
-                    fileSelector.fileinput("clear");
-
-                  }, function(error) {
-
-                  });
-                }, function(error) {
-                  console.log(error);
+                $scope.$apply(() => {
+                  this.profile.icon = profilePhoto.url();
                 });
-              }
+
+                // プレビュー消す
+                fileSelector.fileinput("clear");
+
+              }, function(error) {
+
+              });
+            }, function(error) {
+              console.log(error);
             });
+          }
+        });
 
 
-            fileSelector.on('fileuploaderror', function(event, data, previewId, index) {
-              console.error('file upload error. (this is expected results.)')
-            });
+        fileSelector.on('fileuploaderror', function(event, data, previewId, index) {
+          console.error('file upload error. (this is expected results. please ignore.)')
+        });
 
 
     }

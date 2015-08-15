@@ -3,6 +3,7 @@ var chavo;
     'use strict';
     var SettingsProfileController = (function () {
         function SettingsProfileController($scope, $rootScope) {
+            var _this = this;
             this.$scope = $scope;
             this.$rootScope = $rootScope;
             this.profile = new chavo.Profile($rootScope.currentUser.getUsername(), $rootScope.currentUser.getEmail(), null, null);
@@ -14,12 +15,11 @@ var chavo;
                     var name = "photo.jpg";
                     var parseFile = new Parse.File(name, file);
                     parseFile.save().then(function () {
-                        var _this = this;
-                        this.$rootScopes.currentMember.set("icon", parseFile);
-                        this.$rootScopes.currentMember.save().then(function () {
-                            var profilePhoto = _this.$rootScopes.currentMember.get("icon");
+                        _this.$rootScope.currentUser.set("icon", parseFile);
+                        _this.$rootScope.currentUser.save().then(function () {
+                            var profilePhoto = _this.$rootScope.currentUser.get("icon");
                             $scope.$apply(function () {
-                                this.profile.icon = profilePhoto.url();
+                                _this.profile.icon = profilePhoto.url();
                             });
                             fileSelector.fileinput("clear");
                         }, function (error) {
@@ -30,7 +30,7 @@ var chavo;
                 }
             });
             fileSelector.on('fileuploaderror', function (event, data, previewId, index) {
-                console.error('file upload error. (this is expected results.)');
+                console.error('file upload error. (this is expected results. please ignore.)');
             });
         }
         SettingsProfileController.prototype.saveProfile = function () {
