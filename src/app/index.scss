@@ -46,9 +46,12 @@ body {
     width: 40px;
 }
 
-.icon-size-big {
-    width: 80px;
-    // border-radius: 50%;
+.profile-icon {
+  height: 160px;
+  width: 160px;
+  margin-bottom: 20px;
+  background-size: cover;
+  background-position: center;
 }
 
 #tabmenu {

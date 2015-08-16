@@ -1,10 +1,12 @@
 <div class="panel panel-default" ng-controller="SettingsProfileController as settings_profile">
   <div class="panel-body">
     <form class="form-horizontal">
-      <div class="form-group">
-        <input id="photo-selector" type="file"/>
-      </div>
-      <img ng-src="{{ settings_profile.profile.icon }}" class="icon-size-big"/>
+      <div ng-style="{ 'background-image': 'url(' + settings_profile.profile.icon + ')' }"
+        class="img-thumbnail profile-icon"></div>
+      <!-- <img ng-src="{{ settings_profile.profile.icon }}"
+        class="icon-size-big img-thumbnail profile-icon"
+        ng-class="{ hidden: !settings_profile.showIcon, show: settings_profile.showIcon}"/> -->
+      <input id="photo-selector" type="file" />
       <div class="form-group">
         <label for="username" class="col-sm-3 control-label">ユーザ名</label>
         <div class="col-sm-9">

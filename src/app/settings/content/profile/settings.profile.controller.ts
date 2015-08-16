@@ -7,6 +7,7 @@ module chavo {
   export class SettingsProfileController {
 
     public profile: Profile;
+    public showIcon: boolean = false;
 
     /* @ngInject */
     constructor (
@@ -20,7 +21,12 @@ module chavo {
 
         // ファイルインプットの設定
         var fileSelector: any = angular.element('#photo-selector');
-        fileSelector.fileinput({ 'uploadUrl': 'dummy', 'dropZoneEnabled': false, 'showCaption': true });
+        fileSelector.fileinput({
+          'uploadUrl': 'dummy',
+          'dropZoneEnabled': false,
+          'showCaption': false,
+          'showPreview': true
+        });
 
         // アップロード直前のイベントでParseに送る。（bootstrap-file-inputによるアップロードは失敗する。）
         fileSelector.on('filepreupload', (event, data, previewId, index) => {
@@ -39,6 +45,7 @@ module chavo {
 
                 $scope.$apply(() => {
                   this.profile.icon = profilePhoto.url();
+                  this.showIcon = true;
                 });
 
                 // プレビュー消す

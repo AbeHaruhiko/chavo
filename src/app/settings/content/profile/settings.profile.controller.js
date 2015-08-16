@@ -6,9 +6,15 @@ var chavo;
             var _this = this;
             this.$scope = $scope;
             this.$rootScope = $rootScope;
+            this.showIcon = false;
             this.profile = new chavo.Profile($rootScope.currentUser.getUsername(), $rootScope.currentUser.getEmail(), null, null);
             var fileSelector = angular.element('#photo-selector');
-            fileSelector.fileinput({ 'uploadUrl': 'dummy', 'dropZoneEnabled': false, 'showCaption': true });
+            fileSelector.fileinput({
+                'uploadUrl': 'dummy',
+                'dropZoneEnabled': false,
+                'showCaption': false,
+                'showPreview': true
+            });
             fileSelector.on('filepreupload', function (event, data, previewId, index) {
                 if (data.files.length > 0) {
                     var file = data.files[0];
@@ -20,6 +26,7 @@ var chavo;
                             var profilePhoto = _this.$rootScope.currentUser.get('icon');
                             $scope.$apply(function () {
                                 _this.profile.icon = profilePhoto.url();
+                                _this.showIcon = true;
                             });
                             fileSelector.fileinput('clear');
                         }, function (error) {
