@@ -7,21 +7,21 @@ var chavo;
             this.$scope = $scope;
             this.$rootScope = $rootScope;
             this.profile = new chavo.Profile($rootScope.currentUser.getUsername(), $rootScope.currentUser.getEmail(), null, null);
-            var fileSelector = angular.element("#photo-selector");
-            fileSelector.fileinput({ "uploadUrl": "dummy", "dropZoneEnabled": false });
-            fileSelector.on("filepreupload", function (event, data, previewId, index) {
+            var fileSelector = angular.element('#photo-selector');
+            fileSelector.fileinput({ 'uploadUrl': 'dummy', 'dropZoneEnabled': false, 'showCaption': true });
+            fileSelector.on('filepreupload', function (event, data, previewId, index) {
                 if (data.files.length > 0) {
                     var file = data.files[0];
-                    var name = "photo.jpg";
+                    var name = 'photo.jpg';
                     var parseFile = new Parse.File(name, file);
                     parseFile.save().then(function () {
-                        _this.$rootScope.currentUser.set("icon", parseFile);
+                        _this.$rootScope.currentUser.set('icon', parseFile);
                         _this.$rootScope.currentUser.save().then(function () {
-                            var profilePhoto = _this.$rootScope.currentUser.get("icon");
+                            var profilePhoto = _this.$rootScope.currentUser.get('icon');
                             $scope.$apply(function () {
                                 _this.profile.icon = profilePhoto.url();
                             });
-                            fileSelector.fileinput("clear");
+                            fileSelector.fileinput('clear');
                         }, function (error) {
                         });
                     }, function (error) {
@@ -30,6 +30,7 @@ var chavo;
                 }
             });
             fileSelector.on('fileuploaderror', function (event, data, previewId, index) {
+                angular.element('.file-error-message').css('display', 'none');
                 console.error('file upload error. (this is expected results. please ignore.)');
             });
         }
