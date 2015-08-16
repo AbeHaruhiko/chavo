@@ -39,23 +39,23 @@ module chavo {
             parseFile.save().then(() => {
 
               this.$rootScope.currentUser.set('icon', parseFile);
-              this.$rootScope.currentUser.save().then(() => {
+              this.$rootScope.currentUser.set('iconUrl', parseFile.url());
 
-                var profilePhoto = this.$rootScope.currentUser.get('icon');
+              return this.$rootScope.currentUser.save();
+            }).then(() => {
 
-                $scope.$apply(() => {
-                  this.profile.icon = profilePhoto.url();
-                  this.showIcon = true;
-                });
+              var profilePhoto = this.$rootScope.currentUser.get('icon');
 
-                // プレビュー消す
-                fileSelector.fileinput('clear');
-
-              }, function(error) {
-
+              $scope.$apply(() => {
+                this.profile.icon = profilePhoto.url();
+                this.showIcon = true;
               });
+
+              // プレビュー消す
+              fileSelector.fileinput('clear');
+
             }, function(error) {
-              console.log(error);
+              console.error(error);
             });
           }
         });

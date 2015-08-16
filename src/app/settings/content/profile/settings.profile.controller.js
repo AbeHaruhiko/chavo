@@ -22,17 +22,17 @@ var chavo;
                     var parseFile = new Parse.File(name, file);
                     parseFile.save().then(function () {
                         _this.$rootScope.currentUser.set('icon', parseFile);
-                        _this.$rootScope.currentUser.save().then(function () {
-                            var profilePhoto = _this.$rootScope.currentUser.get('icon');
-                            $scope.$apply(function () {
-                                _this.profile.icon = profilePhoto.url();
-                                _this.showIcon = true;
-                            });
-                            fileSelector.fileinput('clear');
-                        }, function (error) {
+                        _this.$rootScope.currentUser.set('iconUrl', parseFile.url());
+                        return _this.$rootScope.currentUser.save();
+                    }).then(function () {
+                        var profilePhoto = _this.$rootScope.currentUser.get('icon');
+                        $scope.$apply(function () {
+                            _this.profile.icon = profilePhoto.url();
+                            _this.showIcon = true;
                         });
+                        fileSelector.fileinput('clear');
                     }, function (error) {
-                        console.log(error);
+                        console.error(error);
                     });
                 }
             });
