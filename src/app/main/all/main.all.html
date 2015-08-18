@@ -3,14 +3,15 @@
     <div class="media-list">
       <div class="media panel panel-default" ng-repeat="voice in main_all.voices">
         <div class="media-left">
-          <a>
-            <img class="media-object img-circle icon-size" ng-src="{{ voice.icon }}" alt="{{ voice.user }}">
+          <a href="#">
+            <div ng-style="{ 'background-image': 'url(' + voice.icon + ')' }"
+              class="media-object img-circle icon-post"></div>
           </a>
         </div>
         <div class="media-body">
-          <p class="text-right"><small>{{ voice.createdAt }}</small></p>
+          <span><small>{{ voice.user }}</small></span><span class="pull-right"><small>{{ voice.createdAt }}</small></span>
           <p class="pre-line">{{ voice.description }}</p>
-          <p class="text-right"><small>{{ voice.author }} {{ voice.age }} {{ voice.gender }}</small></p>
+          <p class="text-right"><small>{{ voice.speaker }} {{ voice.age }} {{ voice.gender }}</small></p>
         </div>
       </div>
     </div>

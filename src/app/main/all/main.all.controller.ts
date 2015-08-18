@@ -54,13 +54,39 @@ module chavo {
             (voice.get('ageYears') && voice.get('ageMonths')) ? (voice.get('ageYears') + '歳' + voice.get('ageMonths') + 'ヶ月') : '',
             voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '',
             voice.get('user').get('username'),
-            voice.get('user').get('iconUrl'),
+            voice.get('user').get('iconUrl') == undefined ?
+                voice.get('icon') == undefined ? null : voice.get('icon').url()
+                    : voice.get('user').get('iconUrl'),
             moment(voice.createdAt).format('YYYY/MM/DD').toString()
           ));
         });
 
         this.$scope.$apply();
 
+      },
+      (error: Parse.Error) => {
+        // 投稿ユーザがいない場合などエラーになる
+
+        // 表示用にVoiceクラスへ移し替え
+        parseVoices.forEach((voice: Parse.Object) => {
+          if (voice.get('user').get('username') !== undefined) {
+            // すでにいないユーザの投稿は表示しない
+
+            this.voices.push(new Voice(
+              voice.get('description'),
+              voice.get('author'),
+              (voice.get('ageYears') && voice.get('ageMonths')) ? (voice.get('ageYears') + '歳' + voice.get('ageMonths') + 'ヶ月') : '',
+              voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '',
+              voice.get('user').get('username'),
+              voice.get('user').get('iconUrl') == undefined ?
+                  voice.get('icon') == undefined ? null : voice.get('icon').url()
+                      : voice.get('user').get('iconUrl'),
+              moment(voice.createdAt).format('YYYY/MM/DD').toString()
+            ));
+          }
+        });
+
+        this.$scope.$apply();
       });
     }
   }
