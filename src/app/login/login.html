@@ -22,6 +22,22 @@
     </div>
   </form>
 
+  <h5>パスワードを忘れた場合</h5>
+  <form class="form-horizontal" ng-show="!$root.currentUser  || !$root.currentUser.get('emailVerified')" name="resetPwForm" novalidate>
+    <alert type="info" ng-show="login.showResetPwMessage">メールを送信しました。メールのURLをクリックしてパスワードを再設定してください。</alert>
+    <div class="form-group">
+      <label for="email" class="col-sm-2 control-label">Email</label>
+      <div class="col-sm-4">
+        <input type="email" ng-model="resetPwForm.email" class="form-control" id="reset-pw-email" name="reset-pw-email"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button class="btn btn-default" ng-click="login.requestPasswordReset(resetPwForm)" ng-disabled="resetPwForm.email.$invalid">送信</button>
+      </div>
+    </div>
+  </form>
+
   <h5>ユーザ登録</h5>
   <form class="form-horizontal" ng-show="!$root.currentUser  || !$root.currentUser.get('emailVerified')" name="signUpForm" novalidate>
     <alert type="info" ng-show="$root.currentUser && !$root.currentUser.get('emailVerified')">メールを送信しました。メールのURLクリック後、再度ログインしてください。</alert>

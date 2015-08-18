@@ -6,6 +6,8 @@ module chavo {
 
   export class LoginController {
 
+    public showResetPwMessage: boolean = false;
+
     /* @ngInject */
     constructor (public $scope: IMainScope,
       public $rootScope: IChavoRootScope,
@@ -41,6 +43,19 @@ module chavo {
           this.$state.go('home');
         },
         error: (user: Parse.User, error: Parse.Error) => {
+          console.log('Unable to login:  ' + error.code + ' ' + error.message);
+          this.$state.go('login');
+        }
+      });
+    }
+
+    requestPasswordReset(formData: { email: string; }) {
+      this.AuthService.requestPasswordReset(formData, {
+        success: () => {
+          this.showResetPwMessage = true;
+          this.$state.go('login');
+        },
+        error: (error: Parse.Error) => {
           console.log('Unable to login:  ' + error.code + ' ' + error.message);
           this.$state.go('login');
         }

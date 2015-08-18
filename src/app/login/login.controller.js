@@ -10,6 +10,7 @@ var chavo;
             this.AuthService = AuthService;
             this.$q = $q;
             this.FacebookService = FacebookService;
+            this.showResetPwMessage = false;
         }
         LoginController.prototype.signUp = function (form) {
             var _this = this;
@@ -32,6 +33,19 @@ var chavo;
                     _this.$state.go('home');
                 },
                 error: function (user, error) {
+                    console.log('Unable to login:  ' + error.code + ' ' + error.message);
+                    _this.$state.go('login');
+                }
+            });
+        };
+        LoginController.prototype.requestPasswordReset = function (formData) {
+            var _this = this;
+            this.AuthService.requestPasswordReset(formData, {
+                success: function () {
+                    _this.showResetPwMessage = true;
+                    _this.$state.go('login');
+                },
+                error: function (error) {
                     console.log('Unable to login:  ' + error.code + ' ' + error.message);
                     _this.$state.go('login');
                 }

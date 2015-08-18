@@ -31,6 +31,12 @@ module chavo {
         });
     }
 
+    requestPasswordReset(authData: { email: string }, callbacks: any) {
+      Parse.User.requestPasswordReset(authData.email, callbacks)
+        .then(() => {
+        });
+    }
+
     logOut() {
       Parse.User.logOut()
         .then(() => {

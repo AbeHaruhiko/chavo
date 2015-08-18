@@ -23,6 +23,11 @@ var chavo;
                 _this.$rootScope.currentUser = user;
             });
         };
+        AuthService.prototype.requestPasswordReset = function (authData, callbacks) {
+            Parse.User.requestPasswordReset(authData.email, callbacks)
+                .then(function () {
+            });
+        };
         AuthService.prototype.logOut = function () {
             var _this = this;
             Parse.User.logOut()
