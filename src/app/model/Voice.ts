@@ -3,7 +3,7 @@ module chavo {
 
   export class Voice {
     constructor(public description: string,
-      public author: string,
+      public speaker: string,
       public age: string,
       public gender: string,
       public user: string,
