@@ -70,7 +70,8 @@
                       <!-- <p class="text-center">
                         <span class="glyphicon glyphicon-user icon-size"></span>
                       </p> -->
-                      <img src="assets/images/ic_hal.jpg" class="icon-size"/>
+                      <div ng-style="{ 'background-image': 'url(' + $root.currentUser.get('iconUrl') + ')' }"
+                        class="img-circle icon-post"></div>
                     </div>
                     <div class="col-lg-8">
                       <p class="text-left"><strong>{{$root.currentUser.get('username')}}</strong></p>
