@@ -47,6 +47,7 @@ body {
     height: auto;
 }
 
+// 投稿のアイコン
 .icon-post {
   height: 40px;
   width: 40px;
@@ -54,10 +55,11 @@ body {
   background-position: center;
 }
 
+// プロファイルページのアイコン
 .profile-icon {
   height: 160px;
   width: 160px;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
   background-size: cover;
   background-position: center;
 }
@@ -91,6 +93,15 @@ body {
     width: 100%;
 }
 
+// bootstrap-file-uploadのファイル選択ボタン
+.photo-browse-btn {
+  width: 160px;
+}
+
+// bootstrap-file-uploadのコンテナ
+.file-input {
+  margin-bottom: 32px;
+}
 
 /* Do not remove this comments bellow. It's the markers used by gulp-inject to inject
    all your sass files automatically */

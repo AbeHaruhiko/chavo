@@ -17,7 +17,7 @@ module chavo {
         this.profile = new Profile($rootScope.currentUser.getUsername(),
             $rootScope.currentUser.getEmail(),
             null,
-            null);
+            $rootScope.currentUser.get('iconUrl'));
 
         // ファイルインプットの設定
         var fileSelector: any = angular.element('#photo-selector');
@@ -25,7 +25,9 @@ module chavo {
           'uploadUrl': 'dummy',
           'dropZoneEnabled': false,
           'showCaption': false,
-          'showPreview': true
+          'showPreview': true,
+          'browseClass': 'photo-browse-btn btn btn-primary',
+          'browseLabel': 'ファイルを選択'
         });
 
         // アップロード直前のイベントでParseに送る。（bootstrap-file-inputによるアップロードは失敗する。）
@@ -61,7 +63,7 @@ module chavo {
         });
 
 
-        //bootstrap-file-inputによるアップロードは失敗する。
+        // bootstrap-file-inputによるアップロードは失敗する。
         fileSelector.on('fileuploaderror', function(event, data, previewId, index) {
           // エラーメッセージは非表示
           angular.element('.file-error-message').css('display', 'none');

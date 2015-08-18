@@ -7,13 +7,15 @@ var chavo;
             this.$scope = $scope;
             this.$rootScope = $rootScope;
             this.showIcon = false;
-            this.profile = new chavo.Profile($rootScope.currentUser.getUsername(), $rootScope.currentUser.getEmail(), null, null);
+            this.profile = new chavo.Profile($rootScope.currentUser.getUsername(), $rootScope.currentUser.getEmail(), null, $rootScope.currentUser.get('iconUrl'));
             var fileSelector = angular.element('#photo-selector');
             fileSelector.fileinput({
                 'uploadUrl': 'dummy',
                 'dropZoneEnabled': false,
                 'showCaption': false,
-                'showPreview': true
+                'showPreview': true,
+                'browseClass': 'photo-browse-btn btn btn-primary',
+                'browseLabel': 'ファイルを選択'
             });
             fileSelector.on('filepreupload', function (event, data, previewId, index) {
                 if (data.files.length > 0) {
