@@ -17,12 +17,28 @@
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
         <button class="btn btn-default" ng-click="login.logIn(logInForm)" ng-disabled="loginForm.email.$invalid">ログイン</button>
+        or
         <button class="btn btn-default" ng-click="login.loginWithFacebook()">Facebookでログイン</button>
       </div>
     </div>
   </form>
 
-  <h5>パスワードを忘れた場合</h5>
+  <div class="col-sm-offset-2 col-sm-10" id="resetPwPopoverContainer">
+    <alert type="info" ng-show="login.showResetPwMessage">メールを送信しました。メールのURLをクリックしてパスワードを再設定してください。</alert>
+    <a popover-template="'resetPwPopoverTemplate.html'"
+        popover-placement="right"
+        popover-trigger="focus"
+        role="button"
+        tabindex="0">パスワードを忘れたときはこちら</a>
+    <script type="text/ng-template" id="resetPwPopoverTemplate.html">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" ng-model="resetPwForm.email" class="form-control" id="reset-pw-email" name="reset-pw-email">
+          </div>
+          <button class="btn btn-default" ng-click="login.requestPasswordReset(resetPwForm)" ng-disabled="resetPwForm.email.$invalid">送信</button>
+    </script>
+  </div>
+  <!-- <h5>パスワードを忘れた場合</h5>
   <form class="form-horizontal" ng-show="!$root.currentUser  || !$root.currentUser.get('emailVerified')" name="resetPwForm" novalidate>
     <alert type="info" ng-show="login.showResetPwMessage">メールを送信しました。メールのURLをクリックしてパスワードを再設定してください。</alert>
     <div class="form-group">
@@ -36,15 +52,7 @@
         <button class="btn btn-default" ng-click="login.requestPasswordReset(resetPwForm)" ng-disabled="resetPwForm.email.$invalid">送信</button>
       </div>
     </div>
-  </form>
-  <button popover-template="dynamicPopover.templateUrl" popover-title="パスワードをリセットする" type="button" class="btn btn-default">パスワードを忘れた場合</button>
-  <script type="text/ng-template" id="myPopoverTemplate.html">
-        <div>{{dynamicPopover.content}}</div>
-        <div class="form-group">
-          <label>Popup Title:</label>
-          <input type="text" ng-model="resetPwForm.email" class="form-control">
-        </div>
-  </script>
+  </form> -->
 
   <h5>ユーザ登録</h5>
   <form class="form-horizontal" ng-show="!$root.currentUser  || !$root.currentUser.get('emailVerified')" name="signUpForm" novalidate>

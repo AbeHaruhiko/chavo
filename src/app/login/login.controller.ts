@@ -52,6 +52,7 @@ module chavo {
     requestPasswordReset(formData: { email: string; }) {
       this.AuthService.requestPasswordReset(formData, {
         success: () => {
+          // $('#resetPwPopoverContainer .popover').popover('hide')
           this.showResetPwMessage = true;
           this.$state.go('login');
         },
