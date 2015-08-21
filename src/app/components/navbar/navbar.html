@@ -76,7 +76,7 @@
                     <div class="col-lg-8">
                       <p class="text-left"><strong>{{$root.currentUser.get('username')}}</strong></p>
                       <p class="text-left " ng-show="!$root.currentUser.get('authData').facebook && !$root.currentUser.get('emailVerified')">
-                          <alert type="danger">メールアドレスの確認が完了していません。メールを確認してURLをクリックしてください。</alert>
+                          <alert type="danger">メールアドレスの確認が完了しておらず一部機能が利用できません。メールを確認してURLをクリックしてください。</alert>
                       </p>
                     </div>
                   </div>
