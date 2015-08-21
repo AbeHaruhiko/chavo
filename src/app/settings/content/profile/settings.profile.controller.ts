@@ -31,7 +31,7 @@ module chavo {
         });
 
         // アップロード直前のイベントでParseに送る。（bootstrap-file-inputによるアップロードは失敗する。）
-        fileSelector.on('filepreupload', (event, data, previewId, index) => {
+        fileSelector.on('filepreupload', (event: any, data: any, previewId: number, index: number) => {
 
           if (data.files.length > 0) {
             var file = data.files[0];
@@ -56,7 +56,7 @@ module chavo {
               // プレビュー消す
               fileSelector.fileinput('clear');
 
-            }, function(error) {
+            }, function(error: Parse.Error) {
               console.error(error);
             });
           }
@@ -64,11 +64,11 @@ module chavo {
 
 
         // bootstrap-file-inputによるアップロードは失敗する。
-        fileSelector.on('fileuploaderror', function(event, data, previewId, index) {
+        fileSelector.on('fileuploaderror', function(event: any, data: any, previewId: number, index: number) {
           // エラーメッセージは非表示
           angular.element('.file-error-message').css('display', 'none');
 
-          console.error('file upload error. (this is expected results. please ignore.)')
+          console.error('file upload error. (this is expected results. please ignore.)');
         });
 
 
