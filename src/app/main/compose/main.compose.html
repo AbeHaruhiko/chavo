@@ -71,7 +71,7 @@
 
   <div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3">
     <div ng-show="!$root.currentUser"></span> 
-      <alert type="danger">投稿機能の利用にはログインが必要です。</alert>
+      <alert type="danger">投稿機能の利用にはログインが必要です。<a ui-sref="login" class="alert-link">ログインはこちらから</a></alert>
     </div>
     <div ng-show="$root.currentUser && !$root.currentUser.get('authData').facebook && !$root.currentUser.get('emailVerified')"></span> 
       <alert type="danger" close="">投稿機能の利用にはログインが必要です。メールアドレスの確認が完了していません。メールを確認してURLをクリックしてください。</alert>
