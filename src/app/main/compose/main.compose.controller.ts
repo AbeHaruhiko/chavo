@@ -13,6 +13,10 @@ module chavo {
 
     public voiceIsPublic: boolean = false;
 
+    public disableInput: boolean = false;
+
+    public alertMsg: string;
+
     /* @ngInject */
     constructor(public $scope: IMainScope,
         public $state: ng.ui.IStateService) {
@@ -60,6 +64,8 @@ module chavo {
 
     public submit() {
 
+      this.disableInput = true;
+
       var ParseVoice = Parse.Object.extend('Voice');
       var voice = new ParseVoice();
       voice.set('description', this.voice.description);
@@ -80,6 +86,11 @@ module chavo {
       }).then(() => {
         console.log('ほぞんしました');
         this.$state.go('home.all');
+      }, (error: Parse.Error) => {
+        console.error('投稿送信時エラー: ' + error.code + ' ' + error.message);
+        this.alertMsg = '送信に失敗しました...時間をおいてためしてください。';
+        this.disableInput = false;
+        this.$scope.$apply();
       });
     }
   }

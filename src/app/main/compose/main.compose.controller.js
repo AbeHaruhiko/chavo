@@ -11,6 +11,7 @@ var chavo;
                 { label: '女の子', value: chavo.GENDER.FEMALE },
                 { label: '非表示', value: chavo.GENDER.OTHER }];
             this.voiceIsPublic = false;
+            this.disableInput = false;
             var ParseChild = Parse.Object.extend('Child');
             var query = new Parse.Query(ParseChild);
             query.ascending('dispOrder');
@@ -38,6 +39,7 @@ var chavo;
         };
         MainComposeController.prototype.submit = function () {
             var _this = this;
+            this.disableInput = true;
             var ParseVoice = Parse.Object.extend('Voice');
             var voice = new ParseVoice();
             voice.set('description', this.voice.description);
@@ -58,6 +60,11 @@ var chavo;
             }).then(function () {
                 console.log('ほぞんしました');
                 _this.$state.go('home.all');
+            }, function (error) {
+                console.error('投稿送信時エラー: ' + error.code + ' ' + error.message);
+                _this.alertMsg = '送信に失敗しました...時間をおいてためしてください。';
+                _this.disableInput = false;
+                _this.$scope.$apply();
             });
         };
         return MainComposeController;
