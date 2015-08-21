@@ -15,7 +15,7 @@ var chavo;
                 'showCaption': false,
                 'showPreview': true,
                 'browseClass': 'photo-browse-btn btn btn-primary',
-                'browseLabel': 'ファイルを選択'
+                'browseLabel': '画像選択'
             });
             fileSelector.on('filepreupload', function (event, data, previewId, index) {
                 if (data.files.length > 0) {

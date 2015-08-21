@@ -27,7 +27,7 @@ module chavo {
           'showCaption': false,
           'showPreview': true,
           'browseClass': 'photo-browse-btn btn btn-primary',
-          'browseLabel': 'ファイルを選択'
+          'browseLabel': '画像選択'
         });
 
         // アップロード直前のイベントでParseに送る。（bootstrap-file-inputによるアップロードは失敗する。）

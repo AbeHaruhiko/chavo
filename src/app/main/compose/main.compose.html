@@ -85,7 +85,7 @@
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu">
-                <li><a ng-click="main_compose.clearVoiceAuthor()">クリアする</a></li>
+                <li><a ng-click="main_compose.clearVoiceAuthor()">-- クリアする --</a></li>
                 <li ng-repeat="child in main_compose.children">
                   <a ng-click="main_compose.onSelectVoiceAuthor(child)">{{ child.nickName || '（未登録）'}}
                     <span ng-if="child.age">{{child.age}}</span>

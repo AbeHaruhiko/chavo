@@ -2,9 +2,10 @@ var chavo;
 (function (chavo) {
     'use strict';
     var MainComposeController = (function () {
-        function MainComposeController($scope) {
+        function MainComposeController($scope, $state) {
             var _this = this;
             this.$scope = $scope;
+            this.$state = $state;
             this.children = new Array();
             this.genderList = [{ label: '男の子', value: chavo.GENDER.MALE },
                 { label: '女の子', value: chavo.GENDER.FEMALE },
@@ -36,6 +37,7 @@ var chavo;
             this.voiceAuthor = null;
         };
         MainComposeController.prototype.submit = function () {
+            var _this = this;
             var ParseVoice = Parse.Object.extend('Voice');
             var voice = new ParseVoice();
             voice.set('description', this.voice.description);
@@ -55,6 +57,7 @@ var chavo;
                 }
             }).then(function () {
                 console.log('ほぞんしました');
+                _this.$state.go('home.all');
             });
         };
         return MainComposeController;

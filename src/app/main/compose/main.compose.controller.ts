@@ -14,7 +14,8 @@ module chavo {
     public voiceIsPublic: boolean = false;
 
     /* @ngInject */
-    constructor(public $scope: IMainScope) {
+    constructor(public $scope: IMainScope,
+        public $state: ng.ui.IStateService) {
 
       var ParseChild = Parse.Object.extend('Child');
       var query = new Parse.Query(ParseChild);
@@ -78,6 +79,7 @@ module chavo {
         }
       }).then(() => {
         console.log('ほぞんしました');
+        this.$state.go('home.all');
       });
     }
   }
