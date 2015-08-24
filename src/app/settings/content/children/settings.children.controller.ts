@@ -11,11 +11,15 @@ module chavo {
     /* @ngInject */
     constructor (public $scope: ISettingsChildren,
       public $rootScope: IChavoRootScope,
-      public $state: ng.ui.IStateService) {
+      public $state: ng.ui.IStateService,
+      public cfpLoadingBar) {
 
       // parseから取得
       var ParseChild = Parse.Object.extend('Child');
       var query = new Parse.Query(ParseChild);
+
+      cfpLoadingBar.start();
+
   		query.ascending('dispOrder');
   		query.find({
   		  error: function(error: Parse.Error) {
@@ -30,6 +34,8 @@ module chavo {
             // ヶ月（誕生日からの月数 - 年齢分の月数）
             var months: string = '' + (moment().diff(moment(parseChild.get('birthday')), 'months') - (12 * +years));
           }
+
+          cfpLoadingBar.complete();
 
           this.$scope.$apply(() => {
             this.children.push(new Child(parseChild.get('dispOrder'),
