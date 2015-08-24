@@ -64,7 +64,7 @@ module chavo {
               null
             )
             .then(() => {
-              this.$state.go('home');
+              this.$state.go('home.all');
             });
           });
         },

@@ -19,7 +19,7 @@ module chavo {
       this.AuthService.logIn(formData, {
         success: (user: Parse.User) => {
           // this.$rootScope.currentUser = user;
-          this.$state.go('home');
+          this.$state.go('home.all');
         },
         error: (user: Parse.User, error: Parse.Error) => {
           console.log('Unable to login:  ' + error.code + ' ' + error.message);

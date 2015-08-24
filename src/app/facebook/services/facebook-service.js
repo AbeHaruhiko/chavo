@@ -51,7 +51,7 @@ var chavo;
                             }
                         }, null, null)
                             .then(function () {
-                            _this.$state.go('home');
+                            _this.$state.go('home.all');
                         });
                     });
                 },
