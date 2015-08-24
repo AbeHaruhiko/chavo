@@ -108,6 +108,12 @@ body {
   width: 100%;
 }
 
+#loading-bar .bar {
+  margin-top: 50px;   // 2015/08/24 安部追加
+}
+
+
+
 /* Do not remove this comments bellow. It's the markers used by gulp-inject to inject
    all your sass files automatically */
 // injector

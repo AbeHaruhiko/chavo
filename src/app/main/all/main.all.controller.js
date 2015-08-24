@@ -2,13 +2,15 @@ var chavo;
 (function (chavo) {
     'use strict';
     var MainAllController = (function () {
-        function MainAllController($scope) {
+        function MainAllController($scope, cfpLoadingBar) {
             var _this = this;
             this.$scope = $scope;
+            this.cfpLoadingBar = cfpLoadingBar;
             this.voices = new Array();
             var ParseVoice = Parse.Object.extend('Voice');
             var query = new Parse.Query(ParseVoice);
             var parseVoices;
+            cfpLoadingBar.start();
             query.descending('createdAt');
             query.find({
                 success: function (results) {
@@ -30,6 +32,7 @@ var chavo;
                         voice.get('icon') === undefined ? null : voice.get('icon').url()
                         : voice.get('user').get('iconUrl'), moment(voice.createdAt).format('YYYY/MM/DD').toString()));
                 });
+                cfpLoadingBar.complete();
                 _this.$scope.$apply();
             }, function (error) {
                 // 投稿ユーザがいない場合などエラーになる
@@ -40,6 +43,7 @@ var chavo;
                             : voice.get('user').get('iconUrl'), moment(voice.createdAt).format('YYYY/MM/DD').toString()));
                     }
                 });
+                cfpLoadingBar.complete();
                 _this.$scope.$apply();
             });
         }

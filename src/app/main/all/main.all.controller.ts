@@ -6,11 +6,14 @@ module chavo {
     voices = new Array<Voice>();
 
     /* @ngInject */
-    constructor (public $scope: IMainScope) {
+    constructor (public $scope: IMainScope,
+        public cfpLoadingBar) {
 
       var ParseVoice = Parse.Object.extend('Voice');
   		var query = new Parse.Query(ParseVoice);
       var parseVoices: Parse.Object[];
+
+      cfpLoadingBar.start();
 
   		query.descending('createdAt');
 
@@ -61,6 +64,8 @@ module chavo {
           ));
         });
 
+        cfpLoadingBar.complete();
+
         this.$scope.$apply();
 
       },
@@ -85,6 +90,8 @@ module chavo {
             ));
           }
         });
+
+        cfpLoadingBar.complete();
 
         this.$scope.$apply();
       });

@@ -25,7 +25,8 @@ var chavo;
         'ui.router.tabs',
         'ui.bootstrap',
         'ui.validate',
-        'toggle-switch'
+        'toggle-switch',
+        'cfp.loadingBar'
     ])
         .service('AuthService', chavo.AuthService)
         .service('FacebookService', chavo.FacebookService)
@@ -81,6 +82,9 @@ var chavo;
         });
         $urlRouterProvider.otherwise('/');
     })
+        .config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
+            cfpLoadingBarProvider.includeSpinner = false;
+        }])
         .run(function ($rootScope, $window) {
         Parse.initialize('FpENpUI2dIIOJu5J4UrssehUKwkB1afjOfEK92Zv', '1Wbddi5o4HemnLkhBCmHov121BuE8qS5d1jxPxKs');
         $rootScope.currentUser = Parse.User.current();
