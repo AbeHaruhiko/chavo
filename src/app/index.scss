@@ -108,10 +108,32 @@ body {
   width: 100%;
 }
 
+// loading-bar
 #loading-bar .bar {
+  // navbar分下へ
   margin-top: 50px;   // 2015/08/24 安部追加
 }
 
+// お気に入りハート
+#like {
+  margin-right: 12px;
+  // color: #23572c;
+  // &:hover {
+  //   color: $link-color !important;
+  // }
+}
+
+.like-active {
+  color: #ff4081;
+}
+
+.like-active-add {
+  transition: ease-out 0.3s;
+}
+
+.like-active-add-active{
+  font-size: 1.5em;
+}
 
 
 /* Do not remove this comments bellow. It's the markers used by gulp-inject to inject

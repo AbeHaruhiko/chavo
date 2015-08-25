@@ -9,7 +9,14 @@
           </a>
         </div>
         <div class="media-body">
-          <span><small>{{ voice.user }}</small></span><span class="pull-right"><small>{{ voice.createdAt }}</small></span>
+          <span>
+            <small>{{ voice.user }}</small>
+            <small>{{ voice.createdAt }}</small>
+          </span>
+          <span class="pull-right">
+            <span>{{ voice.likes }}</span>
+            <span ng-click="main_all.toggleLike(voice)" id="like" ng-class="{ 'like-active': voice.like }"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span></span>
+          </span>
           <p class="pre-line">{{ voice.description }}</p>
           <p class="text-right"><small>{{ voice.speaker }} {{ voice.age }} {{ voice.gender }}</small></p>
         </div>

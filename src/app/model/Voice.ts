@@ -8,6 +8,7 @@ module chavo {
       public gender: string,
       public user: string,
       public icon: string,
+      public like: boolean,
       public createdAt: string) {
     }
   }

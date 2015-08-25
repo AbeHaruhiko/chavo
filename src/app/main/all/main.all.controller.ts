@@ -60,6 +60,7 @@ module chavo {
             voice.get('user').get('iconUrl') === undefined ?
                 voice.get('icon') === undefined ? null : voice.get('icon').url()
                     : voice.get('user').get('iconUrl'),
+            false,
             moment(voice.createdAt).format('YYYY/MM/DD').toString()
           ));
         });
@@ -86,6 +87,7 @@ module chavo {
               voice.get('user').get('iconUrl') === undefined ?
                   voice.get('icon') === undefined ? null : voice.get('icon').url()
                       : voice.get('user').get('iconUrl'),
+              false,
               moment(voice.createdAt).format('YYYY/MM/DD').toString()
             ));
           }
@@ -96,6 +98,12 @@ module chavo {
         this.$scope.$apply();
       });
     }
-  }
 
+    toggleLike(voice: Voice) {
+        voice.like = !voice.like;
+        var ParseLike = Parse.Object.extend('Like');
+        ParseLike.addUnique('voice', voice.get('objectId'));
+
+    }
+  }
 }
