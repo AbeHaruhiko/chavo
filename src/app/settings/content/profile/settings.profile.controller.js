@@ -7,7 +7,7 @@ var chavo;
             this.$scope = $scope;
             this.$rootScope = $rootScope;
             this.showIcon = false;
-            this.profile = new chavo.Profile($rootScope.currentUser.getUsername(), $rootScope.currentUser.getEmail(), null, $rootScope.currentUser.get('iconUrl'));
+            this.profile = new chavo.Profile($rootScope.currentUser.getUsername(), $rootScope.currentUser.getEmail(), null, $rootScope.currentUser.get('iconUrl'), $rootScope.currentUser.get('likes'));
             var fileSelector = angular.element('#photo-selector');
             fileSelector.fileinput({
                 'uploadUrl': 'dummy',

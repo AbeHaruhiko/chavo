@@ -6,7 +6,9 @@ module chavo {
     voices = new Array<Voice>();
 
     /* @ngInject */
-    constructor (public $scope: IMainScope,
+    constructor (
+        public $scope: IMainScope,
+        public $rootScope: IChavoRootScope,
         public cfpLoadingBar) {
 
       var ParseVoice = Parse.Object.extend('Voice');
@@ -37,7 +39,7 @@ module chavo {
           // this.$scope.$apply();
   		  },
   		  error: function(error: Parse.Error) {
-  		    alert('Error: ' + error.code + ' ' + error.message);
+  		    console.error('Error: ' + error.code + ' ' + error.message);
   		  }
   		}).then((results: Parse.Object[]) => {
         parseVoices = results;
@@ -52,6 +54,7 @@ module chavo {
         parseVoices.forEach((voice: Parse.Object) => {
           /*voice.set('genderDisp', voice.get('gender') == 0 ? '男の子' : voice.get('gender') == 1 ? '女の子' : '');*/
           this.voices.push(new Voice(
+            voice.id,
             voice.get('description'),
             voice.get('author'),
             (voice.get('ageYears') && voice.get('ageMonths')) ? (voice.get('ageYears') + '歳' + voice.get('ageMonths') + 'ヶ月') : '',
@@ -79,6 +82,7 @@ module chavo {
             // すでにいないユーザの投稿は表示しない
 
             this.voices.push(new Voice(
+              voice.id,
               voice.get('description'),
               voice.get('author'),
               (voice.get('ageYears') && voice.get('ageMonths')) ? (voice.get('ageYears') + '歳' + voice.get('ageMonths') + 'ヶ月') : '',
@@ -101,9 +105,21 @@ module chavo {
 
     toggleLike(voice: Voice) {
         voice.like = !voice.like;
-        var ParseLike = Parse.Object.extend('Like');
-        ParseLike.addUnique('voice', voice.get('objectId'));
+        if (voice.like) {
+          this.$rootScope.currentUser.addUnique('likes', voice.objectId);
+        } else {
+          this.$rootScope.currentUser.remove('likes', voice.objectId);
+        }
 
+        this.$rootScope.currentUser.save()
+        .then((user: Parse.User) =>{
+          console.log(user.get('likes'));
+        },
+        (error: Parse.Error) => {
+          console.error('Error: ' + error.code + ' ' + error.message);
+          // 保存に失敗したので戻す。
+          voice.like = !voice.like;
+        });
     }
   }
 }

@@ -52,6 +52,7 @@ module chavo {
         parseVoices.forEach((voice: Parse.Object) => {
           /*voice.set('genderDisp', voice.get('gender') == 0 ? '男の子' : voice.get('gender') == 1 ? '女の子' : '');*/
           this.voices.push(new Voice(
+            voice.id,
             voice.get('description'),
             voice.get('author'),
             (voice.get('ageYears') && voice.get('ageMonths')) ? (voice.get('ageYears') + '歳' + voice.get('ageMonths') + 'ヶ月') : '',
@@ -79,6 +80,7 @@ module chavo {
             // すでにいないユーザの投稿は表示しない（mypostなのでありえないはずだが）
 
             this.voices.push(new Voice(
+              voice.id,
               voice.get('description'),
               voice.get('author'),
               (voice.get('ageYears') && voice.get('ageMonths')) ? (voice.get('ageYears') + '歳' + voice.get('ageMonths') + 'ヶ月') : '',

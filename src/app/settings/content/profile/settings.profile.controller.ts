@@ -14,10 +14,13 @@ module chavo {
       public $scope: ISettingsMenu,
       public $rootScope: IChavoRootScope) {
 
-        this.profile = new Profile($rootScope.currentUser.getUsername(),
+        this.profile = new Profile(
+            $rootScope.currentUser.getUsername(),
             $rootScope.currentUser.getEmail(),
             null,
-            $rootScope.currentUser.get('iconUrl'));
+            $rootScope.currentUser.get('iconUrl'),
+            $rootScope.currentUser.get('likes')
+          );
 
         // ファイルインプットの設定
         var fileSelector: any = angular.element('#photo-selector');
