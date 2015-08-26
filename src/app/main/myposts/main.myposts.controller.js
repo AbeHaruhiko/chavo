@@ -29,7 +29,7 @@ var chavo;
                 return Parse.Promise.when(promises);
             })
                 .then(function () {
-                var myLikes = $rootScope.currentUser.get('likes');
+                var myLikes = $rootScope.currentUser.get('likes') || [];
                 parseVoices.forEach(function (voice) {
                     _this.voices.push(new chavo.Voice(voice.id, voice.get('description'), voice.get('author'), (voice.get('ageYears') && voice.get('ageMonths')) ? (voice.get('ageYears') + '歳' + voice.get('ageMonths') + 'ヶ月') : '', voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '', voice.get('user').get('username'), voice.get('user').get('iconUrl') === undefined ?
                         voice.get('icon') === undefined ? null : voice.get('icon').url()
@@ -39,7 +39,7 @@ var chavo;
                 _this.$scope.$apply();
             }, function (error) {
                 // 投稿ユーザがいない場合などエラーになる
-                var myLikes = $rootScope.currentUser.get('likes');
+                var myLikes = $rootScope.currentUser.get('likes') || [];
                 parseVoices.forEach(function (voice) {
                     if (voice.get('user').get('username') !== undefined) {
                         _this.voices.push(new chavo.Voice(voice.id, voice.get('description'), voice.get('author'), (voice.get('ageYears') && voice.get('ageMonths')) ? (voice.get('ageYears') + '歳' + voice.get('ageMonths') + 'ヶ月') : '', voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '', voice.get('user').get('username'), voice.get('user').get('iconUrl') === undefined ?

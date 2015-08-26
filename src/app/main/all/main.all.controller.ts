@@ -58,7 +58,7 @@ module chavo {
         parseVoices.forEach((voice: Parse.Object) => {
 
           // 自分がlike済みの投稿
-          var myLikes: string[] = $rootScope.currentUser.get('likes');
+          var myLikes: string[] = $rootScope.currentUser.get('likes') || [];
 
 
           this.voices.push(new Voice(
@@ -86,7 +86,7 @@ module chavo {
         // 投稿ユーザがいない場合などエラーになる
 
         // 自分がlike済みの投稿
-        var myLikes: string[] = $rootScope.currentUser.get('likes');
+        var myLikes: string[] = $rootScope.currentUser.get('likes') || [];
 
         // 表示用にVoiceクラスへ移し替え
         parseVoices.forEach((voice: Parse.Object) => {
