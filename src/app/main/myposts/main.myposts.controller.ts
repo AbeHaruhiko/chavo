@@ -6,7 +6,9 @@ module chavo {
     voices = new Array<Voice>();
 
     /* @ngInject */
-    constructor (public $scope: IMainScope,
+    constructor (
+        public $scope: IMainScope,
+        public $rootScope: IChavoRootScope,
         public cfpLoadingBar) {
 
       var ParseVoice = Parse.Object.extend('Voice');
@@ -48,6 +50,10 @@ module chavo {
         return Parse.Promise.when(promises);
       })
       .then(() => {
+
+        // 自分がlike済みの投稿
+        var myLikes: string[] = $rootScope.currentUser.get('likes');
+
         // 表示用にVoiceクラスへ移し替え
         parseVoices.forEach((voice: Parse.Object) => {
           /*voice.set('genderDisp', voice.get('gender') == 0 ? '男の子' : voice.get('gender') == 1 ? '女の子' : '');*/
@@ -61,7 +67,7 @@ module chavo {
             voice.get('user').get('iconUrl') === undefined ?
                 voice.get('icon') === undefined ? null : voice.get('icon').url()
                     : voice.get('user').get('iconUrl'),
-            false,
+            myLikes.indexOf(voice.id) >= 0 ? true: false,
             voice.get('likeCount'),
             moment(voice.createdAt).format('YYYY/MM/DD').toString()
           ));
@@ -74,6 +80,9 @@ module chavo {
       },
       (error: Parse.Error) => {
         // 投稿ユーザがいない場合などエラーになる
+
+        // 自分がlike済みの投稿
+        var myLikes: string[] = $rootScope.currentUser.get('likes');
 
         // 表示用にVoiceクラスへ移し替え
         parseVoices.forEach((voice: Parse.Object) => {
@@ -90,7 +99,7 @@ module chavo {
               voice.get('user').get('iconUrl') === undefined ?
                   voice.get('icon') === undefined ? null : voice.get('icon').url()
                       : voice.get('user').get('iconUrl'),
-              false,
+              myLikes.indexOf(voice.id) >= 0 ? true: false,
               voice.get('likeCount'),
               moment(voice.createdAt).format('YYYY/MM/DD').toString()
             ));
