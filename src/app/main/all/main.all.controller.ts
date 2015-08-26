@@ -64,6 +64,7 @@ module chavo {
                 voice.get('icon') === undefined ? null : voice.get('icon').url()
                     : voice.get('user').get('iconUrl'),
             false,
+            voice.get('likeCount'),
             moment(voice.createdAt).format('YYYY/MM/DD').toString()
           ));
         });
@@ -92,6 +93,7 @@ module chavo {
                   voice.get('icon') === undefined ? null : voice.get('icon').url()
                       : voice.get('user').get('iconUrl'),
               false,
+              voice.get('likeCount'),
               moment(voice.createdAt).format('YYYY/MM/DD').toString()
             ));
           }
@@ -105,10 +107,17 @@ module chavo {
 
     toggleLike(voice: Voice) {
         voice.like = !voice.like;
+
+        var ParseVoice = Parse.Object.extend('Voice');
+        var parseVoice: Parse.Object = new ParseVoice();
+        parseVoice.id = voice.objectId;
+
         if (voice.like) {
           this.$rootScope.currentUser.addUnique('likes', voice.objectId);
+          parseVoice.increment('likeCount');
         } else {
           this.$rootScope.currentUser.remove('likes', voice.objectId);
+          parseVoice.increment('likeCount', -1);
         }
 
         this.$rootScope.currentUser.save()
@@ -119,6 +128,17 @@ module chavo {
           console.error('Error: ' + error.code + ' ' + error.message);
           // 保存に失敗したので戻す。
           voice.like = !voice.like;
+        });
+
+        parseVoice.save()
+        .then((parseVoice: Parse.Object) => {
+          console.log(parseVoice.get('likeCount'));
+          this.$scope.$apply(() => {
+            voice.likeCount = parseVoice.get('likeCount');
+          });
+        },
+        (error: Parse.Error) => {
+          console.error('Error: ' + error.code + ' ' + error.message);
         });
     }
   }

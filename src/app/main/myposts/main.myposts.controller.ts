@@ -62,6 +62,7 @@ module chavo {
                 voice.get('icon') === undefined ? null : voice.get('icon').url()
                     : voice.get('user').get('iconUrl'),
             false,
+            voice.get('likeCount'),
             moment(voice.createdAt).format('YYYY/MM/DD').toString()
           ));
         });
@@ -90,6 +91,7 @@ module chavo {
                   voice.get('icon') === undefined ? null : voice.get('icon').url()
                       : voice.get('user').get('iconUrl'),
               false,
+              voice.get('likeCount'),
               moment(voice.createdAt).format('YYYY/MM/DD').toString()
             ));
           }

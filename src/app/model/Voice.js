@@ -2,7 +2,7 @@ var chavo;
 (function (chavo) {
     'use strict';
     var Voice = (function () {
-        function Voice(objectId, description, speaker, age, gender, user, icon, like, createdAt) {
+        function Voice(objectId, description, speaker, age, gender, user, icon, like, likeCount, createdAt) {
             this.objectId = objectId;
             this.description = description;
             this.speaker = speaker;
@@ -11,6 +11,7 @@ var chavo;
             this.user = user;
             this.icon = icon;
             this.like = like;
+            this.likeCount = likeCount;
             this.createdAt = createdAt;
         }
         return Voice;
