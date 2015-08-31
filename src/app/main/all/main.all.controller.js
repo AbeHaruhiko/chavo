@@ -52,34 +52,14 @@ var chavo;
             });
         }
         MainAllController.prototype.toggleLike = function (voice) {
-            var _this = this;
-            voice.like = !voice.like;
-            var ParseVoice = Parse.Object.extend('Voice');
-            var parseVoice = new ParseVoice();
-            parseVoice.id = voice.objectId;
-            if (voice.like) {
-                this.$rootScope.currentUser.addUnique('likes', voice.objectId);
-                parseVoice.increment('likeCount');
-            }
-            else {
-                this.$rootScope.currentUser.remove('likes', voice.objectId);
-                parseVoice.increment('likeCount', -1);
-            }
-            this.$rootScope.currentUser.save()
-                .then(function (user) {
-                console.log(user.get('likes'));
-            }, function (error) {
-                console.error('Error: ' + error.code + ' ' + error.message);
-                voice.like = !voice.like;
-            });
-            parseVoice.save()
-                .then(function (parseVoice) {
-                console.log(parseVoice.get('likeCount'));
-                _this.$scope.$apply(function () {
-                    voice.likeCount = parseVoice.get('likeCount');
-                });
-            }, function (error) {
-                console.error('Error: ' + error.code + ' ' + error.message);
+            // Cloud Codeへ移動
+            Parse.Cloud.run('toggleLike', { voice: voice }, {
+                success: function (likeCount) {
+                    voice.likeCount = likeCount;
+                },
+                error: function (error) {
+                    console.error('Error: ' + error.code + ' ' + error.message);
+                }
             });
         };
         return MainAllController;

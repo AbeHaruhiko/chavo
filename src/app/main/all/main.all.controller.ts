@@ -71,7 +71,7 @@ module chavo {
             voice.get('user').get('iconUrl') === undefined ?
                 voice.get('icon') === undefined ? null : voice.get('icon').url()
                     : voice.get('user').get('iconUrl'),
-            myLikes.indexOf(voice.id) >= 0 ? true: false,
+            myLikes.indexOf(voice.id) >= 0 ? true : false,
             voice.get('likeCount'),
             moment(voice.createdAt).format('YYYY/MM/DD').toString()
           ));
@@ -103,7 +103,7 @@ module chavo {
               voice.get('user').get('iconUrl') === undefined ?
                   voice.get('icon') === undefined ? null : voice.get('icon').url()
                       : voice.get('user').get('iconUrl'),
-              myLikes.indexOf(voice.id) >= 0 ? true: false,
+              myLikes.indexOf(voice.id) >= 0 ? true : false,
               voice.get('likeCount'),
               moment(voice.createdAt).format('YYYY/MM/DD').toString()
             ));
@@ -117,40 +117,53 @@ module chavo {
     }
 
     toggleLike(voice: Voice) {
-        voice.like = !voice.like;
 
-        var ParseVoice = Parse.Object.extend('Voice');
-        var parseVoice: Parse.Object = new ParseVoice();
-        parseVoice.id = voice.objectId;
+      // Cloud Codeへ移動
 
-        if (voice.like) {
-          this.$rootScope.currentUser.addUnique('likes', voice.objectId);
-          parseVoice.increment('likeCount');
-        } else {
-          this.$rootScope.currentUser.remove('likes', voice.objectId);
-          parseVoice.increment('likeCount', -1);
+      // voice.like = !voice.like;
+      //
+      // var ParseVoice = Parse.Object.extend('Voice');
+      // var parseVoice: Parse.Object = new ParseVoice();
+      // parseVoice.id = voice.objectId;
+      //
+      // if (voice.like) {
+      //   this.$rootScope.currentUser.addUnique('likes', voice.objectId);
+      //   parseVoice.increment('likeCount');
+      // } else {
+      //   this.$rootScope.currentUser.remove('likes', voice.objectId);
+      //   parseVoice.increment('likeCount', -1);
+      // }
+      //
+      // this.$rootScope.currentUser.save()
+      // .then((user: Parse.User) =>{
+      //   console.log(user.get('likes'));
+      // },
+      // (error: Parse.Error) => {
+      //   console.error('Error: ' + error.code + ' ' + error.message);
+      //   // 保存に失敗したので戻す。
+      //   voice.like = !voice.like;
+      // });
+      //
+      // parseVoice.save()
+      // .then((parseVoice: Parse.Object) => {
+      //   console.log(parseVoice.get('likeCount'));
+      //   this.$scope.$apply(() => {
+      //     voice.likeCount = parseVoice.get('likeCount');
+      //   });
+      // },
+      // (error: Parse.Error) => {
+      //   console.error('Error: ' + error.code + ' ' + error.message);
+      // });
+
+      Parse.Cloud.run('toggleLike', { voice: voice }, {
+        success: function(likeCount: number) {
+            voice.likeCount = likeCount;
+        },
+        error: function(error) {
+          console.error('Error: ' + error.code + ' ' + error.message);
         }
+      });
 
-        this.$rootScope.currentUser.save()
-        .then((user: Parse.User) =>{
-          console.log(user.get('likes'));
-        },
-        (error: Parse.Error) => {
-          console.error('Error: ' + error.code + ' ' + error.message);
-          // 保存に失敗したので戻す。
-          voice.like = !voice.like;
-        });
-
-        parseVoice.save()
-        .then((parseVoice: Parse.Object) => {
-          console.log(parseVoice.get('likeCount'));
-          this.$scope.$apply(() => {
-            voice.likeCount = parseVoice.get('likeCount');
-          });
-        },
-        (error: Parse.Error) => {
-          console.error('Error: ' + error.code + ' ' + error.message);
-        });
     }
   }
 }
