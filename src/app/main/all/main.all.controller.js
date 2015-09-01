@@ -53,13 +53,25 @@ var chavo;
         }
         MainAllController.prototype.toggleLike = function (voice) {
             // Cloud Codeへ移動
-            Parse.Cloud.run('toggleLike', { voice: voice }, {
-                success: function (likeCount) {
-                    voice.likeCount = likeCount;
-                },
-                error: function (error) {
-                    console.error('Error: ' + error.code + ' ' + error.message);
-                }
+            var _this = this;
+            voice.like = !voice.like;
+            var ParseVoice = Parse.Object.extend('Voice');
+            var parseVoice = new ParseVoice();
+            parseVoice.id = voice.objectId;
+            if (voice.like) {
+                parseVoice.increment('likeCount');
+            }
+            else {
+                parseVoice.increment('likeCount', -1);
+            }
+            parseVoice.save()
+                .then(function (parseVoice) {
+                console.log(parseVoice.get('likeCount'));
+                _this.$scope.$apply(function () {
+                    voice.likeCount = parseVoice.get('likeCount');
+                });
+            }, function (error) {
+                console.error('Error: ' + error.code + ' ' + error.message);
             });
         };
         return MainAllController;
