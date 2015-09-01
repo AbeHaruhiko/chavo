@@ -18,7 +18,9 @@ module.exports = function(options) {
     var injectScripts = gulp.src([
       '{' + options.src + ',' + options.tmp + '/serve}/app/**/*.js',
       '!' + options.src + '/app/**/*.spec.js',
-      '!' + options.src + '/app/**/*.mock.js'
+      '!' + options.src + '/app/**/*.mock.js',
+      '!' + options.src + '/app/cloud/**/*.js',
+      '!' + options.tmp + '/serve/app/cloud/**/*.js'
     ], { read: false })
     .pipe($.order(sortOutput, {base: options.tmp + '/serve/app'}));
 

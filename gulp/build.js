@@ -64,6 +64,12 @@ module.exports = function(options) {
       .pipe($.size({ title: options.dist + '/', showFiles: true }));
   });
 
+  // 2015/09/01 安部追加
+  gulp.task('cloud', function () {
+    return gulp.src(options.tmp + '/serve/app/cloud/**/*.js')
+      .pipe(gulp.dest(options.dist + '/../cloud/'));
+  });
+
   // Only applies for fonts from bower dependencies
   // Custom fonts are handled by the "other" task
   gulp.task('fonts', function () {
@@ -85,5 +91,5 @@ module.exports = function(options) {
     $.del([options.dist + '/', options.tmp + '/'], done);
   });
 
-  gulp.task('build', ['html', 'fonts', 'other']);
+  gulp.task('build', ['html', 'fonts', 'other', 'cloud']);  // 2015/09/01 安部追加 cloud
 };

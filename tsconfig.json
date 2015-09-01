@@ -28,6 +28,7 @@
         "./src/app/main/myposts/main.myposts.controller.ts",
         "./src/app/model/Child.ts",
         "./src/app/model/GENDER.ts",
+        "./src/app/model/Profile.ts",
         "./src/app/model/Voice.ts",
         "./src/app/settings/content/child/settings.child.controller.ts",
         "./src/app/settings/content/children/settings.children.controller.ts",

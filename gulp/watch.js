@@ -29,6 +29,7 @@ module.exports = function(options) {
     ], function(event) {
       if(isOnlyChange(event)) {
         gulp.start('scripts');
+        gulp.start('scriptsCloud');
       } else {
         gulp.start('inject');
       }
