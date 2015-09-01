@@ -16,6 +16,7 @@
     ],
     "files": [
         "./auth/services/auth-service.ts",
+        "./cloud/main.ts",
         "./components/navbar/navbar.controller.ts",
         "./components/tabmenu/tabmenu.controller.ts",
         "./facebook/services/facebook-service.ts",
