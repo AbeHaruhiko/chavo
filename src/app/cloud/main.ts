@@ -25,17 +25,17 @@ Parse.Cloud.define('toggleLike', function(request: Parse.Cloud.FunctionRequest, 
 
   request.user.save()
   .then((user: Parse.User) => {
-    console.log(user.get('likes'));
+    console.log('user: ' + user);
+    console.log('likes: ' + user.get('likes'));
+    return parseVoice.save();
   },
   (error: Parse.Error) => {
     console.error('Error: ' + error.code + ' ' + error.message);
 
     response.error('Error: ' + error.code + ' ' + error.message);
-  });
-
-  parseVoice.save()
+  })
   .then((parseVoice: Parse.Object) => {
-    console.log(parseVoice.get('likeCount'));
+    console.log('likeCound: ' + parseVoice.get('likeCount'));
     response.success(parseVoice.get('likeCount'));
   },
   (error: Parse.Error) => {

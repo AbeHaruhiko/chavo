@@ -18,14 +18,15 @@ Parse.Cloud.define('toggleLike', function (request, response) {
     }
     request.user.save()
         .then(function (user) {
-        console.log(user.get('likes'));
+        console.log('user: ' + user);
+        console.log('likes: ' + user.get('likes'));
+        return parseVoice.save();
     }, function (error) {
         console.error('Error: ' + error.code + ' ' + error.message);
         response.error('Error: ' + error.code + ' ' + error.message);
-    });
-    parseVoice.save()
+    })
         .then(function (parseVoice) {
-        console.log(parseVoice.get('likeCount'));
+        console.log('likeCound: ' + parseVoice.get('likeCount'));
         response.success(parseVoice.get('likeCount'));
     }, function (error) {
         console.error('Error: ' + error.code + ' ' + error.message);
