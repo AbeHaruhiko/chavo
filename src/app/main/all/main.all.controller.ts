@@ -122,35 +122,37 @@ module chavo {
 
       voice.like = !voice.like;
 
-      var ParseVoice = Parse.Object.extend('Voice');
-      var parseVoice: Parse.Object = new ParseVoice();
-      parseVoice.id = voice.objectId;
-
-      if (voice.like) {
-        parseVoice.increment('likeCount');
-      } else {
-        parseVoice.increment('likeCount', -1);
-      }
-
-      parseVoice.save()
-      .then((parseVoice: Parse.Object) => {
-        console.log(parseVoice.get('likeCount'));
-        this.$scope.$apply(() => {
-          voice.likeCount = parseVoice.get('likeCount');
-        });
-      },
-      (error: Parse.Error) => {
-        console.error('Error: ' + error.code + ' ' + error.message);
-      });
+      // var ParseVoice = Parse.Object.extend('Voice');
+      // var parseVoice: Parse.Object = new ParseVoice();
+      // parseVoice.id = voice.objectId;
       //
-      // Parse.Cloud.run('toggleLike', { voice: voice }, {
-      //   success: function(likeCount: number) {
-      //       voice.likeCount = likeCount;
-      //   },
-      //   error: function(error) {
-      //     console.error('Error: ' + error.code + ' ' + error.message);
-      //   }
+      // if (voice.like) {
+      //   parseVoice.increment('likeCount');
+      // } else {
+      //   parseVoice.increment('likeCount', -1);
+      // }
+      //
+      // parseVoice.save()
+      // .then((parseVoice: Parse.Object) => {
+      //   console.log(parseVoice.get('likeCount'));
+      //   this.$scope.$apply(() => {
+      //     voice.likeCount = parseVoice.get('likeCount');
+      //   });
+      // },
+      // (error: Parse.Error) => {
+      //   console.error('Error: ' + error.code + ' ' + error.message);
       // });
+      //
+      Parse.Cloud.run('toggleLike', { voice: voice }, {
+        success: (likeCount: number) => {
+          this.$scope.$apply(() => {
+            voice.likeCount = likeCount;
+          })
+        },
+        error: (error) => {
+          console.error('Error: ' + error.code + ' ' + error.message);
+        }
+      });
 
     }
   }

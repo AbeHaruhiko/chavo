@@ -2,10 +2,9 @@
 Parse.Cloud.define('hello', function (request, response) {
     response.success('Hello world!');
 });
-Parse.Cloud.afterSave('Voice', function (request) {
+Parse.Cloud.define('toggleLike', function (request, response) {
     Parse.Cloud.useMasterKey();
-    var voice = request.object;
-    voice.like = !voice.like;
+    var voice = request.params.voice;
     var ParseVoice = Parse.Object.extend('Voice');
     var parseVoice = new ParseVoice();
     parseVoice.id = voice.objectId;
