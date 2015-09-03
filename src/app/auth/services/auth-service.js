@@ -26,6 +26,7 @@ var chavo;
         AuthService.prototype.requestPasswordReset = function (authData, callbacks) {
             Parse.User.requestPasswordReset(authData.email, callbacks)
                 .then(function () {
+                console.log('password reset done.');
             });
         };
         AuthService.prototype.logOut = function () {

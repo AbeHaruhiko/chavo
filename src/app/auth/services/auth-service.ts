@@ -34,6 +34,7 @@ module chavo {
     requestPasswordReset(authData: { email: string }, callbacks: any) {
       Parse.User.requestPasswordReset(authData.email, callbacks)
         .then(() => {
+          console.log('password reset done.');
         });
     }
 

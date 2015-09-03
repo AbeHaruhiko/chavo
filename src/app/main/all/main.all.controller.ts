@@ -9,7 +9,7 @@ module chavo {
     constructor (
         public $scope: IMainScope,
         public $rootScope: IChavoRootScope,
-        public cfpLoadingBar) {
+        public cfpLoadingBar: any) {
 
       var ParseVoice = Parse.Object.extend('Voice');
   		var query = new Parse.Query(ParseVoice);
@@ -49,6 +49,10 @@ module chavo {
         results.forEach((voice: Parse.Object) => {
           promises.push(voice.get('user').fetch());
         });
+
+        // // 最新のlikesを取得しておく
+        // promises.push(Parse.User.current().fetch());
+
         return Parse.Promise.when(promises);
       })
       .then(() => {
@@ -58,8 +62,9 @@ module chavo {
         parseVoices.forEach((voice: Parse.Object) => {
 
           // 自分がlike済みの投稿
+          // $rootScope.currentUser = Parse.User.current();
           var myLikes: string[] = $rootScope.currentUser.get('likes') || [];
-
+          console.log('myLikes: ' + myLikes);
 
           this.voices.push(new Voice(
             voice.id,
@@ -82,11 +87,13 @@ module chavo {
         this.$scope.$apply();
 
       },
-      (error: Parse.Error) => {
+      (error: any) => {
+        console.error(error);
         // 投稿ユーザがいない場合などエラーになる
 
         // 自分がlike済みの投稿
         var myLikes: string[] = $rootScope.currentUser.get('likes') || [];
+        console.log('myLikes: ' + myLikes);
 
         // 表示用にVoiceクラスへ移し替え
         parseVoices.forEach((voice: Parse.Object) => {
@@ -118,7 +125,7 @@ module chavo {
 
     toggleLike(voice: Voice) {
 
-      // Cloud Codeへ移動
+      // cloud Codeへ移動
 
       voice.like = !voice.like;
 
@@ -143,17 +150,24 @@ module chavo {
       //   console.error('Error: ' + error.code + ' ' + error.message);
       // });
       //
-      Parse.Cloud.run('toggleLike', { voice: voice }, {
-        success: (likeCount: number) => {
-          this.$scope.$apply(() => {
-            voice.likeCount = likeCount;
-          })
-        },
-        error: (error) => {
-          console.error('Error: ' + error.code + ' ' + error.message);
-        }
-      });
+      Parse.Cloud.run('toggleLike', { voice: voice })
+      .then((likeCount: number) => {
+        this.$scope.$apply(() => {
+          voice.likeCount = likeCount;
 
+          // CloudCodeでユーザにlikesを追加しているのでフェッチ
+          return Parse.User.current().fetch();
+        });
+      },
+      (error: Parse.Error) => {
+        console.error('Error: ' + error.code + ' ' + error.message);
+      })
+      .then((user: Parse.User) => {
+        this.$rootScope.currentUser = Parse.User.current();
+      },
+      (error: Parse.Error) => {
+        console.error('Error: ' + error.code + ' ' + error.message);
+      });
     }
   }
 }

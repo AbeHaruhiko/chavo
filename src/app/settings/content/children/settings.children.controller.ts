@@ -12,7 +12,7 @@ module chavo {
     constructor (public $scope: ISettingsChildren,
       public $rootScope: IChavoRootScope,
       public $state: ng.ui.IStateService,
-      public cfpLoadingBar) {
+      public cfpLoadingBar: any) {
 
       // parseから取得
       var ParseChild = Parse.Object.extend('Child');

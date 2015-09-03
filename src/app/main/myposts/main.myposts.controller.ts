@@ -9,7 +9,7 @@ module chavo {
     constructor (
         public $scope: IMainScope,
         public $rootScope: IChavoRootScope,
-        public cfpLoadingBar) {
+        public cfpLoadingBar: any) {
 
       var ParseVoice = Parse.Object.extend('Voice');
   		var query = new Parse.Query(ParseVoice);
@@ -67,7 +67,7 @@ module chavo {
             voice.get('user').get('iconUrl') === undefined ?
                 voice.get('icon') === undefined ? null : voice.get('icon').url()
                     : voice.get('user').get('iconUrl'),
-            myLikes.indexOf(voice.id) >= 0 ? true: false,
+            myLikes.indexOf(voice.id) >= 0 ? true : false,
             voice.get('likeCount'),
             moment(voice.createdAt).format('YYYY/MM/DD').toString()
           ));
@@ -99,7 +99,7 @@ module chavo {
               voice.get('user').get('iconUrl') === undefined ?
                   voice.get('icon') === undefined ? null : voice.get('icon').url()
                       : voice.get('user').get('iconUrl'),
-              myLikes.indexOf(voice.id) >= 0 ? true: false,
+              myLikes.indexOf(voice.id) >= 0 ? true : false,
               voice.get('likeCount'),
               moment(voice.createdAt).format('YYYY/MM/DD').toString()
             ));

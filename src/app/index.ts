@@ -92,7 +92,7 @@ module chavo {
 
     $urlRouterProvider.otherwise('/');
   })
-  .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+  .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider: any) {
     cfpLoadingBarProvider.includeSpinner = false;
   }])
   .run(function($rootScope: IChavoRootScope, $window: any) {

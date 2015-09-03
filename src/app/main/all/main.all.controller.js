@@ -31,6 +31,7 @@ var chavo;
                 .then(function () {
                 parseVoices.forEach(function (voice) {
                     var myLikes = $rootScope.currentUser.get('likes') || [];
+                    console.log('myLikes: ' + myLikes);
                     _this.voices.push(new chavo.Voice(voice.id, voice.get('description'), voice.get('author'), (voice.get('ageYears') && voice.get('ageMonths')) ? (voice.get('ageYears') + '歳' + voice.get('ageMonths') + 'ヶ月') : '', voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '', voice.get('user').get('username'), voice.get('user').get('iconUrl') === undefined ?
                         voice.get('icon') === undefined ? null : voice.get('icon').url()
                         : voice.get('user').get('iconUrl'), myLikes.indexOf(voice.id) >= 0 ? true : false, voice.get('likeCount'), moment(voice.createdAt).format('YYYY/MM/DD').toString()));
@@ -38,8 +39,9 @@ var chavo;
                 cfpLoadingBar.complete();
                 _this.$scope.$apply();
             }, function (error) {
-                // 投稿ユーザがいない場合などエラーになる
+                console.error(error);
                 var myLikes = $rootScope.currentUser.get('likes') || [];
+                console.log('myLikes: ' + myLikes);
                 parseVoices.forEach(function (voice) {
                     if (voice.get('user').get('username') !== undefined) {
                         _this.voices.push(new chavo.Voice(voice.id, voice.get('description'), voice.get('author'), (voice.get('ageYears') && voice.get('ageMonths')) ? (voice.get('ageYears') + '歳' + voice.get('ageMonths') + 'ヶ月') : '', voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '', voice.get('user').get('username'), voice.get('user').get('iconUrl') === undefined ?
@@ -52,18 +54,22 @@ var chavo;
             });
         }
         MainAllController.prototype.toggleLike = function (voice) {
-            // Cloud Codeへ移動
+            // cloud Codeへ移動
             var _this = this;
             voice.like = !voice.like;
-            Parse.Cloud.run('toggleLike', { voice: voice }, {
-                success: function (likeCount) {
-                    _this.$scope.$apply(function () {
-                        voice.likeCount = likeCount;
-                    });
-                },
-                error: function (error) {
-                    console.error('Error: ' + error.code + ' ' + error.message);
-                }
+            Parse.Cloud.run('toggleLike', { voice: voice })
+                .then(function (likeCount) {
+                _this.$scope.$apply(function () {
+                    voice.likeCount = likeCount;
+                    return Parse.User.current().fetch();
+                });
+            }, function (error) {
+                console.error('Error: ' + error.code + ' ' + error.message);
+            })
+                .then(function (user) {
+                _this.$rootScope.currentUser = Parse.User.current();
+            }, function (error) {
+                console.error('Error: ' + error.code + ' ' + error.message);
             });
         };
         return MainAllController;
