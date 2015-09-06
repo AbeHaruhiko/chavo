@@ -18,6 +18,10 @@ var chavo;
                     console.log('Error: ' + error.code + ' ' + error.message);
                 }
             }).then(function (results) {
+                if (results.length <= 0) {
+                    cfpLoadingBar.complete();
+                    return;
+                }
                 results.forEach(function (parseChild) {
                     if (parseChild.get('birthday')) {
                         var years = '' + moment().diff(moment(parseChild.get('birthday')), 'years');

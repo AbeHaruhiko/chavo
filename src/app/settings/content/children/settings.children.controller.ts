@@ -26,6 +26,11 @@ module chavo {
   		    console.log('Error: ' + error.code + ' ' + error.message);
   		  }
   		}).then((results: Parse.Object[]) => {
+        if (results.length <= 0) {
+          cfpLoadingBar.complete();
+          return;
+        }
+
         results.forEach((parseChild: Parse.Object) => {
 
           if (parseChild.get('birthday')) {

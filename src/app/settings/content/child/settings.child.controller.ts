@@ -19,10 +19,12 @@ module chavo {
     public birthDates: number[];
 
     /* @ngInject */
-    constructor (public $scope: ISettingsChild,
+    constructor (
+        public $scope: ISettingsChild,
         public $rootScope: IChavoRootScope,
-        public $state: ng.ui.IStateProvider,
-        public $stateParams: ng.ui.IStateParamsService) {
+        public $state: ng.ui.IStateService,
+        public $stateParams: ng.ui.IStateParamsService,
+        public cfpLoadingBar: any) {
 
       console.log(this.$rootScope.targetChild);
 
@@ -42,6 +44,8 @@ module chavo {
     }
 
     public saveChildData() {
+
+      this.cfpLoadingBar.start();
 
       if (this.$rootScope.targetChild.dispOrder > 0) {
         // 登録済みのこどもの更新の場合
@@ -65,6 +69,9 @@ module chavo {
         }).then(() => {
 
           console.log('ほぞんしました');
+          this.cfpLoadingBar.complete();
+          this.$state.go('settings.children');
+
         });
       } else {
         // 未登録のこども情報の新規登録
@@ -81,7 +88,8 @@ module chavo {
             }
     		  },
     		  error: function(error: Parse.Error) {
-    		    alert('Error: ' + error.code + ' ' + error.message);
+    		    console.error('Error: ' + error.code + ' ' + error.message);
+            this.cfpLoadingBar.complete();
     		  }
     		}).then(() => {
 
@@ -96,12 +104,15 @@ module chavo {
           return child.save({
       		  error: function(child: Child, error: Parse.Error) {
       		    console.log('Error: ' + error.code + ' ' + error.message);
+              this.cfpLoadingBar.complete();
       		  }
       		});
 
         }).then(() => {
 
           console.log('ほぞんしました');
+          this.cfpLoadingBar.complete();
+          this.$state.go('settings.children');
         });
       }
     }

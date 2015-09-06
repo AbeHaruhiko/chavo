@@ -2,11 +2,12 @@ var chavo;
 (function (chavo) {
     'use strict';
     var SettingsChildController = (function () {
-        function SettingsChildController($scope, $rootScope, $state, $stateParams) {
+        function SettingsChildController($scope, $rootScope, $state, $stateParams, cfpLoadingBar) {
             this.$scope = $scope;
             this.$rootScope = $rootScope;
             this.$state = $state;
             this.$stateParams = $stateParams;
+            this.cfpLoadingBar = cfpLoadingBar;
             console.log(this.$rootScope.targetChild);
             this.initBirthday();
             this.birthYears = new Array();
@@ -21,6 +22,7 @@ var chavo;
         }
         SettingsChildController.prototype.saveChildData = function () {
             var _this = this;
+            this.cfpLoadingBar.start();
             if (this.$rootScope.targetChild.dispOrder > 0) {
                 var ParseChild = Parse.Object.extend('Child');
                 var query = new Parse.Query(ParseChild);
@@ -37,6 +39,8 @@ var chavo;
                     });
                 }).then(function () {
                     console.log('ほぞんしました');
+                    _this.cfpLoadingBar.complete();
+                    _this.$state.go('settings.children');
                 });
             }
             else {
@@ -51,7 +55,8 @@ var chavo;
                         }
                     },
                     error: function (error) {
-                        alert('Error: ' + error.code + ' ' + error.message);
+                        console.error('Error: ' + error.code + ' ' + error.message);
+                        this.cfpLoadingBar.complete();
                     }
                 }).then(function () {
                     var child = new ParseChild();
@@ -63,10 +68,13 @@ var chavo;
                     return child.save({
                         error: function (child, error) {
                             console.log('Error: ' + error.code + ' ' + error.message);
+                            this.cfpLoadingBar.complete();
                         }
                     });
                 }).then(function () {
                     console.log('ほぞんしました');
+                    _this.cfpLoadingBar.complete();
+                    _this.$state.go('settings.children');
                 });
             }
         };
