@@ -66,14 +66,14 @@
               <li>
                 <div class="navbar-login">
                   <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-2">
                       <!-- <p class="text-center">
                         <span class="glyphicon glyphicon-user icon-size"></span>
                       </p> -->
                       <div ng-style="{ 'background-image': 'url(' + $root.currentUser.get('iconUrl') + ')' }"
                         class="img-circle icon-post"></div>
                     </div>
-                    <div class="col-lg-8">
+                    <div class="col-lg-10">
                       <p class="text-left"><strong>{{$root.currentUser.get('username')}}</strong></p>
                       <p class="text-left " ng-show="!$root.currentUser.get('authData').facebook && !$root.currentUser.get('emailVerified')">
                           <alert type="danger">メールアドレスの確認が完了しておらず一部機能が利用できません。メールのURLをクリックして登録完了してください。<br/>
