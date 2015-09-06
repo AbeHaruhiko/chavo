@@ -55,6 +55,11 @@ body {
   background-position: center;
 }
 
+// 投稿のヘッダ部分（ユーザ名や投稿日時、likeCountなど）
+.media-header {
+  margin-bottom: 16px;
+}
+
 // プロファイルページのアイコン
 .profile-icon {
   height: 160px;
@@ -117,6 +122,7 @@ body {
 // お気に入りハート
 #like {
   margin-right: 4px;
+  cursor: pointer;
   // color: #23572c;
   // &:hover {
   //   color: $link-color !important;
