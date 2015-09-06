@@ -36,6 +36,18 @@ module chavo {
     loginWithFacebook() {
       this.FacebookService.loginWithFacebookAndGoHome();
     }
+
+    fetchUser() {
+      Parse.User.current().fetch()
+      .then((user: Parse.User) => {
+        this.$rootScope.$apply(() => {
+          this.$rootScope.currentUser = Parse.User.current();
+        });
+      },
+      (error: Parse.Error) => {
+        console.error('Error: ' + error.code + ' ' + error.message);
+      });
+    }
   }
 
 }

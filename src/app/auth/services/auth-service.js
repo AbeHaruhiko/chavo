@@ -7,11 +7,15 @@ var chavo;
             this.$rootScope = $rootScope;
         }
         AuthService.prototype.signUp = function (form, callbacks) {
+            var _this = this;
             var user = new Parse.User();
             user.set('username', form.username);
             user.set('email', form.email);
             user.set('password', form.password);
-            user.signUp(null, callbacks);
+            user.signUp(null, callbacks)
+                .then(function (user) {
+                _this.$rootScope.currentUser = user;
+            });
         };
         AuthService.prototype.loginWithFacebook = function (callbacks) {
             Parse.FacebookUtils.logIn(null, callbacks);

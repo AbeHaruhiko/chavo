@@ -29,6 +29,17 @@ var chavo;
         NavbarController.prototype.loginWithFacebook = function () {
             this.FacebookService.loginWithFacebookAndGoHome();
         };
+        NavbarController.prototype.fetchUser = function () {
+            var _this = this;
+            Parse.User.current().fetch()
+                .then(function (user) {
+                _this.$rootScope.$apply(function () {
+                    _this.$rootScope.currentUser = Parse.User.current();
+                });
+            }, function (error) {
+                console.error('Error: ' + error.code + ' ' + error.message);
+            });
+        };
         return NavbarController;
     })();
     chavo.NavbarController = NavbarController;

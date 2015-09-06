@@ -2,9 +2,10 @@ var chavo;
 (function (chavo) {
     'use strict';
     var MainComposeController = (function () {
-        function MainComposeController($scope, $state) {
+        function MainComposeController($scope, $rootScope, $state) {
             var _this = this;
             this.$scope = $scope;
+            this.$rootScope = $rootScope;
             this.$state = $state;
             this.children = new Array();
             this.genderList = [{ label: '男の子', value: chavo.GENDER.MALE },
@@ -65,6 +66,17 @@ var chavo;
                 _this.alertMsg = '送信に失敗しました...時間をおいてためしてください。';
                 _this.disableInput = false;
                 _this.$scope.$apply();
+            });
+        };
+        MainComposeController.prototype.fetchUser = function () {
+            var _this = this;
+            Parse.User.current().fetch()
+                .then(function (user) {
+                _this.$rootScope.$apply(function () {
+                    _this.$rootScope.currentUser = Parse.User.current();
+                });
+            }, function (error) {
+                console.error('Error: ' + error.code + ' ' + error.message);
             });
         };
         return MainComposeController;

@@ -74,7 +74,9 @@
       <alert type="danger">投稿機能の利用にはログインが必要です。<a ui-sref="login" class="alert-link">ログインはこちらから</a></alert>
     </div>
     <div ng-show="$root.currentUser && !$root.currentUser.get('authData').facebook && !$root.currentUser.get('emailVerified')"></span> 
-      <alert type="danger" close="">投稿機能の利用にはログインが必要です。メールアドレスの確認が完了していません。メールを確認してURLをクリックしてください。</alert>
+      <alert type="danger" close="">投稿機能の利用にはログインが必要です。メールアドレスの確認が完了していません。メールを確認してURLをクリックしてください。<br/>
+        <a class="alert-link" ng-click="main_compose.fetchUser()">登録完了したらここをクリックして再読み込み</a>
+      </alert>
     </div>
     <div ng-show="$root.currentUser.get('authData').facebook || $root.currentUser.get('emailVerified')"></span> 
       <alert type="danger" ng-show="main_compose.alertMsg" close="">{{main_compose.alertMsg}}</alert>

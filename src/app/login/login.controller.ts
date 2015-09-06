@@ -23,7 +23,7 @@ module chavo {
         success: (user: Parse.User) => {
           // authService でセットしているのでここではコメントアウト
           /*this.$rootScope.currentUser = Parse.User.current();*/
-          this.$state.go('home.all');
+          this.$state.reload();
         },
         error: (user: Parse.User, error: Parse.Error) => {
           alert('Unable to sign up:  ' + error.code + ' ' + error.message);

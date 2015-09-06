@@ -16,7 +16,7 @@ var chavo;
             var _this = this;
             this.AuthService.signUp(form, {
                 success: function (user) {
-                    _this.$state.go('home.all');
+                    _this.$state.reload();
                 },
                 error: function (user, error) {
                     alert('Unable to sign up:  ' + error.code + ' ' + error.message);

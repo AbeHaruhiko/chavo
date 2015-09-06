@@ -1,7 +1,7 @@
 <div class="col-sm-8 col-sm-offset-2" ng-controller="LoginController as login">
+  <alert type="info" ng-show="$root.currentUser && !$root.currentUser.get('emailVerified')">メールを送信しました。メールのURLクリック後、再度ログインしてください。</alert>
   <h5>ログイン</h5>
   <form class="form-horizontal" ng-show="!$root.currentUser  || !$root.currentUser.get('emailVerified')" name="loginForm" novalidate>
-    <alert type="info" ng-show="$root.currentUser && !$root.currentUser.get('emailVerified')">メールを送信しました。メールのURLクリック後、再度ログインしてください。</alert>
     <div class="form-group">
       <label for="username" class="col-sm-2 control-label">ユーザ名</label>
       <div class="col-sm-4">
@@ -56,7 +56,7 @@
 
   <h5>ユーザ登録</h5>
   <form class="form-horizontal" ng-show="!$root.currentUser  || !$root.currentUser.get('emailVerified')" name="signUpForm" novalidate>
-    <alert type="info" ng-show="$root.currentUser && !$root.currentUser.get('emailVerified')">メールを送信しました。メールのURLクリック後、再度ログインしてください。</alert>
+    <!-- <alert type="info" ng-show="$root.currentUser && !$root.currentUser.get('emailVerified')">メールを送信しました。メールのURLクリック後、再度ログインしてください。</alert> -->
     <div class="form-group">
       <label for="username" class="col-sm-2 control-label">ユーザ名</label>
       <div class="col-sm-4">

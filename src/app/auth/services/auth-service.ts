@@ -17,7 +17,10 @@ module chavo {
       user.set('email', form.email);
       user.set('password', form.password);
 
-      user.signUp(null, callbacks);
+      user.signUp(null, callbacks)
+      .then((user: Parse.User) => {
+        this.$rootScope.currentUser = user;
+      });
     }
 
     loginWithFacebook(callbacks: any) {

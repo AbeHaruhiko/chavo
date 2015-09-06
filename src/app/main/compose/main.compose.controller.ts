@@ -18,7 +18,9 @@ module chavo {
     public alertMsg: string;
 
     /* @ngInject */
-    constructor(public $scope: IMainScope,
+    constructor(
+        public $scope: IMainScope,
+        public $rootScope: IChavoRootScope,
         public $state: ng.ui.IStateService) {
 
       var ParseChild = Parse.Object.extend('Child');
@@ -91,6 +93,18 @@ module chavo {
         this.alertMsg = '送信に失敗しました...時間をおいてためしてください。';
         this.disableInput = false;
         this.$scope.$apply();
+      });
+    }
+
+    fetchUser() {
+      Parse.User.current().fetch()
+      .then((user: Parse.User) => {
+        this.$rootScope.$apply(() => {
+          this.$rootScope.currentUser = Parse.User.current();
+        });
+      },
+      (error: Parse.Error) => {
+        console.error('Error: ' + error.code + ' ' + error.message);
       });
     }
   }
