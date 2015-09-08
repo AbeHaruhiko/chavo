@@ -2,12 +2,10 @@
     class="col-sm-2 col-md-2 col-sm-offset-2  col-md-offset-2">
   <div class="list-group">
     <a class="list-group-item"
-      ng-class="{ active: settings_menu.isActive('profile') }"
       ui-sref="settings.profile"
-      ng-click="settings_menu.activeMenu = 'profile'">プロフィール</a>
+      ui-sref-active="active">プロフィール</a>
     <a class="list-group-item"
-      ng-class="{ active: settings_menu.isActive('children') }"
       ui-sref="settings.children"
-      ng-click="settings_menu.activeMenu = 'children'">こどもの情報</a>
+      ui-sref-active="active">こどもの情報</a>
   </div>
 </div>

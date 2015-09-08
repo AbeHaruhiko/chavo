@@ -88,6 +88,9 @@
                 <textarea name="description" ng-model="main_compose.voice.description" class="form-control" rows="3" placeholder="こどもの名言・迷言、一発ネタ、何気ない一言、泣かされたセリフ、なんでも記録しよう！" required>
                 </textarea>
               </div>
+              <alert type="danger" ng-if="main_compose.children.length <= 0">まだこどもが登録されていません。登録すると投稿のとき毎回入力する手間を省けます。<br/>
+                <a ui-sref="settings.children">登録はこちらから</a>
+              </alert>
               <div class="form-group">
                 だれのセリフを記録しますか？
                 <div class="btn-group btn-group-sm" dropdown is-open="main_compose.dropDownStatus.voiceAuthorIsOpen">
@@ -109,8 +112,8 @@
               </div>
               <div class="form-group">
                 <div class="row">
-                  <div class="col-xs-2">
-                    <input type="text" class="form-control input-sm" ng-model="main_compose.voiceAuthor.nickName">
+                  <div class="col-xs-4">
+                    <input placeholder="ニックネーム" type="text" class="form-control input-sm" ng-model="main_compose.voiceAuthor.nickName">
                   </div>
                   <div class="col-xs-4">
                     <div class="input-group">
@@ -121,7 +124,11 @@
                     </div>
                   </div>
                   <div class="col-xs-3">
-                    <select class="form-control input-sm" ng-model="main_compose.voiceAuthor.gender" ng-options="gender.value as gender.label for gender in main_compose.genderList">
+                    <select
+                      class="form-control input-sm"
+                      ng-model="main_compose.voiceAuthor.gender"
+                      ng-options="gender.value as gender.label for gender in main_compose.genderList">
+                      <option disabled="true" selected="true" value="">性別</option>
                     </select>
                   </div>
                 </div>
