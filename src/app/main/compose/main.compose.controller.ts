@@ -71,10 +71,10 @@ module chavo {
       var ParseVoice = Parse.Object.extend('Voice');
       var voice = new ParseVoice();
       voice.set('description', this.voice.description);
-      voice.set('gender', this.voiceAuthor.gender);
-      voice.set('author', this.voiceAuthor.nickName);
-      voice.set('ageYears', this.voiceAuthor.ageYears);
-      voice.set('ageMonths', this.voiceAuthor.ageMonths);
+      voice.set('gender', this.voiceAuthor ? this.voiceAuthor.gender : GENDER.OTHER);
+      voice.set('author', this.voiceAuthor ? this.voiceAuthor.nickName : null);
+      voice.set('ageYears', this.voiceAuthor ? this.voiceAuthor.ageYears : null);
+      voice.set('ageMonths', this.voiceAuthor ? this.voiceAuthor.ageMonths: null);
       voice.set('user', Parse.User.current());
       var voiceACL = new Parse.ACL(Parse.User.current());
       if (this.voiceIsPublic) {
