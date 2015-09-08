@@ -63,7 +63,9 @@ module chavo {
 
           // 自分がlike済みの投稿
           // $rootScope.currentUser = Parse.User.current();
-          var myLikes: string[] = $rootScope.currentUser.get('likes') || [];
+          var myLikes: string[] = !$rootScope.currentUser ? []
+                                      : !$rootScope.currentUser.get('likes') ? []
+                                      : $rootScope.currentUser.get('likes');
           console.log('myLikes: ' + myLikes);
 
           this.voices.push(new Voice(
@@ -92,7 +94,9 @@ module chavo {
         // 投稿ユーザがいない場合などエラーになる
 
         // 自分がlike済みの投稿
-        var myLikes: string[] = $rootScope.currentUser.get('likes') || [];
+        var myLikes: string[] = !$rootScope.currentUser ? []
+                                    : !$rootScope.currentUser.get('likes') ? []
+                                    : $rootScope.currentUser.get('likes');
         console.log('myLikes: ' + myLikes);
 
         // 表示用にVoiceクラスへ移し替え
