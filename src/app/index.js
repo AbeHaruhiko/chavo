@@ -4,10 +4,12 @@
 /// <reference path="main/myposts/main.myposts.controller.ts" />
 /// <reference path="main/compose/main.compose.controller.ts" />
 /// <reference path="login/login.controller.ts"/>
+/// <reference path="signup/signup.controller.ts"/>
 /// <reference path="settings/menu/settings.menu.controller.ts"/>
 /// <reference path="settings/content/settings.content.controller.ts"/>
 /// <reference path="settings/content/children/settings.children.controller.ts"/>
 /// <reference path="settings/content/child/settings.child.controller.ts"/>
+/// <reference path="settings/content/profile/settings.profile.controller.ts"/>
 /// <reference path="../app/components/navbar/navbar.controller.ts" />
 /// <reference path="../app/components/tabmenu/tabmenu.controller.ts"/>
 /// <reference path="./auth/services/auth-service.ts"/>
@@ -35,6 +37,7 @@ var chavo;
         .controller('MainMyPostsController', chavo.MainMyPostsController)
         .controller('MainComposeController', chavo.MainComposeController)
         .controller('LoginController', chavo.LoginController)
+        .controller('SignupController', chavo.SignupController)
         .controller('NavbarController', chavo.NavbarController)
         .controller('TabmenuController', chavo.TabmenuController)
         .controller('SettingsMenuController', chavo.SettingsMenuController)
@@ -79,6 +82,10 @@ var chavo;
             .state('login', {
             url: '/login',
             templateUrl: 'app/login/login.html'
+        })
+            .state('signup', {
+            url: '/signup',
+            templateUrl: 'app/signup/signup.html'
         });
         $urlRouterProvider.otherwise('/');
     })

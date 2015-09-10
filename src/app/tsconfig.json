@@ -34,6 +34,7 @@
         "./settings/content/children/settings.children.controller.ts",
         "./settings/content/profile/settings.profile.controller.ts",
         "./settings/content/settings.content.controller.ts",
-        "./settings/menu/settings.menu.controller.ts"
+        "./settings/menu/settings.menu.controller.ts",
+        "./signup/signup.controller.ts"
     ]
 }

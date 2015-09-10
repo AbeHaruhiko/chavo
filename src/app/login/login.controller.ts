@@ -18,19 +18,19 @@ module chavo {
       public FacebookService: FacebookService) {
     }
 
-    signUp(form: { username: string; email: string; password: string; }) {
-      this.AuthService.signUp(form, {
-        success: (user: Parse.User) => {
-          // authService でセットしているのでここではコメントアウト
-          /*this.$rootScope.currentUser = Parse.User.current();*/
-          this.$state.reload();
-        },
-        error: (user: Parse.User, error: Parse.Error) => {
-          alert('Unable to sign up:  ' + error.code + ' ' + error.message);
-        }
-      });
-    }
-
+    // signUp(form: { username: string; email: string; password: string; }) {
+    //   this.AuthService.signUp(form, {
+    //     success: (user: Parse.User) => {
+    //       // authService でセットしているのでここではコメントアウト
+    //       /*this.$rootScope.currentUser = Parse.User.current();*/
+    //       this.$state.reload();
+    //     },
+    //     error: (user: Parse.User, error: Parse.Error) => {
+    //       alert('Unable to sign up:  ' + error.code + ' ' + error.message);
+    //     }
+    //   });
+    // }
+    //
     loginWithFacebook() {
       this.FacebookService.loginWithFacebookAndGoHome();
     }

@@ -12,17 +12,6 @@ var chavo;
             this.FacebookService = FacebookService;
             this.showResetPwMessage = false;
         }
-        LoginController.prototype.signUp = function (form) {
-            var _this = this;
-            this.AuthService.signUp(form, {
-                success: function (user) {
-                    _this.$state.reload();
-                },
-                error: function (user, error) {
-                    alert('Unable to sign up:  ' + error.code + ' ' + error.message);
-                }
-            });
-        };
         LoginController.prototype.loginWithFacebook = function () {
             this.FacebookService.loginWithFacebookAndGoHome();
         };

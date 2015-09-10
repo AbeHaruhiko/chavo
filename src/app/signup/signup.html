@@ -1,0 +1,54 @@
+<div class="col-sm-4 col-sm-offset-4" ng-controller="LoginController as login">
+  <h1>ちゃぼ</h1>
+  <alert type="info" ng-show="$root.currentUser && !$root.currentUser.get('emailVerified')">メールを送信しました。メールのURLクリック後、再度ログインしてください。</alert>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <h4>ユーザ登録</h4>
+      <form class="form-horizontal" ng-show="!$root.currentUser  || !$root.currentUser.get('emailVerified')" name="signUpForm" novalidate>
+        <!-- <alert type="info" ng-show="$root.currentUser && !$root.currentUser.get('emailVerified')">メールを送信しました。メールのURLクリック後、再度ログインしてください。</alert> -->
+        <div class="form-group">
+          <div class="col-sm-12">
+            <input
+              type="text"
+              ng-model="signUpForm.username"
+              class="form-control"
+              id="signup-username"
+              name="signup-username"
+              placeholder="ユーザー名"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <input
+              type="email"
+              ng-model="signUpForm.email"
+              class="form-control"
+              id="signup-email"
+              name="signup-email"
+              placeholder="メールアドレス"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <input
+              type="password"
+              ng-model="signUpForm.password"
+              class="form-control"
+              id="signup-password"
+              name="signup-password"
+              placeholder="パスワード"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <button class="btn btn-default" ng-click="login.signUp(signUpForm)" ng-disabled="signUpForm.email.$invalid">ユーザ登録</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="panel-footer">
+      または <button class="btn btn-default" ng-click="login.loginWithFacebook()">Facebookで登録・ログイン</button>
+    </div>
+  </div>
+  <a class="btn btn-default" ui-sref="login">アカウントをお持ちの場合はここからログイン</a>
+</div>
