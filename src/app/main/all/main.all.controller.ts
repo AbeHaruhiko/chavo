@@ -50,8 +50,8 @@ module chavo {
           promises.push(voice.get('user').fetch());
         });
 
-        // // 最新のlikesを取得しておく
-        // promises.push(Parse.User.current().fetch());
+        // 最新のlikesを取得しておく
+        promises.push(Parse.User.current().fetch());
 
         return Parse.Promise.when(promises);
       })
@@ -159,19 +159,20 @@ module chavo {
         this.$scope.$apply(() => {
           voice.likeCount = likeCount;
 
-          // CloudCodeでユーザにlikesを追加しているのでフェッチ
-          return Parse.User.current().fetch();
+          // // CloudCodeでユーザにlikesを追加しているのでフェッチ
+          // return Parse.User.current().fetch();
         });
       },
       (error: Parse.Error) => {
         console.error('Error: ' + error.code + ' ' + error.message);
       })
-      .then((user: Parse.User) => {
-        this.$rootScope.currentUser = Parse.User.current();
-      },
-      (error: Parse.Error) => {
-        console.error('Error: ' + error.code + ' ' + error.message);
-      });
+      // .then((user: Parse.User) => {
+      //   this.$rootScope.currentUser = Parse.User.current();
+      // },
+      // (error: Parse.Error) => {
+      //   console.error('Error: ' + error.code + ' ' + error.message);
+      // })
+      ;
     }
   }
 }

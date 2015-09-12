@@ -26,6 +26,7 @@ var chavo;
                 results.forEach(function (voice) {
                     promises.push(voice.get('user').fetch());
                 });
+                promises.push(Parse.User.current().fetch());
                 return Parse.Promise.when(promises);
             })
                 .then(function () {
@@ -65,13 +66,7 @@ var chavo;
                 .then(function (likeCount) {
                 _this.$scope.$apply(function () {
                     voice.likeCount = likeCount;
-                    return Parse.User.current().fetch();
                 });
-            }, function (error) {
-                console.error('Error: ' + error.code + ' ' + error.message);
-            })
-                .then(function (user) {
-                _this.$rootScope.currentUser = Parse.User.current();
             }, function (error) {
                 console.error('Error: ' + error.code + ' ' + error.message);
             });
