@@ -9,10 +9,22 @@
           </a>
         </div>
         <div class="media-body">
-          <span><small>{{ voice.user }}</small></span><span class="pull-right"><small>{{ voice.createdAt }}</small></span>
+          <div class="media-header">
+            <span>
+              <small>{{ voice.user }}</small>
+              <small>{{ voice.createdAt }}</small>
+            </span>
+            <span class="pull-right">
+              <span ng-click="main_myposts.toggleLike(voice)" id="like" ng-class="{ 'like-active': voice.like }">
+                <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+              </span>
+              <span>{{ voice.likeCount }}</span>
+            </span>
+          </div>
           <p class="pre-line">{{ voice.description }}</p>
           <p class="text-right"><small>{{ voice.speaker }} {{ voice.age }} {{ voice.gender }}</small></p>
         </div>
+        <!-- <pre>{{voice|json}}</pre> -->
       </div>
     </div>
   </div>
