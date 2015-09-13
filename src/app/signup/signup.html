@@ -1,4 +1,4 @@
-<div class="col-sm-4 col-sm-offset-4" ng-controller="LoginController as login">
+<div class="col-sm-4 col-sm-offset-4" ng-controller="SignupController as signup">
   <h1>ちゃぼ</h1>
   <alert type="info" ng-show="$root.currentUser && !$root.currentUser.get('emailVerified')">メールを送信しました。メールのURLクリック後、再度ログインしてください。</alert>
   <div class="panel panel-default">
@@ -41,13 +41,13 @@
         </div>
         <div class="form-group">
           <div class="col-sm-12">
-            <button class="btn btn-default" ng-click="login.signUp(signUpForm)" ng-disabled="signUpForm.email.$invalid">ユーザ登録</button>
+            <button class="btn btn-default" ng-click="signup.signUp(signUpForm)" ng-disabled="signUpForm.email.$invalid">ユーザ登録</button>
           </div>
         </div>
       </form>
     </div>
     <div class="panel-footer">
-      または <button class="btn btn-default" ng-click="login.loginWithFacebook()">Facebookで登録・ログイン</button>
+      または <button class="btn btn-default" ng-click="signup.loginWithFacebook()">Facebookで登録・ログイン</button>
     </div>
   </div>
   <a class="btn btn-default" ui-sref="login">アカウントをお持ちの場合はここからログイン</a>
