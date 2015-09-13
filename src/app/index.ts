@@ -43,6 +43,7 @@ module chavo {
     .controller('MainController', MainController)
     .controller('MainAllController', MainAllController)
     .controller('MainMyPostsController', MainMyPostsController)
+    .controller('DeletePostConfirmModalController', DeletePostConfirmModalController)
     .controller('MainComposeController', MainComposeController)
     .controller('LoginController', LoginController)
     .controller('SignupController', SignupController)

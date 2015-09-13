@@ -74,7 +74,7 @@ module chavo {
       voice.set('gender', this.voiceAuthor ? this.voiceAuthor.gender : GENDER.OTHER);
       voice.set('author', this.voiceAuthor ? this.voiceAuthor.nickName : null);
       voice.set('ageYears', this.voiceAuthor ? this.voiceAuthor.ageYears : null);
-      voice.set('ageMonths', this.voiceAuthor ? this.voiceAuthor.ageMonths: null);
+      voice.set('ageMonths', this.voiceAuthor ? this.voiceAuthor.ageMonths : null);
       voice.set('user', Parse.User.current());
       var voiceACL = new Parse.ACL(Parse.User.current());
       if (this.voiceIsPublic) {

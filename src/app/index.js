@@ -35,6 +35,7 @@ var chavo;
         .controller('MainController', chavo.MainController)
         .controller('MainAllController', chavo.MainAllController)
         .controller('MainMyPostsController', chavo.MainMyPostsController)
+        .controller('DeletePostConfirmModalController', chavo.DeletePostConfirmModalController)
         .controller('MainComposeController', chavo.MainComposeController)
         .controller('LoginController', chavo.LoginController)
         .controller('SignupController', chavo.SignupController)
