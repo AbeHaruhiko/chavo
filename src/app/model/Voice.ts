@@ -9,6 +9,7 @@ module chavo {
       public age: string,
       public gender: string,
       public user: string,
+      public userObjectId: string,
       public icon: string,
       public like: boolean,
       public likeCount: number,
