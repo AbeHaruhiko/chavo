@@ -9,15 +9,21 @@ module chavo {
     constructor (
         public $scope: IMainScope,
         public $rootScope: IChavoRootScope,
-        public cfpLoadingBar: any) {
+        public $state: ng.ui.IStateService,
+        public cfpLoadingBar: any,
+        public $modal: any) {
 
+      this.init();
+    }
+
+    init() {
       var ParseVoice = Parse.Object.extend('Voice');
-  		var query = new Parse.Query(ParseVoice);
+      var query = new Parse.Query(ParseVoice);
       var parseVoices: Parse.Object[];
 
-      cfpLoadingBar.start();
+      this.cfpLoadingBar.start();
 
-  		query.descending('createdAt');
+      query.descending('createdAt');
 
       query.find({
         success: (results: Parse.Object[]) => {
@@ -37,11 +43,11 @@ module chavo {
           // });
           //
           // this.$scope.$apply();
-  		  },
-  		  error: function(error: Parse.Error) {
-  		    console.error('Error: ' + error.code + ' ' + error.message);
-  		  }
-  		}).then((results: Parse.Object[]) => {
+        },
+        error: function(error: Parse.Error) {
+          console.error('Error: ' + error.code + ' ' + error.message);
+        }
+      }).then((results: Parse.Object[]) => {
         // 投稿者のアイコンを取得するため、fetchする。
 
         parseVoices = results;
@@ -63,9 +69,9 @@ module chavo {
 
           // 自分がlike済みの投稿
           // $rootScope.currentUser = Parse.User.current();
-          var myLikes: string[] = !$rootScope.currentUser ? []
-                                      : !$rootScope.currentUser.get('likes') ? []
-                                      : $rootScope.currentUser.get('likes');
+          var myLikes: string[] = !this.$rootScope.currentUser ? []
+                                      : !this.$rootScope.currentUser.get('likes') ? []
+                                      : this.$rootScope.currentUser.get('likes');
           console.log('myLikes: ' + myLikes);
 
           this.voices.push(new Voice(
@@ -85,7 +91,7 @@ module chavo {
           ));
         });
 
-        cfpLoadingBar.complete();
+        this.cfpLoadingBar.complete();
 
         this.$scope.$apply();
 
@@ -95,9 +101,9 @@ module chavo {
         // 投稿ユーザがいない場合などエラーになる
 
         // 自分がlike済みの投稿
-        var myLikes: string[] = !$rootScope.currentUser ? []
-                                    : !$rootScope.currentUser.get('likes') ? []
-                                    : $rootScope.currentUser.get('likes');
+        var myLikes: string[] = !this.$rootScope.currentUser ? []
+                                    : !this.$rootScope.currentUser.get('likes') ? []
+                                    : this.$rootScope.currentUser.get('likes');
         console.log('myLikes: ' + myLikes);
 
         // 表示用にVoiceクラスへ移し替え
@@ -123,10 +129,11 @@ module chavo {
           }
         });
 
-        cfpLoadingBar.complete();
+        this.cfpLoadingBar.complete();
 
         this.$scope.$apply();
       });
+
     }
 
     toggleLike(voice: Voice) {
@@ -175,6 +182,39 @@ module chavo {
       //   console.error('Error: ' + error.code + ' ' + error.message);
       // })
       ;
+    }
+
+    openDeletePostConfirmModal(voice: Voice) {
+      var modalInstance = this.$modal.open({
+        animation: true,
+        templateUrl: 'deletePostConfirmModal.html',
+        controller: 'DeletePostConfirmModalController',
+        controllerAs: 'delete_post_modal',
+        size: 'sm',
+        resolve: {
+          voice: function () {
+            return voice;
+          }
+        }
+      });
+
+      modalInstance.result.then((voice: Voice) => {
+        // todo: ここで削除処理
+        var ParseVoice = Parse.Object.extend('Voice');
+        var parseVoice = new ParseVoice();
+        parseVoice.id = voice.objectId;
+        parseVoice.destroy()
+        .then(() => {
+            this.$state.reload();
+          }
+        );
+
+        console.info('1: Modal dismissed at: ' + new Date());
+        console.dir(voice);
+      }, () => {
+        console.info('2: Modal dismissed at: ' + new Date());
+        console.dir(voice);
+      });
     }
   }
 }

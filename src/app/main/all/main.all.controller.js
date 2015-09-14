@@ -2,16 +2,21 @@ var chavo;
 (function (chavo) {
     'use strict';
     var MainAllController = (function () {
-        function MainAllController($scope, $rootScope, cfpLoadingBar) {
-            var _this = this;
+        function MainAllController($scope, $rootScope, $state, cfpLoadingBar, $modal) {
             this.$scope = $scope;
             this.$rootScope = $rootScope;
+            this.$state = $state;
             this.cfpLoadingBar = cfpLoadingBar;
+            this.$modal = $modal;
             this.voices = new Array();
+            this.init();
+        }
+        MainAllController.prototype.init = function () {
+            var _this = this;
             var ParseVoice = Parse.Object.extend('Voice');
             var query = new Parse.Query(ParseVoice);
             var parseVoices;
-            cfpLoadingBar.start();
+            this.cfpLoadingBar.start();
             query.descending('createdAt');
             query.find({
                 success: function (results) {
@@ -31,21 +36,21 @@ var chavo;
             })
                 .then(function () {
                 parseVoices.forEach(function (voice) {
-                    var myLikes = !$rootScope.currentUser ? []
-                        : !$rootScope.currentUser.get('likes') ? []
-                            : $rootScope.currentUser.get('likes');
+                    var myLikes = !_this.$rootScope.currentUser ? []
+                        : !_this.$rootScope.currentUser.get('likes') ? []
+                            : _this.$rootScope.currentUser.get('likes');
                     console.log('myLikes: ' + myLikes);
                     _this.voices.push(new chavo.Voice(voice.id, voice.get('description'), voice.get('author'), (voice.get('ageYears') && voice.get('ageMonths')) ? (voice.get('ageYears') + '歳' + voice.get('ageMonths') + 'ヶ月') : '', voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '', voice.get('user').get('username'), voice.get('user').id, voice.get('user').get('iconUrl') === undefined ?
                         voice.get('icon') === undefined ? null : voice.get('icon').url()
                         : voice.get('user').get('iconUrl'), myLikes.indexOf(voice.id) >= 0 ? true : false, voice.get('likeCount'), moment(voice.createdAt).format('YYYY/MM/DD').toString()));
                 });
-                cfpLoadingBar.complete();
+                _this.cfpLoadingBar.complete();
                 _this.$scope.$apply();
             }, function (error) {
                 console.error(error);
-                var myLikes = !$rootScope.currentUser ? []
-                    : !$rootScope.currentUser.get('likes') ? []
-                        : $rootScope.currentUser.get('likes');
+                var myLikes = !_this.$rootScope.currentUser ? []
+                    : !_this.$rootScope.currentUser.get('likes') ? []
+                        : _this.$rootScope.currentUser.get('likes');
                 console.log('myLikes: ' + myLikes);
                 parseVoices.forEach(function (voice) {
                     if (voice.get('user').get('username') !== undefined) {
@@ -54,10 +59,10 @@ var chavo;
                             : voice.get('user').get('iconUrl'), myLikes.indexOf(voice.id) >= 0 ? true : false, voice.get('likeCount'), moment(voice.createdAt).format('YYYY/MM/DD').toString()));
                     }
                 });
-                cfpLoadingBar.complete();
+                _this.cfpLoadingBar.complete();
                 _this.$scope.$apply();
             });
-        }
+        };
         MainAllController.prototype.toggleLike = function (voice) {
             // cloud Codeへ移動
             var _this = this;
@@ -69,6 +74,35 @@ var chavo;
                 });
             }, function (error) {
                 console.error('Error: ' + error.code + ' ' + error.message);
+            });
+        };
+        MainAllController.prototype.openDeletePostConfirmModal = function (voice) {
+            var _this = this;
+            var modalInstance = this.$modal.open({
+                animation: true,
+                templateUrl: 'deletePostConfirmModal.html',
+                controller: 'DeletePostConfirmModalController',
+                controllerAs: 'delete_post_modal',
+                size: 'sm',
+                resolve: {
+                    voice: function () {
+                        return voice;
+                    }
+                }
+            });
+            modalInstance.result.then(function (voice) {
+                var ParseVoice = Parse.Object.extend('Voice');
+                var parseVoice = new ParseVoice();
+                parseVoice.id = voice.objectId;
+                parseVoice.destroy()
+                    .then(function () {
+                    _this.$state.reload();
+                });
+                console.info('1: Modal dismissed at: ' + new Date());
+                console.dir(voice);
+            }, function () {
+                console.info('2: Modal dismissed at: ' + new Date());
+                console.dir(voice);
             });
         };
         return MainAllController;
