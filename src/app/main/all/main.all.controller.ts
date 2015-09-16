@@ -56,8 +56,10 @@ module chavo {
           promises.push(voice.get('user').fetch());
         });
 
-        // 最新のlikesを取得しておく
-        promises.push(Parse.User.current().fetch());
+        if (Parse.User.current()) {
+          // 最新のlikesを取得しておく
+          promises.push(Parse.User.current().fetch());
+        }
 
         return Parse.Promise.when(promises);
       })

@@ -31,7 +31,9 @@ var chavo;
                 results.forEach(function (voice) {
                     promises.push(voice.get('user').fetch());
                 });
-                promises.push(Parse.User.current().fetch());
+                if (Parse.User.current()) {
+                    promises.push(Parse.User.current().fetch());
+                }
                 return Parse.Promise.when(promises);
             })
                 .then(function () {
