@@ -1,8 +1,7 @@
 node_modules/
 bower_components/
 .sass-cache/
-.tmp/
-!.tmp/typings/parse/parse.d.ts
+.tmp/*
+!.tmp/typings/
 dist/
-typings/
-tsd.json
+#tsd.json
