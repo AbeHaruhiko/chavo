@@ -3,8 +3,11 @@ $icon-font-path: "../../bower_components/bootstrap-sass-official/assets/fonts/bo
 // cutomize bootstrap 2015/09/20 安部追加
 $body-bg: #f5f8fa;
 
+$brand-primary:         #ff4081;
+
 // 本カスタマイズ用プライマリーカラー（テーマを変えたらこれも変えなきゃ・・・） 2015/09/20 安部追加
-$primay-color: #337ab7;
+// $primay-color: #337ab7;  // blue
+$primay-color: #ff4081;  // pink
 
 $list-group-active-color: $primay-color;
 $list-group-active-bg: #fff;
