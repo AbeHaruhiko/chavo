@@ -1,5 +1,17 @@
 $icon-font-path: "../../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 
+// cutomize bootstrap 2015/09/20 安部追加
+$body-bg: #f5f8fa;
+
+// 本カスタマイズ用プライマリーカラー（テーマを変えたらこれも変えなきゃ・・・） 2015/09/20 安部追加
+$primay-color: #337ab7;
+
+$list-group-active-color: $primay-color;
+$list-group-active-bg: #fff;
+$list-group-active-border: $primay-color;
+// @import "../../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_variables";
+
+
 /* Do not remove this comments bellow. It's the markers used by wiredep to inject
    sass dependencies when defined in the bower.json of your dependencies */
 // bower:scss

@@ -29,7 +29,7 @@ module chavo {
           'dropZoneEnabled': false,
           'showCaption': false,
           'showPreview': true,
-          'browseClass': 'photo-browse-btn btn btn-primary',
+          'browseClass': 'photo-browse-btn btn btn-primary btn-outline',
           'browseLabel': '画像選択'
         });
 

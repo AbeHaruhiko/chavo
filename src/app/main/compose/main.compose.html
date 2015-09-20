@@ -1,74 +1,4 @@
 <div ng-controller="MainComposeController as main_compose" class="row">
-
-
-  <!-- <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--3-col">
-    </div>
-    <div class="mdl-card mdl-cell mdl-cell--6-col">
-
-      <div class="mdl-textfield mdl-js-textfield textfield-demo" id="compose-description-container">
-        <textarea name="compose-description" ng-model="main_compose.voice.description"  class="mdl-textfield__input" rows= "3" id="compose-description" required="" title="こどもの名言・迷言、一発ネタ、何気ない一言、泣かされたセリフ、なんでも記録しよう！"></textarea>
-        <label class="mdl-textfield__label" for="compose-description">こどもの名言・迷言、一発ネタ、何気ない一言、<br/>泣かされたセリフ、なんでも記録しよう！</label>
-      </div>
-
-      <div class="form-group">
-        だれのセリフを記録しますか？
-        <div class="btn-group btn-group-sm" dropdown is-open="main_compose.dropDownStatus.voiceAuthorIsOpen">
-          <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
-            {{ 'こどもを選択' }}
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li><a ng-click="main_compose.clearVoiceAuthor()">クリアする</a></li>
-            <li ng-repeat="child in main_compose.children">
-              <a ng-click="main_compose.onSelectVoiceAuthor(child)">{{ child.nickName || '（未登録）'}}
-                <span ng-if="child.age">{{child.age}}</span>
-                <span ng-if="child.gender ===  0">男の子</span>
-                <span ng-if="child.gender ===  1">女の子</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="row">
-          <div class="col-xs-2">
-            <input type="text" class="form-control input-sm" ng-model="main_compose.voiceAuthor.nickName">
-          </div>
-          <div class="col-xs-4">
-            <div class="input-group">
-              <input id="voice-author-age-years" type="text" class="form-control input-sm text-right" ng-model="main_compose.voiceAuthor.ageYears">
-              <div class="input-group-addon">歳</div>
-              <input id="voice-author-age-months" type="text" class="form-control input-sm text-right" ng-model="main_compose.voiceAuthor.ageMonths">
-              <div class="input-group-addon">ヶ月</div>
-            </div>
-          </div>
-          <div class="col-xs-3">
-            <select class="form-control input-sm" ng-model="main_compose.voiceAuthor.gender" ng-options="gender.value as gender.label for gender in main_compose.genderList">
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="compose-scope">
-        <input type="checkbox" id="compose-scope" class="mdl-switch__input" ng-model="main_compose.voiceIsPublic" />
-        <span class="mdl-switch__label">公開</span>
-      </label>
-
-      <div class="form-group">
-        <button
-          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent pull-right"
-          ng-click="main_compose.submit()"
-          ng-disabled="!main_compose.voice.description">送信</button>
-      </div>
-
-    </div>
-  </div> -->
-
-
-
-
   <div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3">
     <div ng-show="!$root.currentUser"></span> 
       <alert type="danger">投稿機能の利用にはログインが必要です。<a ui-sref="login" class="alert-link">ログインはこちらから</a></alert>
@@ -110,20 +40,20 @@
                   </ul>
                 </div>
               </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-xs-4">
-                    <input placeholder="ニックネーム" type="text" class="form-control input-sm" ng-model="main_compose.voiceAuthor.nickName">
-                  </div>
-                  <div class="col-xs-4">
+              <div class="form-horizontal">
+                <div class="form-group">
+                  <input placeholder="ニックネーム" type="text" class="form-control input-sm" ng-model="main_compose.voiceAuthor.nickName">
+                </div>
+                <div class="form-group">
+                  <div class="form-inline">
                     <div class="input-group">
                       <input id="voice-author-age-years" type="text" class="form-control input-sm text-right" ng-model="main_compose.voiceAuthor.ageYears">
                       <div class="input-group-addon">歳</div>
+                    </div>
+                    <div class="input-group">
                       <input id="voice-author-age-months" type="text" class="form-control input-sm text-right" ng-model="main_compose.voiceAuthor.ageMonths">
                       <div class="input-group-addon">ヶ月</div>
                     </div>
-                  </div>
-                  <div class="col-xs-3">
                     <select
                       class="form-control input-sm"
                       ng-model="main_compose.voiceAuthor.gender"
@@ -132,11 +62,11 @@
                     </select>
                   </div>
                 </div>
-              </div>
-              <div class="form-group">
-                <toggle-switch ng-model="main_compose.voiceIsPublic" on-label="公開" off-label="非公開">
-                </toggle-switch>
-                <button type="button" class="btn btn-primary pull-right" ng-click="main_compose.submit()" ng-disabled="!main_compose.voice.description">送信</button>
+                <div class="form-group">
+                  <toggle-switch ng-model="main_compose.voiceIsPublic" on-label="公開" off-label="非公開">
+                  </toggle-switch>
+                  <button type="button" class="btn btn-primary pull-right btn-outline" ng-click="main_compose.submit()" ng-disabled="!main_compose.voice.description">送信</button>
+                </div>
               </div>
             </fieldset>
           </form>
