@@ -91,5 +91,10 @@ module.exports = function(options) {
     $.del([options.dist + '/', options.tmp + '/'], done);
   });
 
+  // 2015/09/19 安部追加
+  gulp.task('clean-only-dist', function (done) {
+    $.del([options.dist + '/'], done);
+  });
+
   gulp.task('build', ['html', 'fonts', 'other', 'cloud']);  // 2015/09/01 安部追加 cloud
 };
