@@ -41,7 +41,7 @@ var chavo;
                         : !_this.$rootScope.currentUser.get('likes') ? []
                             : _this.$rootScope.currentUser.get('likes');
                     console.log('myLikes: ' + myLikes);
-                    _this.voices.push(new chavo.Voice(voice.id, voice.get('description'), voice.get('author'), (voice.get('ageYears') && voice.get('ageMonths')) ? (voice.get('ageYears') + '歳' + voice.get('ageMonths') + 'ヶ月') : '', voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '', voice.get('user').get('username'), voice.get('user').id, voice.get('user').get('iconUrl') === undefined ?
+                    _this.voices.push(new chavo.Voice(voice.id, voice.get('description'), voice.get('author'), _this.makeAgeString(voice.get('ageYears'), voice.get('ageMonths')), voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '', voice.get('user').get('username'), voice.get('user').id, voice.get('user').get('iconUrl') === undefined ?
                         voice.get('icon') === undefined ? null : voice.get('icon').url()
                         : voice.get('user').get('iconUrl'), myLikes.indexOf(voice.id) >= 0 ? true : false, voice.get('likeCount'), moment(voice.createdAt).format('YYYY/MM/DD').toString()));
                 });
@@ -55,7 +55,7 @@ var chavo;
                 console.log('myLikes: ' + myLikes);
                 parseVoices.forEach(function (voice) {
                     if (voice.get('user').get('username') !== undefined) {
-                        _this.voices.push(new chavo.Voice(voice.id, voice.get('description'), voice.get('author'), (voice.get('ageYears') && voice.get('ageMonths')) ? (voice.get('ageYears') + '歳' + voice.get('ageMonths') + 'ヶ月') : '', voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '', voice.get('user').get('username'), voice.get('user').id, voice.get('user').get('iconUrl') === undefined ?
+                        _this.voices.push(new chavo.Voice(voice.id, voice.get('description'), voice.get('author'), _this.makeAgeString(voice.get('ageYears'), voice.get('ageMonths')), voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '', voice.get('user').get('username'), voice.get('user').id, voice.get('user').get('iconUrl') === undefined ?
                             voice.get('icon') === undefined ? null : voice.get('icon').url()
                             : voice.get('user').get('iconUrl'), myLikes.indexOf(voice.id) >= 0 ? true : false, voice.get('likeCount'), moment(voice.createdAt).format('YYYY/MM/DD').toString()));
                     }
@@ -105,6 +105,17 @@ var chavo;
                 console.info('2: Modal dismissed at: ' + new Date());
                 console.dir(voice);
             });
+        };
+        MainMyPostsController.prototype.makeAgeString = function (ageYears, ageMonths) {
+            if (ageYears && ageMonths) {
+                return ageYears + '歳' + ageMonths + 'ヶ月';
+            }
+            else if (ageYears) {
+                return ageYears + '歳';
+            }
+            else {
+                return '0歳' + ageMonths + 'ヶ月';
+            }
         };
         return MainMyPostsController;
     })();
