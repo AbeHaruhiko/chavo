@@ -3,15 +3,25 @@ $icon-font-path: "../../bower_components/bootstrap-sass-official/assets/fonts/bo
 // cutomize bootstrap 2015/09/20 安部追加
 $body-bg: #f5f8fa;
 
-$brand-primary:         #ff4081;
+$primay-color: #ff4081;  // pink
+
+$brand-primary: $primay-color;
+
+// disabled時のボタン背景を白に
+// $btn-primary-bg: #fff;
 
 // 本カスタマイズ用プライマリーカラー（テーマを変えたらこれも変えなきゃ・・・） 2015/09/20 安部追加
 // $primay-color: #337ab7;  // blue
-$primay-color: #ff4081;  // pink
 
+// settingsのサイドメニュー
 $list-group-active-color: $primay-color;
 $list-group-active-bg: #fff;
 $list-group-active-border: $primay-color;
+
+//
+// // navbar
+// $navbar-default-bg: darken($primay-color, 6.5%);
+
 // @import "../../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_variables";
 
 
