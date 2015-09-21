@@ -5,7 +5,8 @@ Parse.Cloud.define('hello', function (request, response) {
 Parse.Cloud.define('toggleLike', function (request, response) {
     Parse.Cloud.useMasterKey();
     var voice = request.params.voice;
-    voice.like = !voice.like;
+    // ↓のトグルはローカルで実施済み
+    // voice.like = !voice.like;
     var ParseVoice = Parse.Object.extend('Voice');
     var parseVoice = new ParseVoice();
     parseVoice.id = voice.objectId;
