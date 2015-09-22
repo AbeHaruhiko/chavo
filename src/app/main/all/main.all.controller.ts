@@ -92,6 +92,7 @@ module chavo {
                     : voice.get('user').get('iconUrl'),
             myLikes.indexOf(voice.id) >= 0 ? true : false,
             voice.get('likeCount'),
+            voice.getACL().getPublicReadAccess(),
             moment(voice.createdAt).format('YYYY/MM/DD').toString()
           ));
         });
@@ -132,6 +133,7 @@ module chavo {
                       : voice.get('user').get('iconUrl'),
               myLikes.indexOf(voice.id) >= 0 ? true : false,
               voice.get('likeCount'),
+              voice.getACL().getPublicReadAccess(),
               moment(voice.createdAt).format('YYYY/MM/DD').toString()
             ));
           }

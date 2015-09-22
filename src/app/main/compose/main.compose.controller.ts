@@ -60,6 +60,7 @@ module chavo {
       this.voiceAuthor.ageYears = this.voice.ageYears;
       this.voiceAuthor.ageMonths = this.voice.ageMonths;
       this.voiceAuthor.gender = this.voice.genderValue;
+      this.voiceIsPublic = this.voice.isPublic;
     }
 
     /**
@@ -78,19 +79,23 @@ module chavo {
       this.disableInput = true;
 
       var ParseVoice = Parse.Object.extend('Voice');
-      var voice = new ParseVoice();
-      voice.set('description', this.voice.description);
-      voice.set('gender', this.voiceAuthor ? this.voiceAuthor.gender : GENDER.OTHER);
-      voice.set('author', this.voiceAuthor ? this.voiceAuthor.nickName : null);
-      voice.set('ageYears', this.voiceAuthor ? this.voiceAuthor.ageYears : null);
-      voice.set('ageMonths', this.voiceAuthor ? this.voiceAuthor.ageMonths : null);
-      voice.set('user', Parse.User.current());
+      var parseVoice = new ParseVoice();
+      // 編集モードの場合、上書きする
+      if (this.voice.objectId) {
+        parseVoice.id = this.voice.objectId;
+      }
+      parseVoice.set('description', this.voice.description);
+      parseVoice.set('gender', this.voiceAuthor ? this.voiceAuthor.gender : GENDER.OTHER);
+      parseVoice.set('author', this.voiceAuthor ? this.voiceAuthor.nickName : null);
+      parseVoice.set('ageYears', this.voiceAuthor ? this.voiceAuthor.ageYears : null);
+      parseVoice.set('ageMonths', this.voiceAuthor ? this.voiceAuthor.ageMonths : null);
+      parseVoice.set('user', Parse.User.current());
       var voiceACL = new Parse.ACL(Parse.User.current());
       if (this.voiceIsPublic) {
         voiceACL.setPublicReadAccess(true);
       }
-      voice.setACL(voiceACL);  // 本人のRead, Write
-      voice.save({
+      parseVoice.setACL(voiceACL);  // 本人のRead, Write
+      parseVoice.save({
         error: function(voice: Voice, error: Parse.Error) {
           console.log('Error: ' + error.code + ' ' + error.message);
         }

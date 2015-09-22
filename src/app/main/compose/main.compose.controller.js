@@ -38,6 +38,7 @@ var chavo;
             this.voiceAuthor.ageYears = this.voice.ageYears;
             this.voiceAuthor.ageMonths = this.voice.ageMonths;
             this.voiceAuthor.gender = this.voice.genderValue;
+            this.voiceIsPublic = this.voice.isPublic;
         }
         MainComposeController.prototype.onSelectVoiceAuthor = function (child) {
             this.voiceAuthor = angular.copy(child);
@@ -49,19 +50,22 @@ var chavo;
             var _this = this;
             this.disableInput = true;
             var ParseVoice = Parse.Object.extend('Voice');
-            var voice = new ParseVoice();
-            voice.set('description', this.voice.description);
-            voice.set('gender', this.voiceAuthor ? this.voiceAuthor.gender : chavo.GENDER.OTHER);
-            voice.set('author', this.voiceAuthor ? this.voiceAuthor.nickName : null);
-            voice.set('ageYears', this.voiceAuthor ? this.voiceAuthor.ageYears : null);
-            voice.set('ageMonths', this.voiceAuthor ? this.voiceAuthor.ageMonths : null);
-            voice.set('user', Parse.User.current());
+            var parseVoice = new ParseVoice();
+            if (this.voice.objectId) {
+                parseVoice.id = this.voice.objectId;
+            }
+            parseVoice.set('description', this.voice.description);
+            parseVoice.set('gender', this.voiceAuthor ? this.voiceAuthor.gender : chavo.GENDER.OTHER);
+            parseVoice.set('author', this.voiceAuthor ? this.voiceAuthor.nickName : null);
+            parseVoice.set('ageYears', this.voiceAuthor ? this.voiceAuthor.ageYears : null);
+            parseVoice.set('ageMonths', this.voiceAuthor ? this.voiceAuthor.ageMonths : null);
+            parseVoice.set('user', Parse.User.current());
             var voiceACL = new Parse.ACL(Parse.User.current());
             if (this.voiceIsPublic) {
                 voiceACL.setPublicReadAccess(true);
             }
-            voice.setACL(voiceACL);
-            voice.save({
+            parseVoice.setACL(voiceACL);
+            parseVoice.save({
                 error: function (voice, error) {
                     console.log('Error: ' + error.code + ' ' + error.message);
                 }

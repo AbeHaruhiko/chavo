@@ -16,6 +16,7 @@ module chavo {
       public icon: string,
       public like: boolean,
       public likeCount: number,
+      public isPublic: boolean,
       public createdAt: string) {
     }
   }

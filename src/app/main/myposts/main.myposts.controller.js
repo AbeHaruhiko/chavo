@@ -43,7 +43,7 @@ var chavo;
                     console.log('myLikes: ' + myLikes);
                     _this.voices.push(new chavo.Voice(voice.id, voice.get('description'), voice.get('author'), _this.makeAgeString(voice.get('ageYears'), voice.get('ageMonths')), voice.get('ageYears'), voice.get('ageMonths'), voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '', voice.get('gender'), voice.get('user').get('username'), voice.get('user').id, voice.get('user').get('iconUrl') === undefined ?
                         voice.get('icon') === undefined ? null : voice.get('icon').url()
-                        : voice.get('user').get('iconUrl'), myLikes.indexOf(voice.id) >= 0 ? true : false, voice.get('likeCount'), moment(voice.createdAt).format('YYYY/MM/DD').toString()));
+                        : voice.get('user').get('iconUrl'), myLikes.indexOf(voice.id) >= 0 ? true : false, voice.get('likeCount'), voice.getACL().getPublicReadAccess(), moment(voice.createdAt).format('YYYY/MM/DD').toString()));
                 });
                 _this.cfpLoadingBar.complete();
                 _this.$scope.$apply();
@@ -57,7 +57,7 @@ var chavo;
                     if (voice.get('user').get('username') !== undefined) {
                         _this.voices.push(new chavo.Voice(voice.id, voice.get('description'), voice.get('author'), _this.makeAgeString(voice.get('ageYears'), voice.get('ageMonths')), voice.get('ageYears'), voice.get('ageMonths'), voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '', voice.get('gender'), voice.get('user').get('username'), voice.get('user').id, voice.get('user').get('iconUrl') === undefined ?
                             voice.get('icon') === undefined ? null : voice.get('icon').url()
-                            : voice.get('user').get('iconUrl'), myLikes.indexOf(voice.id) >= 0 ? true : false, voice.get('likeCount'), moment(voice.createdAt).format('YYYY/MM/DD').toString()));
+                            : voice.get('user').get('iconUrl'), myLikes.indexOf(voice.id) >= 0 ? true : false, voice.get('likeCount'), voice.getACL().getPublicReadAccess(), moment(voice.createdAt).format('YYYY/MM/DD').toString()));
                     }
                 });
                 _this.cfpLoadingBar.complete();
