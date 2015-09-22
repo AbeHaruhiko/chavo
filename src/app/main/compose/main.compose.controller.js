@@ -2,11 +2,12 @@ var chavo;
 (function (chavo) {
     'use strict';
     var MainComposeController = (function () {
-        function MainComposeController($scope, $rootScope, $state) {
+        function MainComposeController($scope, $rootScope, $state, $stateParams) {
             var _this = this;
             this.$scope = $scope;
             this.$rootScope = $rootScope;
             this.$state = $state;
+            this.$stateParams = $stateParams;
             this.children = new Array();
             this.genderList = [{ label: '男の子', value: chavo.GENDER.MALE },
                 { label: '女の子', value: chavo.GENDER.FEMALE },
@@ -31,6 +32,12 @@ var chavo;
                     });
                 });
             });
+            this.voice = $stateParams['voice'];
+            this.voiceAuthor = this.voiceAuthor || new chavo.Child();
+            this.voiceAuthor.nickName = this.voice.speaker;
+            this.voiceAuthor.ageYears = this.voice.ageYears;
+            this.voiceAuthor.ageMonths = this.voice.ageMonths;
+            this.voiceAuthor.gender = this.voice.genderValue;
         }
         MainComposeController.prototype.onSelectVoiceAuthor = function (child) {
             this.voiceAuthor = angular.copy(child);

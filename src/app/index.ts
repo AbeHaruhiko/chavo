@@ -71,7 +71,8 @@ module chavo {
       })
       .state('home.compose', {
         url: '/compose',
-        templateUrl: 'app/main/compose/main.compose.html'
+        templateUrl: 'app/main/compose/main.compose.html',
+        params: { voice: {} }
       })
       .state('settings', {
         url: '/settings',

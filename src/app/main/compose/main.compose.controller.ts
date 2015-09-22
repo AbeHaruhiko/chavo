@@ -21,7 +21,8 @@ module chavo {
     constructor(
         public $scope: IMainScope,
         public $rootScope: IChavoRootScope,
-        public $state: ng.ui.IStateService) {
+        public $state: ng.ui.IStateService,
+        public $stateParams: ng.ui.IStateParamsService) {
 
       var ParseChild = Parse.Object.extend('Child');
       var query = new Parse.Query(ParseChild);
@@ -51,6 +52,14 @@ module chavo {
           });
         });
       });
+
+      // voiceがある場合は画面にセット（編集モード）
+      this.voice = $stateParams['voice'];
+      this.voiceAuthor = this.voiceAuthor || new Child();
+      this.voiceAuthor.nickName = this.voice.speaker;
+      this.voiceAuthor.ageYears = this.voice.ageYears;
+      this.voiceAuthor.ageMonths = this.voice.ageMonths;
+      this.voiceAuthor.gender = this.voice.genderValue;
     }
 
     /**

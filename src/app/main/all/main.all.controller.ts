@@ -81,7 +81,10 @@ module chavo {
             voice.get('description'),
             voice.get('author'),
             this.makeAgeString(voice.get('ageYears'), voice.get('ageMonths')),
+            voice.get('ageYears'),
+            voice.get('ageMonths'),
             voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '',
+            voice.get('gender'),
             voice.get('user').get('username'),
             voice.get('user').id,
             voice.get('user').get('iconUrl') === undefined ?
@@ -118,7 +121,10 @@ module chavo {
               voice.get('description'),
               voice.get('author'),
               this.makeAgeString(voice.get('ageYears'), voice.get('ageMonths')),
+              voice.get('ageYears'),
+              voice.get('ageMonths'),
               voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '',
+              voice.get('gender'),
               voice.get('user').get('username'),
               voice.get('user').id,
               voice.get('user').get('iconUrl') === undefined ?
