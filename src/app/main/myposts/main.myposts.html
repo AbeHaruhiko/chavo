@@ -25,7 +25,7 @@
                     dropdown-toggle>
                 </span>
                 <ul class="dropdown-menu dropdown-menu-right">
-                  <!-- <li><a>編集する</a></li> -->
+                  <li><a ui-sref="home.compose({ voice: voice })">編集する</a></li>
                   <li><a ng-click="main_myposts.openDeletePostConfirmModal(voice)">削除する</a></li>
                   <script type="text/ng-template" id="deletePostConfirmModal.html">
                     <div class="modal-body">この投稿を削除しますか？</div>
