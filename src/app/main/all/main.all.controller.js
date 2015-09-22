@@ -37,32 +37,10 @@ var chavo;
                 return Parse.Promise.when(promises);
             })
                 .then(function () {
-                parseVoices.forEach(function (voice) {
-                    var myLikes = !_this.$rootScope.currentUser ? []
-                        : !_this.$rootScope.currentUser.get('likes') ? []
-                            : _this.$rootScope.currentUser.get('likes');
-                    console.log('myLikes: ' + myLikes);
-                    _this.voices.push(new chavo.Voice(voice.id, voice.get('description'), voice.get('author'), _this.makeAgeString(voice.get('ageYears'), voice.get('ageMonths')), voice.get('ageYears'), voice.get('ageMonths'), voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '', voice.get('gender'), voice.get('user').get('username'), voice.get('user').id, voice.get('user').get('iconUrl') === undefined ?
-                        voice.get('icon') === undefined ? null : voice.get('icon').url()
-                        : voice.get('user').get('iconUrl'), myLikes.indexOf(voice.id) >= 0 ? true : false, voice.get('likeCount'), voice.getACL().getPublicReadAccess(), moment(voice.createdAt).format('YYYY/MM/DD').toString()));
-                });
-                _this.cfpLoadingBar.complete();
-                _this.$scope.$apply();
+                _this.applyFoundVoices(parseVoices);
             }, function (error) {
                 console.error(error);
-                var myLikes = !_this.$rootScope.currentUser ? []
-                    : !_this.$rootScope.currentUser.get('likes') ? []
-                        : _this.$rootScope.currentUser.get('likes');
-                console.log('myLikes: ' + myLikes);
-                parseVoices.forEach(function (voice) {
-                    if (voice.get('user').get('username') !== undefined) {
-                        _this.voices.push(new chavo.Voice(voice.id, voice.get('description'), voice.get('author'), _this.makeAgeString(voice.get('ageYears'), voice.get('ageMonths')), voice.get('ageYears'), voice.get('ageMonths'), voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '', voice.get('gender'), voice.get('user').get('username'), voice.get('user').id, voice.get('user').get('iconUrl') === undefined ?
-                            voice.get('icon') === undefined ? null : voice.get('icon').url()
-                            : voice.get('user').get('iconUrl'), myLikes.indexOf(voice.id) >= 0 ? true : false, voice.get('likeCount'), voice.getACL().getPublicReadAccess(), moment(voice.createdAt).format('YYYY/MM/DD').toString()));
-                    }
-                });
-                _this.cfpLoadingBar.complete();
-                _this.$scope.$apply();
+                _this.applyFoundVoices(parseVoices);
             });
         };
         MainAllController.prototype.toggleLike = function (voice) {
@@ -107,16 +85,18 @@ var chavo;
                 console.dir(voice);
             });
         };
-        MainAllController.prototype.makeAgeString = function (ageYears, ageMonths) {
-            if (ageYears && ageMonths) {
-                return ageYears + '歳' + ageMonths + 'ヶ月';
-            }
-            else if (ageYears) {
-                return ageYears + '歳';
-            }
-            else {
-                return '0歳' + ageMonths + 'ヶ月';
-            }
+        MainAllController.prototype.applyFoundVoices = function (parseVoices) {
+            var _this = this;
+            var myLikes = !this.$rootScope.currentUser ? []
+                : !this.$rootScope.currentUser.get('likes') ? []
+                    : this.$rootScope.currentUser.get('likes');
+            parseVoices.forEach(function (voice) {
+                if (voice.get('user').get('username') !== undefined) {
+                    _this.voices.push(new chavo.Voice(voice, myLikes));
+                }
+            });
+            this.cfpLoadingBar.complete();
+            this.$scope.$apply();
         };
         return MainAllController;
     })();

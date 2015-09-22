@@ -27,22 +27,6 @@ module chavo {
 
       query.find({
         success: (results: Parse.Object[]) => {
-
-          // 表示用にVoiceクラスへ移し替え
-          // results.forEach((voice: Parse.Object) => {
-          //   /*voice.set('genderDisp', voice.get('gender') == 0 ? '男の子' : voice.get('gender') == 1 ? '女の子' : '');*/
-          //   this.voices.push(new Voice(
-          //     voice.get('description'),
-          //     voice.get('author'),
-          //     (voice.get('ageYears') && voice.get('ageMonths')) ? (voice.get('ageYears') + '歳' + voice.get('ageMonths') + 'ヶ月') : '',
-          //     voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '',
-          //     null,
-          //     null,
-          //     moment(voice.createdAt).format('YYYY/MM/DD').toString()
-          //   ));
-          // });
-          //
-          // this.$scope.$apply();
         },
         error: function(error: Parse.Error) {
           console.error('Error: ' + error.code + ' ' + error.message);
@@ -57,91 +41,19 @@ module chavo {
         });
 
         if (Parse.User.current()) {
-          // 最新のlikesを取得しておく
+          // ユーザをfetchして最新のlikesを取得しておく
           promises.push(Parse.User.current().fetch());
         }
 
         return Parse.Promise.when(promises);
       })
       .then(() => {
-
-
-        // 表示用にVoiceクラスへ移し替え
-        parseVoices.forEach((voice: Parse.Object) => {
-
-          // 自分がlike済みの投稿
-          // $rootScope.currentUser = Parse.User.current();
-          var myLikes: string[] = !this.$rootScope.currentUser ? []
-                                      : !this.$rootScope.currentUser.get('likes') ? []
-                                      : this.$rootScope.currentUser.get('likes');
-          console.log('myLikes: ' + myLikes);
-
-          this.voices.push(new Voice(
-            voice.id,
-            voice.get('description'),
-            voice.get('author'),
-            this.makeAgeString(voice.get('ageYears'), voice.get('ageMonths')),
-            voice.get('ageYears'),
-            voice.get('ageMonths'),
-            voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '',
-            voice.get('gender'),
-            voice.get('user').get('username'),
-            voice.get('user').id,
-            voice.get('user').get('iconUrl') === undefined ?
-                voice.get('icon') === undefined ? null : voice.get('icon').url()
-                    : voice.get('user').get('iconUrl'),
-            myLikes.indexOf(voice.id) >= 0 ? true : false,
-            voice.get('likeCount'),
-            voice.getACL().getPublicReadAccess(),
-            moment(voice.createdAt).format('YYYY/MM/DD').toString()
-          ));
-        });
-
-        this.cfpLoadingBar.complete();
-
-        this.$scope.$apply();
-
+        this.applyFoundVoices(parseVoices);
       },
       (error: any) => {
-        console.error(error);
         // 投稿ユーザがいない場合などエラーになる
-
-        // 自分がlike済みの投稿
-        var myLikes: string[] = !this.$rootScope.currentUser ? []
-                                    : !this.$rootScope.currentUser.get('likes') ? []
-                                    : this.$rootScope.currentUser.get('likes');
-        console.log('myLikes: ' + myLikes);
-
-        // 表示用にVoiceクラスへ移し替え
-        parseVoices.forEach((voice: Parse.Object) => {
-          if (voice.get('user').get('username') !== undefined) {
-            // すでにいないユーザの投稿は表示しない
-
-            this.voices.push(new Voice(
-              voice.id,
-              voice.get('description'),
-              voice.get('author'),
-              this.makeAgeString(voice.get('ageYears'), voice.get('ageMonths')),
-              voice.get('ageYears'),
-              voice.get('ageMonths'),
-              voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '',
-              voice.get('gender'),
-              voice.get('user').get('username'),
-              voice.get('user').id,
-              voice.get('user').get('iconUrl') === undefined ?
-                  voice.get('icon') === undefined ? null : voice.get('icon').url()
-                      : voice.get('user').get('iconUrl'),
-              myLikes.indexOf(voice.id) >= 0 ? true : false,
-              voice.get('likeCount'),
-              voice.getACL().getPublicReadAccess(),
-              moment(voice.createdAt).format('YYYY/MM/DD').toString()
-            ));
-          }
-        });
-
-        this.cfpLoadingBar.complete();
-
-        this.$scope.$apply();
+        console.error(error);
+        this.applyFoundVoices(parseVoices);
       });
 
     }
@@ -227,14 +139,25 @@ module chavo {
       });
     }
 
-    private makeAgeString(ageYears: string, ageMonths: string): string {
-      if (ageYears && ageMonths) {
-        return ageYears + '歳' + ageMonths + 'ヶ月';
-      } else if (ageYears) {
-        return ageYears + '歳';
-      } else {
-        return '0歳' + ageMonths + 'ヶ月';
-      }
+    private applyFoundVoices(parseVoices: Parse.Object[]) {
+      // 自分がlike済みの投稿
+      var myLikes: string[] = !this.$rootScope.currentUser ? []
+                                  : !this.$rootScope.currentUser.get('likes') ? []
+                                  : this.$rootScope.currentUser.get('likes');
+      // console.log('myLikes: ' + myLikes);
+
+      // 表示用にVoiceクラスへ移し替え
+      parseVoices.forEach((voice: Parse.Object) => {
+        if (voice.get('user').get('username') !== undefined) {
+          // すでにいないユーザの投稿は表示しない
+
+          this.voices.push(new Voice(voice, myLikes));
+        }
+      });
+
+      this.cfpLoadingBar.complete();
+
+      this.$scope.$apply();
     }
   }
 }
