@@ -40,6 +40,7 @@
           </div>
           <p class="pre-line">{{ voice.description }}</p>
           <p class="text-right"><small>{{ voice.speaker }} {{ voice.age }} {{ voice.gender }}</small></p>
+          <p ng-show="voice.photoUrl"><img ng-src="{{voice.photoUrl}}" class="img-responsive img-thumbnail"/></p>
         </div>
         <!-- <pre>{{voice|json}}</pre> -->
       </div>

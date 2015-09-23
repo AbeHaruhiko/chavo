@@ -17,6 +17,7 @@ module chavo {
     public icon: string;
     public like: boolean;
     public likeCount: number;
+    public photoUrl: string;
     public isPublic: boolean;
     public createdAt: string;
 
@@ -47,6 +48,7 @@ module chavo {
               : voice.get('user').get('iconUrl');
       this.like = likes.indexOf(voice.id) >= 0 ? true : false;
       this.likeCount = voice.get('likeCount');
+      this.photoUrl = voice.get('photoUrl');
       this.isPublic = voice.getACL().getPublicReadAccess();
       this.createdAt = moment(voice.createdAt).format('YYYY/MM/DD').toString();
     }

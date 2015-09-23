@@ -24,6 +24,7 @@ var chavo;
                 : voice.get('user').get('iconUrl');
             this.like = likes.indexOf(voice.id) >= 0 ? true : false;
             this.likeCount = voice.get('likeCount');
+            this.photoUrl = voice.get('photoUrl');
             this.isPublic = voice.getACL().getPublicReadAccess();
             this.createdAt = moment(voice.createdAt).format('YYYY/MM/DD').toString();
         };

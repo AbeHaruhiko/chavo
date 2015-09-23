@@ -22,7 +22,8 @@ module chavo {
         public $scope: IMainScope,
         public $rootScope: IChavoRootScope,
         public $state: ng.ui.IStateService,
-        public $stateParams: ng.ui.IStateParamsService) {
+        public $stateParams: ng.ui.IStateParamsService,
+        public cfpLoadingBar: any) {
 
       var ParseChild = Parse.Object.extend('Child');
       var query = new Parse.Query(ParseChild);
@@ -61,6 +62,17 @@ module chavo {
       this.voiceAuthor.ageMonths = this.voice.ageMonths;
       this.voiceAuthor.gender = this.voice.genderValue;
       this.voiceIsPublic = this.voice.isPublic;
+
+      // ファイルインプットの設定
+      var fileSelector: any = angular.element('#photo-selector');
+      fileSelector.fileinput({
+        dropZoneEnabled: false,
+        showUpload: false,
+        showCaption: false,
+        showPreview: true,
+        browseClass: 'photo-browse-btn btn btn-primary btn-outline',
+        browseLabel: '画像選択'
+      });
     }
 
     /**
@@ -78,36 +90,53 @@ module chavo {
 
       this.disableInput = true;
 
-      var ParseVoice = Parse.Object.extend('Voice');
-      var parseVoice = new ParseVoice();
-      // 編集モードの場合、上書きする
-      if (this.voice.objectId) {
-        parseVoice.id = this.voice.objectId;
+      // ファイルアップロード
+      var fileSelector: any = angular.element('#photo-selector');
+      if (fileSelector[0].files.length > 0) {
+        // 画像が選択されている場合、保存して投稿と紐付ける。
+
+        var file = fileSelector[0].files[0];
+        var name = 'photo.jpg';
+
+        var parseFile = new Parse.File(name, file);
+        parseFile.save().then(() => {
+
+          var parseVoice = this.makeParseVoice();
+          parseVoice.set('photo', parseFile);
+          parseVoice.set('photoUrl', parseFile.url())
+
+          return parseVoice.save({
+            error: function(voice: Voice, error: Parse.Error) {
+              console.log('Error: ' + error.code + ' ' + error.message);
+            }
+          });
+        }).then(() => {
+          console.log('ほぞんしました');
+          this.$state.go('home.all');
+        }, function(error: Parse.Error) {
+          console.error('投稿送信時エラー: ' + error.code + ' ' + error.message);
+          this.alertMsg = '送信に失敗しました...時間をおいてためしてください。';
+          this.disableInput = false;
+          this.$scope.$apply();
+        });
+      } else {
+        // 画像が選択されていない場合、投稿のみ保存
+
+        var parseVoice = this.makeParseVoice();
+        parseVoice.save({
+          error: function(voice: Voice, error: Parse.Error) {
+            console.log('Error: ' + error.code + ' ' + error.message);
+          }
+        }).then(() => {
+          console.log('ほぞんしました');
+          this.$state.go('home.all');
+        }, (error: Parse.Error) => {
+          console.error('投稿送信時エラー: ' + error.code + ' ' + error.message);
+          this.alertMsg = '送信に失敗しました...時間をおいてためしてください。';
+          this.disableInput = false;
+          this.$scope.$apply();
+        });
       }
-      parseVoice.set('description', this.voice.description);
-      parseVoice.set('gender', this.voiceAuthor ? this.voiceAuthor.gender : GENDER.OTHER);
-      parseVoice.set('author', this.voiceAuthor ? this.voiceAuthor.nickName : null);
-      parseVoice.set('ageYears', this.voiceAuthor ? this.voiceAuthor.ageYears : null);
-      parseVoice.set('ageMonths', this.voiceAuthor ? this.voiceAuthor.ageMonths : null);
-      parseVoice.set('user', Parse.User.current());
-      var voiceACL = new Parse.ACL(Parse.User.current());
-      if (this.voiceIsPublic) {
-        voiceACL.setPublicReadAccess(true);
-      }
-      parseVoice.setACL(voiceACL);  // 本人のRead, Write
-      parseVoice.save({
-        error: function(voice: Voice, error: Parse.Error) {
-          console.log('Error: ' + error.code + ' ' + error.message);
-        }
-      }).then(() => {
-        console.log('ほぞんしました');
-        this.$state.go('home.all');
-      }, (error: Parse.Error) => {
-        console.error('投稿送信時エラー: ' + error.code + ' ' + error.message);
-        this.alertMsg = '送信に失敗しました...時間をおいてためしてください。';
-        this.disableInput = false;
-        this.$scope.$apply();
-      });
     }
 
     fetchUser() {
@@ -120,6 +149,30 @@ module chavo {
       (error: Parse.Error) => {
         console.error('Error: ' + error.code + ' ' + error.message);
       });
+    }
+
+    private makeParseVoice(): Parse.Object {
+
+      var ParseVoice = Parse.Object.extend('Voice');
+      var parseVoice = new ParseVoice();
+      // 編集モードの場合、上書きする
+      if (this.voice.objectId) {
+        parseVoice.id = this.voice.objectId;
+      }
+
+      parseVoice.set('description', this.voice.description);
+      parseVoice.set('gender', this.voiceAuthor ? this.voiceAuthor.gender : GENDER.OTHER);
+      parseVoice.set('author', this.voiceAuthor ? this.voiceAuthor.nickName : null);
+      parseVoice.set('ageYears', this.voiceAuthor ? this.voiceAuthor.ageYears : null);
+      parseVoice.set('ageMonths', this.voiceAuthor ? this.voiceAuthor.ageMonths : null);
+      parseVoice.set('user', Parse.User.current());
+      var voiceACL = new Parse.ACL(Parse.User.current());
+      if (this.voiceIsPublic) {
+        voiceACL.setPublicReadAccess(true);
+      }
+      parseVoice.setACL(voiceACL);  // 本人のRead, Write
+
+      return parseVoice;
     }
   }
 
