@@ -28,10 +28,10 @@ var chavo;
                             _this.loginMessage = 'ユーザー名かパスワードが間違っています。';
                         }
                         else if (error.code === 200) {
-                            _this.loginMessage = 'ユーザー名を入力してください。';
+                            _this.loginMessage = 'ユーザー名が間違っています。';
                         }
                         else if (error.code === 201) {
-                            _this.loginMessage = 'パスワードを入力してください。';
+                            _this.loginMessage = 'パスワードが間違っています。';
                         }
                         else {
                             _this.loginMessage = 'ログインできませんでした。：' + error.code + ' ' + error.message;
