@@ -27,7 +27,7 @@ module chavo {
       Parse.FacebookUtils.logIn(null, callbacks);
     }
 
-    logIn(authData: { username: string; password: string; }, callbacks: any) {
+    logIn(authData: { username: string; password: string; } = { username: '', password: '' }, callbacks: any) {
       Parse.User.logIn(authData.username, authData.password, callbacks)
         .then((user: Parse.User) => {
           this.$rootScope.currentUser = user;
