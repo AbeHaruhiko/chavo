@@ -100,6 +100,7 @@ var chavo;
                     _this.$scope.$apply();
                 });
             }
+            Parse.Cloud.run('saveTag', { tags: this.voice.tags });
         };
         MainComposeController.prototype.fetchUser = function () {
             var _this = this;

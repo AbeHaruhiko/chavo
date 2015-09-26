@@ -27,6 +27,7 @@ module chavo {
 
       query.find({
         success: (results: Parse.Object[]) => {
+          console.log('success.');
         },
         error: function(error: Parse.Error) {
           console.error('Error: ' + error.code + ' ' + error.message);
@@ -131,10 +132,10 @@ module chavo {
           }
         );
 
-        console.info('1: Modal dismissed at: ' + new Date());
+        // console.info('1: Modal dismissed at: ' + new Date());
         console.dir(voice);
       }, () => {
-        console.info('2: Modal dismissed at: ' + new Date());
+        // console.info('2: Modal dismissed at: ' + new Date());
         console.dir(voice);
       });
     }

@@ -199,15 +199,23 @@ body {
 // タグ表示用のバッジ
 .tag-badge {
   margin-right: 8px;
-  // padding: 3px 10px;
   font-weight: normal;
   color: $primay-color;
-  // line-height: 1.2;
   background-color: #fff;
   border: 1px solid $primay-color;
+  cursor: pointer;
+}
+
+.tag-badge:hover {
+  color: #fff;
+  background-color: $primay-color;
 }
 
 // ngTagsInpuのスタイルを上書き
+tags-input {
+  margin-bottom: 12px;
+}
+
 tags-input .tags .tag-item {
   color: $primay-color !important;
   background: #fff !important;

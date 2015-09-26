@@ -29,7 +29,7 @@
                   placeholder="カテゴリ・タグを追加"
                   min-length="1"
                   template="tag.html">
-                <auto-complete source="main_compose.loadTags($query)"></auto-complete>
+                <auto-complete source="main_compose.loadTags($query)" min-length="1"></auto-complete>
               </tags-input>
               <script type="text/ng-template" id="tag.html">
                 <span class="">{{$getDisplayText()}}</span>

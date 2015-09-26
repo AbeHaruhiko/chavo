@@ -18,14 +18,14 @@
               <span ng-click="main_all.toggleLike(voice)" id="like" ng-class="{ 'like-active': voice.like }">
                 <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
               </span>
-              <span>{{ voice.likeCount }}</span>
+              <span id="like-count">{{ voice.likeCount }}</span>
               <span ng-show="{{voice.userObjectId === main_all.$rootScope.currentUser.id}}" dropdown class="dropdown"><!-- ここのclass="dropdown"がないと動かない -->
                 <span
                     class="glyphicon glyphicon-option-horizontal cursor-pointer dropdown-toggle"
                     dropdown-toggle>
                 </span>
                 <ul class="dropdown-menu dropdown-menu-right">
-                  <li><a ui-sref="home.compose({ voice: voice })">編集する</a></li>
+                  <li><a ui-sref="home.compose({ voice: voice, voiceId: voice.objectId })">編集する</a></li>
                   <li><a ng-click="main_all.openDeletePostConfirmModal(voice)">削除する</a></li>
                   <script type="text/ng-template" id="deletePostConfirmModal.html">
                     <div class="modal-body">この投稿を削除しますか？</div>
@@ -39,9 +39,7 @@
             </span>
           </div>
           <p class="pre-line">{{ voice.description }}</p>
-          <!-- <p><tags-input ng-model="voice.tags" remove-tag-symbol="▼"></p> -->
-          <p><span class="badge tag-badge" ng-repeat="tag in voice.tags">{{ tag.text }}</span></p>
-
+          <p><a ng-repeat="tag in voice.tags" ui-sref="main.tag"><span class="badge tag-badge">{{ tag.text }}</span></a></p>
           <p class="text-right"><small>{{ voice.speaker }} {{ voice.age }} {{ voice.gender }}</small></p>
           <p ng-show="voice.photoUrl"><img ng-src="{{voice.photoUrl}}" class="img-responsive img-thumbnail"/></p>
         </div>

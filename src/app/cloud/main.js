@@ -33,3 +33,24 @@ Parse.Cloud.define('toggleLike', function (request, response) {
         response.error('Error: ' + error.code + ' ' + error.message);
     });
 });
+Parse.Cloud.define('saveTag', function (request, response) {
+    var tags = request.params.tags;
+    tags.forEach(function (tag) {
+        console.log(tag);
+        var ParseTag = Parse.Object.extend('Tag');
+        var query = new Parse.Query(ParseTag);
+        query.equalTo('tag', tag.text);
+        query.count().then(function (count) {
+            if (count === 0) {
+                var parseTag = new ParseTag();
+                parseTag.set('tag', tag.text);
+                return parseTag.save();
+            }
+        })
+            .then(function (parseTag) {
+            if (parseTag) {
+                console.log('saved tag: ' + parseTag.get('tag'));
+            }
+        });
+    });
+});

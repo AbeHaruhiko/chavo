@@ -138,6 +138,10 @@ module chavo {
           this.$scope.$apply();
         });
       }
+
+      // タグを保存
+      Parse.Cloud.run('saveTag', { tags: this.voice.tags });
+
     }
 
     fetchUser() {
