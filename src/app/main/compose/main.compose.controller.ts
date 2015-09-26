@@ -103,7 +103,7 @@ module chavo {
 
           var parseVoice = this.makeParseVoice();
           parseVoice.set('photo', parseFile);
-          parseVoice.set('photoUrl', parseFile.url())
+          parseVoice.set('photoUrl', parseFile.url());
 
           return parseVoice.save({
             error: function(voice: Voice, error: Parse.Error) {

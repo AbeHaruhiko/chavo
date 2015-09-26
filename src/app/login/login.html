@@ -34,6 +34,9 @@
         </div>
       </form>
 
+      <div class="col-sm-12">
+        <alert type="danger" ng-show="login.loginMessage">{{login.loginMessage}}</alert>
+      </div>
       <div class="col-sm-12" id="resetPwPopoverContainer">
         <alert type="info" ng-show="login.showResetPwMessage">メールを送信しました。メールのURLをクリックしてパスワードを再設定してください。</alert>
         <a popover-template="'resetPwPopoverTemplate.html'"

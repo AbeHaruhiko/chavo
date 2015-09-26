@@ -37,7 +37,7 @@ module chavo {
       this.tags = voice.get('tags');
       this.speaker = voice.get('author');
       this.age = this.makeAgeString(voice.get('ageYears'), voice.get('ageMonths'));
-      this.ageYears = voice.get('ageYears')
+      this.ageYears = voice.get('ageYears');
       this.ageMonths = voice.get('ageMonths');
       this.gender = voice.get('gender') === 0 ? '男の子' : voice.get('gender') === 1 ? '女の子' : '';
       this.genderValue = voice.get('gender');

@@ -8,6 +8,8 @@ module chavo {
 
     public showResetPwMessage: boolean = false;
 
+    public loginMessage: string;
+
     /* @ngInject */
     constructor (public $scope: IMainScope,
       public $rootScope: IChavoRootScope,
@@ -44,7 +46,18 @@ module chavo {
         },
         error: (user: Parse.User, error: Parse.Error) => {
           console.log('Unable to login:  ' + error.code + ' ' + error.message);
-          this.$state.go('login');
+          this.$scope.$apply(() => {
+            if (error.code === 101) {
+              this.loginMessage = 'ユーザー名かパスワードが間違っています。';
+            } else if (error.code === 200) {
+              this.loginMessage = 'ユーザー名を入力してください。';
+            } else if (error.code === 201) {
+              this.loginMessage = 'パスワードを入力してください。';
+            } else {
+              this.loginMessage = 'ログインできませんでした。：' + error.code + ' ' + error.message;
+            }
+          });
+          // this.$state.go('login');
         }
       });
     }
