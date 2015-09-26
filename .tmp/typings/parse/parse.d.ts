@@ -80,6 +80,9 @@ declare namespace Parse {
       // when(promises: Promise<T>[]): Promise<T>;
       static when(promises: Promise<any>[]): Promise<any>;
 
+      // 2015/09/24 安部追加
+      static as(result: any): Promise<any>;
+
         always(callback: Function): Promise<T>;
         as(): Promise<T>;
         done(callback: Function): Promise<T>;
