@@ -32,10 +32,8 @@
                 <auto-complete source="main_compose.loadTags($query)"></auto-complete>
               </tags-input>
               <script type="text/ng-template" id="tag.html">
-                <div class="">
-                  <span class="">{{$getDisplayText()}}</span>
-                  <a class="remove-button" ng-click="$removeTag()">&#10006;</a>
-                </div>
+                <span class="">{{$getDisplayText()}}</span>
+                <a class="remove-button" ng-click="$removeTag()">&#10006;</a>
               </script>
               <div ng-show="main_compose.voice.photoUrl"><img ng-src="{{main_compose.voice.photoUrl}}" class="img-responsive img-thumbnail"/></div>
               <input id="photo-selector" type="file" />
