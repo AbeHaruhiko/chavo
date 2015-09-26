@@ -3,8 +3,6 @@ var chavo;
     'use strict';
     var Voice = (function () {
         function Voice(voice, likes) {
-            this.voice = voice;
-            this.likes = likes;
             this.constructVoiceFromParseVoice(voice, likes);
         }
         Voice.prototype.constructVoiceFromParseVoice = function (voice, likes) {

@@ -6,6 +6,7 @@ Parse.Cloud.define('hello', function(request: Parse.Cloud.FunctionRequest, respo
 
 Parse.Cloud.define('toggleLike', function(request: Parse.Cloud.FunctionRequest, response: Parse.Cloud.FunctionResponse) {
 
+  // 人のvoiceのlikceCountをincrementするのでuseMasterKey
   Parse.Cloud.useMasterKey();
   var voice = request.params.voice;
   // ↓のトグルはローカルで実施済み
@@ -42,6 +43,31 @@ Parse.Cloud.define('toggleLike', function(request: Parse.Cloud.FunctionRequest, 
     console.error('Error: ' + error.code + ' ' + error.message);
 
     response.error('Error: ' + error.code + ' ' + error.message);
+  });
+
+});
+
+Parse.Cloud.define('saveTag', function(request: Parse.Cloud.FunctionRequest, response: Parse.Cloud.FunctionResponse) {
+  var tags: { text: string; }[] = request.params.tags;
+
+  tags.forEach((tag: { text: string; }) => {
+    console.log(tag);
+    var ParseTag = Parse.Object.extend('Tag');
+
+    var query = new Parse.Query(ParseTag);
+    query.equalTo('tag', tag.text);
+    query.count().then((count: number) => {
+      if (count === 0) {
+        var parseTag = new ParseTag();
+        parseTag.set('tag', tag.text);
+        return parseTag.save();
+      }
+    })
+    .then((parseTag: Parse.Object) => {
+      if (parseTag) {
+        console.log('saved tag: ' + parseTag.get('tag'))
+      }
+    });
   });
 
 });

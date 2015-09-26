@@ -2,13 +2,14 @@ var chavo;
 (function (chavo) {
     'use strict';
     var MainComposeController = (function () {
-        function MainComposeController($scope, $rootScope, $state, $stateParams, cfpLoadingBar) {
+        function MainComposeController($scope, $rootScope, $state, $stateParams, cfpLoadingBar, $q) {
             var _this = this;
             this.$scope = $scope;
             this.$rootScope = $rootScope;
             this.$state = $state;
             this.$stateParams = $stateParams;
             this.cfpLoadingBar = cfpLoadingBar;
+            this.$q = $q;
             this.children = new Array();
             this.genderList = [{ label: '男の子', value: chavo.GENDER.MALE },
                 { label: '女の子', value: chavo.GENDER.FEMALE },
@@ -99,6 +100,7 @@ var chavo;
                     _this.$scope.$apply();
                 });
             }
+            Parse.Cloud.run('saveTag', { tags: this.voice.tags });
         };
         MainComposeController.prototype.fetchUser = function () {
             var _this = this;
@@ -111,6 +113,21 @@ var chavo;
                 console.error('Error: ' + error.code + ' ' + error.message);
             });
         };
+        MainComposeController.prototype.loadTags = function (queryString) {
+            var ParseTag = Parse.Object.extend('Tag');
+            var query = new Parse.Query(ParseTag);
+            query.select('tag');
+            query.startsWith('tag', queryString);
+            var tags = [];
+            var deferred = this.$q.defer();
+            query.find().then(function (results) {
+                results.forEach(function (result) {
+                    tags.push({ text: result.get('tag') });
+                });
+                deferred.resolve(tags);
+            }, null);
+            return deferred.promise;
+        };
         MainComposeController.prototype.makeParseVoice = function () {
             var ParseVoice = Parse.Object.extend('Voice');
             var parseVoice = new ParseVoice();
@@ -118,6 +135,7 @@ var chavo;
                 parseVoice.id = this.voice.objectId;
             }
             parseVoice.set('description', this.voice.description);
+            parseVoice.set('tags', this.voice.tags);
             parseVoice.set('gender', this.voiceAuthor ? this.voiceAuthor.gender : chavo.GENDER.OTHER);
             parseVoice.set('author', this.voiceAuthor ? this.voiceAuthor.nickName : null);
             parseVoice.set('ageYears', this.voiceAuthor ? this.voiceAuthor.ageYears : null);

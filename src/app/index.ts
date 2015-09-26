@@ -36,7 +36,8 @@ module chavo {
     'ui.bootstrap',
     'ui.validate',
     'toggle-switch',
-    'cfp.loadingBar'
+    'cfp.loadingBar',
+    'ngTagsInput'
     ])
     .service('AuthService', AuthService)
     .service('FacebookService', FacebookService)
@@ -70,7 +71,7 @@ module chavo {
         templateUrl: 'app/main/all/main.all.html'
       })
       .state('home.compose', {
-        url: '/compose',
+        url: '/compose/:voiceId',
         templateUrl: 'app/main/compose/main.compose.html',
         params: { voice: {} }
       })

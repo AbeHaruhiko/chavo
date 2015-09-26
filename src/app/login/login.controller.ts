@@ -50,9 +50,9 @@ module chavo {
             if (error.code === 101) {
               this.loginMessage = 'ユーザー名かパスワードが間違っています。';
             } else if (error.code === 200) {
-              this.loginMessage = 'ユーザー名を入力してください。';
+              this.loginMessage = 'ユーザー名が間違っています。';
             } else if (error.code === 201) {
-              this.loginMessage = 'パスワードを入力してください。';
+              this.loginMessage = 'パスワードが間違っています。';
             } else {
               this.loginMessage = 'ログインできませんでした。：' + error.code + ' ' + error.message;
             }

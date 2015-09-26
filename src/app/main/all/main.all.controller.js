@@ -20,6 +20,7 @@ var chavo;
             query.descending('createdAt');
             query.find({
                 success: function (results) {
+                    console.log('success.');
                 },
                 error: function (error) {
                     console.error('Error: ' + error.code + ' ' + error.message);
@@ -78,10 +79,8 @@ var chavo;
                     .then(function () {
                     _this.$state.reload();
                 });
-                console.info('1: Modal dismissed at: ' + new Date());
                 console.dir(voice);
             }, function () {
-                console.info('2: Modal dismissed at: ' + new Date());
                 console.dir(voice);
             });
         };

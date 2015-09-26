@@ -1,3 +1,6 @@
+$primay-color: #ff4081;  // pink
+
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
@@ -191,6 +194,49 @@ body {
 // ここまで outline button
 
 
+
+
+// タグ表示用のバッジ
+.tag-badge {
+  margin-right: 8px;
+  font-weight: normal;
+  color: $primay-color;
+  background-color: #fff;
+  border: 1px solid $primay-color;
+  cursor: pointer;
+}
+
+.tag-badge:hover {
+  color: #fff;
+  background-color: $primay-color;
+}
+
+// ngTagsInpuのスタイルを上書き
+tags-input {
+  margin-bottom: 12px;
+}
+
+tags-input .tags .tag-item {
+  color: $primay-color !important;
+  background: #fff !important;
+  border: 1px solid $primay-color !important;
+  border-radius: 1em !important;
+  padding-left: 0.5em !important;
+  padding-right: 0.5em !important;
+}
+
+tags-input .tags .tag-item.selected {
+  color: #fff !important;
+  background: $primay-color !important;
+}
+// ngTagsInpuのスタイルを上書きここまで
+
+// .tag-item {
+//     color: #fff;
+//     background: #fff;
+//     border: 0px;
+//     border-radius: 0px;
+// }
 /* Do not remove this comments bellow. It's the markers used by gulp-inject to inject
    all your sass files automatically */
 // injector
