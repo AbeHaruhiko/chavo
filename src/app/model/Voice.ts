@@ -22,8 +22,8 @@ module chavo {
     public createdAt: string;
 
     constructor(
-      private voice: Parse.Object,
-      private likes: string[]
+      voice: Parse.Object,
+      likes: string[]
       ) {
         this.constructVoiceFromParseVoice(voice, likes);
     }
