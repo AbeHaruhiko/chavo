@@ -39,6 +39,9 @@
             </span>
           </div>
           <p class="pre-line">{{ voice.description }}</p>
+          <!-- <p><tags-input ng-model="voice.tags" remove-tag-symbol="▼"></p> -->
+          <p><span class="badge tag-badge" ng-repeat="tag in voice.tags">{{ tag.text }}</span></p>
+
           <p class="text-right"><small>{{ voice.speaker }} {{ voice.age }} {{ voice.gender }}</small></p>
           <p ng-show="voice.photoUrl"><img ng-src="{{voice.photoUrl}}" class="img-responsive img-thumbnail"/></p>
         </div>

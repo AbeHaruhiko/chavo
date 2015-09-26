@@ -36,7 +36,8 @@ module chavo {
     'ui.bootstrap',
     'ui.validate',
     'toggle-switch',
-    'cfp.loadingBar'
+    'cfp.loadingBar',
+    'ngTagsInput'
     ])
     .service('AuthService', AuthService)
     .service('FacebookService', FacebookService)

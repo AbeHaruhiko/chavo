@@ -23,7 +23,8 @@ module chavo {
         public $rootScope: IChavoRootScope,
         public $state: ng.ui.IStateService,
         public $stateParams: ng.ui.IStateParamsService,
-        public cfpLoadingBar: any) {
+        public cfpLoadingBar: any,
+        public $q: angular.IQService) {
 
       var ParseChild = Parse.Object.extend('Child');
       var query = new Parse.Query(ParseChild);
@@ -151,6 +152,27 @@ module chavo {
       });
     }
 
+    loadTags(queryString: string) {
+      // var a = [ {text: 'hoge'}, {text: 'hoo'} ];
+      // return a;
+      var ParseTag = Parse.Object.extend('Tag');
+      var query: Parse.Query = new Parse.Query(ParseTag);
+
+      query.select('tag');
+      query.startsWith('tag', queryString);
+
+      var tags: { text: string }[] = [];
+      var deferred = this.$q.defer();
+      query.find().then((results: Parse.Object[]) => {
+        results.forEach((result: Parse.Object) => {
+            tags.push({ text: result.get('tag') });
+        });
+        deferred.resolve(tags);
+      }, null);
+
+      return deferred.promise;
+    }
+
     private makeParseVoice(): Parse.Object {
 
       var ParseVoice = Parse.Object.extend('Voice');
@@ -161,6 +183,7 @@ module chavo {
       }
 
       parseVoice.set('description', this.voice.description);
+      parseVoice.set('tags', this.voice.tags);
       parseVoice.set('gender', this.voiceAuthor ? this.voiceAuthor.gender : GENDER.OTHER);
       parseVoice.set('author', this.voiceAuthor ? this.voiceAuthor.nickName : null);
       parseVoice.set('ageYears', this.voiceAuthor ? this.voiceAuthor.ageYears : null);
