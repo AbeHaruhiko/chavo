@@ -23,7 +23,20 @@ var chavo;
                 },
                 error: function (user, error) {
                     console.log('Unable to login:  ' + error.code + ' ' + error.message);
-                    _this.$state.go('login');
+                    _this.$scope.$apply(function () {
+                        if (error.code === 101) {
+                            _this.loginMessage = 'ユーザー名かパスワードが間違っています。';
+                        }
+                        else if (error.code === 200) {
+                            _this.loginMessage = 'ユーザー名を入力してください。';
+                        }
+                        else if (error.code === 201) {
+                            _this.loginMessage = 'パスワードを入力してください。';
+                        }
+                        else {
+                            _this.loginMessage = 'ログインできませんでした。：' + error.code + ' ' + error.message;
+                        }
+                    });
                 }
             });
         };
