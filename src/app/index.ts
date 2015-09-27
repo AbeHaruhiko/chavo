@@ -3,6 +3,7 @@
 /// <reference path="main/main.controller.ts" />
 /// <reference path="main/all/main.all.controller.ts" />
 /// <reference path="main/myposts/main.myposts.controller.ts" />
+/// <reference path="main/tag/main.tag.controller.ts" />
 /// <reference path="main/compose/main.compose.controller.ts" />
 /// <reference path="login/login.controller.ts"/>
 /// <reference path="signup/signup.controller.ts"/>
