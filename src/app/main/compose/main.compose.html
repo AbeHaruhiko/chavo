@@ -23,18 +23,20 @@
                     placeholder="こどもの名言・迷言、一発ネタ、何気ない一言、泣かされたセリフ、なんでも記録しよう！" required>
                 </textarea>
               </div>
-              <tags-input
-                  ng-model="main_compose.voice.tags"
-                  add-on-paste="true"
-                  placeholder="カテゴリ・タグを追加"
-                  min-length="1"
-                  template="tag.html">
-                <auto-complete source="main_compose.loadTags($query)" min-length="1"></auto-complete>
-              </tags-input>
-              <script type="text/ng-template" id="tag.html">
-                <span class="">{{$getDisplayText()}}</span>
-                <a class="remove-button" ng-click="$removeTag()">&#10006;</a>
-              </script>
+              <div class="form-group">
+                <tags-input
+                    ng-model="main_compose.voice.tags"
+                    add-on-paste="true"
+                    placeholder="カテゴリ・タグを追加"
+                    min-length="1"
+                    template="tag.html">
+                  <auto-complete source="main_compose.loadTags($query)" min-length="1"></auto-complete>
+                </tags-input>
+                <script type="text/ng-template" id="tag.html">
+                  <span class="">{{$getDisplayText()}}</span>
+                  <a class="remove-button" ng-click="$removeTag()">&#10006;</a>
+                </script>
+              </div>
               <div ng-show="main_compose.voice.photoUrl"><img ng-src="{{main_compose.voice.photoUrl}}" class="img-responsive img-thumbnail"/></div>
               <input id="photo-selector" type="file" />
               <alert type="danger" ng-if="main_compose.children.length <= 0">まだこどもが登録されていません。登録すると投稿のとき毎回入力する手間を省けます。<br/>
