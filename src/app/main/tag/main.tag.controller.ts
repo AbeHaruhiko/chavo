@@ -5,6 +5,8 @@ module chavo {
 
     voices = new Array<Voice>();
 
+    sampleTagList: string[] = ['おもしろ','迷言','名言','一発ネタ','謎ワード','感動','成長したなあ。','苦笑','ほのぼの'];
+
     /* @ngInject */
     constructor (
         public $scope: IMainScope,
