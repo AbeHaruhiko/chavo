@@ -16,6 +16,7 @@ var chavo;
                 { label: '非表示', value: chavo.GENDER.OTHER }];
             this.voiceIsPublic = false;
             this.disableInput = false;
+            this.ngTags = [];
             var ParseChild = Parse.Object.extend('Child');
             var query = new Parse.Query(ParseChild);
             query.ascending('dispOrder');
@@ -35,6 +36,7 @@ var chavo;
                 });
             });
             this.voice = $stateParams['voice'];
+            this.ngTags = chavo.Tag.stringArrayToTagsInputObjectArray(this.voice.tags);
             this.voiceAuthor = this.voiceAuthor || new chavo.Child();
             this.voiceAuthor.nickName = this.voice.speaker;
             this.voiceAuthor.ageYears = this.voice.ageYears;
@@ -60,6 +62,7 @@ var chavo;
         MainComposeController.prototype.submit = function () {
             var _this = this;
             this.disableInput = true;
+            this.voice.tags = chavo.Tag.tagsInputObjectArrayToStringArray(this.ngTags);
             var fileSelector = angular.element('#photo-selector');
             if (fileSelector[0].files.length > 0) {
                 var file = fileSelector[0].files[0];

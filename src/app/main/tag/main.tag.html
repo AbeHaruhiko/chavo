@@ -1,7 +1,7 @@
-<div ng-controller="MainAllController as main_all" class="row">
+<div ng-controller="MainTagController as main_tag" class="row">
   <div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3">
     <div class="media-list">
-      <div class="media panel panel-default" ng-repeat="voice in main_all.voices">
+      <div class="media panel panel-default" ng-repeat="voice in main_tag.voices">
         <div class="media-left">
           <a href="#">
             <div ng-style="{ 'background-image': 'url(' + voice.icon + ')' }"
@@ -15,18 +15,18 @@
               <small>{{ voice.createdAt }}</small>
             </span>
             <span class="pull-right">
-              <span ng-click="main_all.toggleLike(voice)" id="like" ng-class="{ 'like-active': voice.like }">
+              <span ng-click="main_tag.toggleLike(voice)" id="like" ng-class="{ 'like-active': voice.like }">
                 <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
               </span>
               <span id="like-count">{{ voice.likeCount }}</span>
-              <span ng-show="{{voice.userObjectId === main_all.$rootScope.currentUser.id}}" dropdown class="dropdown"><!-- ここのclass="dropdown"がないと動かない -->
+              <span ng-show="{{voice.userObjectId === main_tag.$rootScope.currentUser.id}}" dropdown class="dropdown"><!-- ここのclass="dropdown"がないと動かない -->
                 <span
                     class="glyphicon glyphicon-option-horizontal cursor-pointer dropdown-toggle"
                     dropdown-toggle>
                 </span>
                 <ul class="dropdown-menu dropdown-menu-right">
                   <li><a ui-sref="home.compose({ voice: voice, voiceId: voice.objectId })">編集する</a></li>
-                  <li><a ng-click="main_all.openDeletePostConfirmModal(voice)">削除する</a></li>
+                  <li><a ng-click="main_tag.openDeletePostConfirmModal(voice)">削除する</a></li>
                   <script type="text/ng-template" id="deletePostConfirmModal.html">
                     <div class="modal-body">この投稿を削除しますか？</div>
                     <div class="modal-footer">
@@ -48,7 +48,7 @@
     </div>
   </div>
 
-  <!-- <div class="mdl-grid" ng-repeat="voice in main_all.voices">
+  <!-- <div class="mdl-grid" ng-repeat="voice in main_tag.voices">
     <div class="mdl-cell mdl-cell--3-col">
     </div>
     <div class="mdl-card mdl-cell mdl-cell--6-col mdl-shadow--4dp posted-voice">

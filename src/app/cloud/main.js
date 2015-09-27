@@ -39,11 +39,12 @@ Parse.Cloud.define('saveTag', function (request, response) {
         console.log(tag);
         var ParseTag = Parse.Object.extend('Tag');
         var query = new Parse.Query(ParseTag);
-        query.equalTo('tag', tag.text);
+        query.equalTo('tag', tag);
         query.count().then(function (count) {
+            console.log('count: ' + count);
             if (count === 0) {
                 var parseTag = new ParseTag();
-                parseTag.set('tag', tag.text);
+                parseTag.set('tag', tag);
                 return parseTag.save();
             }
         })
