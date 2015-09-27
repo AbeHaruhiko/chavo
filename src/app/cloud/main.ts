@@ -48,18 +48,19 @@ Parse.Cloud.define('toggleLike', function(request: Parse.Cloud.FunctionRequest, 
 });
 
 Parse.Cloud.define('saveTag', function(request: Parse.Cloud.FunctionRequest, response: Parse.Cloud.FunctionResponse) {
-  var tags: { text: string; }[] = request.params.tags;
+  var tags: string[] = request.params.tags;
 
-  tags.forEach((tag: { text: string; }) => {
+  tags.forEach((tag: string) => {
     console.log(tag);
     var ParseTag = Parse.Object.extend('Tag');
 
     var query = new Parse.Query(ParseTag);
-    query.equalTo('tag', tag.text);
+    query.equalTo('tag', tag);
     query.count().then((count: number) => {
+      console.log('count: ' + count);
       if (count === 0) {
         var parseTag = new ParseTag();
-        parseTag.set('tag', tag.text);
+        parseTag.set('tag', tag);
         return parseTag.save();
       }
     })

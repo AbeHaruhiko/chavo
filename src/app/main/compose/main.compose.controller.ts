@@ -10,12 +10,14 @@ module chavo {
       { label: '非表示', value: GENDER.OTHER }];
 
     public voice: Voice;
-
     public voiceIsPublic: boolean = false;
 
     public disableInput: boolean = false;
 
     public alertMsg: string;
+
+    // ngTagsInput用フィールド
+    private ngTags: { text: string; }[] = [];
 
     /* @ngInject */
     constructor(
@@ -57,6 +59,9 @@ module chavo {
 
       // voiceがある場合は画面にセット（編集モード）
       this.voice = $stateParams['voice'];
+      // ngTagsInputのモデルは{ text: string; }[]なので変換しておく。
+      // （string[]のカラムはParse.Query.equalsToで検索できるので）
+      this.ngTags = Tag.stringArrayToTagsInputObjectArray(this.voice.tags);
       this.voiceAuthor = this.voiceAuthor || new Child();
       this.voiceAuthor.nickName = this.voice.speaker;
       this.voiceAuthor.ageYears = this.voice.ageYears;
@@ -90,6 +95,10 @@ module chavo {
     public submit() {
 
       this.disableInput = true;
+
+      // ngTagsInputのモデルは{ text: string; }[]なので、string[]に変換しておく。
+      // （string[]のカラムはParse.Query.equalsToで検索できるので）
+      this.voice.tags = Tag.tagsInputObjectArrayToStringArray(this.ngTags);
 
       // ファイルアップロード
       var fileSelector: any = angular.element('#photo-selector');

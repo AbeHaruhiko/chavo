@@ -5,7 +5,7 @@ module chavo {
 
     public objectId: string;
     public description: string;
-    public tags: { tagName: string; }[];
+    public tags: string[];
     public speaker: string;
     public age: string;
     public ageYears: string;

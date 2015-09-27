@@ -35,6 +35,7 @@ var chavo;
         .service('FacebookService', chavo.FacebookService)
         .controller('MainController', chavo.MainController)
         .controller('MainAllController', chavo.MainAllController)
+        .controller('MainTagController', chavo.MainTagController)
         .controller('MainMyPostsController', chavo.MainMyPostsController)
         .controller('DeletePostConfirmModalController', chavo.DeletePostConfirmModalController)
         .controller('MainComposeController', chavo.MainComposeController)
@@ -60,6 +61,10 @@ var chavo;
             .state('home.all', {
             url: '/all',
             templateUrl: 'app/main/all/main.all.html'
+        })
+            .state('home.tag', {
+            url: '/tag/:tag',
+            templateUrl: 'app/main/tag/main.tag.html'
         })
             .state('home.compose', {
             url: '/compose/:voiceId',
