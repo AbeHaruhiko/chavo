@@ -13,9 +13,10 @@ module chavo {
       public $state: ng.ui.IStateService) {
     }
 
-    menus = [
+    menuItems = [
       { title: 'プロフィール', route: 'settings.profile'},
       { title: 'こどもの情報', route: 'settings.children'},
+      { title: 'かぞくの情報', route: 'settings.family'}
     ];
   }
 }

@@ -1,0 +1,12 @@
+<div ng-controller="SettingsFamilyController as settings_family">
+  <ul class="list-group">
+    <li class="list-group-item text-right">
+      <a class="btn btn-primary btn-outline" ui-sref="settings.family_application"><i class="fa fa-user-plus"> 追加</i></a>
+    </li>
+    <li class="list-group-item" ng-repeat="familyMember in settings_family.family">
+      <a ng-click="settings_family.go(familyMember)">
+        <span>{{child.nickName || '（未登録）'}}</span>
+      </a>
+    </li>
+  </ul>
+</div>

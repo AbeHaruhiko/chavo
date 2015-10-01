@@ -1,0 +1,45 @@
+<div ng-controller="SettingsFamilyApplicationController as settings_family_application" class="panel panel-default">
+  <div class="panel-heading">かぞく申請</div>
+  <div class="panel-body">
+    <alert type="info">かぞく申請して相手に承認されるとかぞくとして登録されます。登録済みのこどもの設定を共有できたりおたがいの非公開の投稿を見られるようになります。</alert>
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label for="nickName" class="col-sm-3 control-label">ユーザーID</label>
+        <div class="col-sm-9">
+          <!-- <input type="text" class="form-control" placeholder="ユーザーID" ng-model="settings_family_application.targetUserId"/> -->
+          <tags-input
+              ng-model="settings_family_application.ngTags"
+              add-on-paste="true"
+              placeholder="かぞく申請したいユーザーIDを入力"
+              min-length="1"
+              min-tags="1"
+              max-tags="1"
+              add-from-autocomplete-only="true"
+              debounce-delay="0"
+              template="tag.html">
+            <auto-complete
+              source="settings_family_application.loadUser($query)"
+              template="suggest.html"
+              min-length="1">
+            </auto-complete>
+          </tags-input>
+          <script type="text/ng-template" id="tag.html">
+            <span class="">{{ $getDisplayText() }}</span>
+            <a class="remove-button" ng-click="$removeTag()">&#10006;</a>
+          </script>
+          <script type="text/ng-template" id="suggest.html">
+          <div class="">
+            <div class="media-left">
+              <div ng-style="{ 'background-image': 'url(' + data.iconUrl + ')' }"
+                class="img-circle icon-post">
+              </div>
+            </div>
+            <div class="media-body"><h4>{{ $getDisplayText() }}</h4></div>
+          </div>
+          </script>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary pull-right btn-outline" ng-click="settings_family_application.apply()">このユーザーにかぞく申請する</button>
+    </form>
+  </div>
+</div>

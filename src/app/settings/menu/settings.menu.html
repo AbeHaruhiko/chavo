@@ -2,10 +2,8 @@
     class="col-sm-2 col-md-2 col-sm-offset-2  col-md-offset-2">
   <div class="list-group">
     <a class="list-group-item"
-      ui-sref="settings.profile"
-      ui-sref-active="active">プロフィール</a>
-    <a class="list-group-item"
-      ui-sref="settings.children"
-      ui-sref-active="active">こどもの情報</a>
+       ng-repeat="menuItem in settings_menu.menuItems"
+       ui-sref="{{ menuItem.route }}"
+       ui-sref-active="active">{{ menuItem.title }}</a>
   </div>
 </div>

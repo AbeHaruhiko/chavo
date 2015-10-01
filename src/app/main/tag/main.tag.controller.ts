@@ -5,7 +5,17 @@ module chavo {
 
     voices = new Array<Voice>();
 
-    sampleTagList: string[] = ['おもしろ','迷言','名言','一発ネタ','謎ワード','感動','成長したなあ。','苦笑','ほのぼの'];
+    sampleTagList: string[] = [
+      'おもしろ',
+      '迷言',
+      '名言',
+      '一発ネタ',
+      '謎ワード',
+      '感動',
+      '成長したなあ。',
+      '苦笑',
+      'ほのぼの'
+    ];
 
     /* @ngInject */
     constructor (
@@ -61,6 +71,25 @@ module chavo {
         this.applyFoundVoices(parseVoices);
       });
 
+      // // 人気のタグ取得
+      // var ParaseTag
+      // var ParaseTag = Parse.Object.extend('Tag');
+      // var queryForTag = new Prase.Query(ParseTag);
+      // query.select('tag');
+      //
+      //
+      // var queryForPopularTag = new Parse.Query(ParseVoice);
+      // var parseVoices: Parse.Object[];
+      //
+      // this.cfpLoadingBar.start();
+      //
+      // queryForPopularTag.limit(20);
+      // queryForPopularTag.select('tag');
+      //
+      // query.equalTo('tags', this.$stateParams['tag']);
+      //
+      // query.find({
+
     }
 
     toggleLike(voice: Voice) {
@@ -69,27 +98,6 @@ module chavo {
 
       voice.like = !voice.like;
 
-      // var ParseVoice = Parse.Object.extend('Voice');
-      // var parseVoice: Parse.Object = new ParseVoice();
-      // parseVoice.id = voice.objectId;
-      //
-      // if (voice.like) {
-      //   parseVoice.increment('likeCount');
-      // } else {
-      //   parseVoice.increment('likeCount', -1);
-      // }
-      //
-      // parseVoice.save()
-      // .then((parseVoice: Parse.Object) => {
-      //   console.log(parseVoice.get('likeCount'));
-      //   this.$scope.$apply(() => {
-      //     voice.likeCount = parseVoice.get('likeCount');
-      //   });
-      // },
-      // (error: Parse.Error) => {
-      //   console.error('Error: ' + error.code + ' ' + error.message);
-      // });
-      //
       Parse.Cloud.run('toggleLike', { voice: voice })
       .then((likeCount: number) => {
         this.$scope.$apply(() => {
@@ -101,14 +109,7 @@ module chavo {
       },
       (error: Parse.Error) => {
         console.error('Error: ' + error.code + ' ' + error.message);
-      })
-      // .then((user: Parse.User) => {
-      //   this.$rootScope.currentUser = Parse.User.current();
-      // },
-      // (error: Parse.Error) => {
-      //   console.error('Error: ' + error.code + ' ' + error.message);
-      // })
-      ;
+      });
     }
 
     openDeletePostConfirmModal(voice: Voice) {
