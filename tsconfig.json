@@ -20,6 +20,7 @@
         "./src/app/cloud/main.ts",
         "./src/app/components/navbar/navbar.controller.ts",
         "./src/app/components/tabmenu/tabmenu.controller.ts",
+        "./src/app/const/const.ts",
         "./src/app/facebook/services/facebook-service.ts",
         "./src/app/index.ts",
         "./src/app/login/login.controller.ts",
