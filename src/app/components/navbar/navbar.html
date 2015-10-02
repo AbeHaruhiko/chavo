@@ -57,8 +57,24 @@
 
       <div ng-show="$root.currentUser">
         <ul class="nav navbar-nav navbar-right">
+          <li dropdown>
+            <a href="#" dropdown-toggle data-toggle="dropdown" role="button">
+              <span class="badge">42</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <div class="navbar-login">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <a ui-sref="settings.family_approval">かぞく申請が届いています。</a>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </li>
           <li>
-            <a href="#" role="button" ui-sref="settings"><span class="glyphicon glyphicon-cog"></span></a>
+            <a role="button" ui-sref="settings"><span class="glyphicon glyphicon-cog"></span></a>
           </li>
           <li dropdown>
             <a href="#" dropdown-toggle data-toggle="dropdown" role="button">

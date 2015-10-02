@@ -14,6 +14,7 @@
 /// <reference path="settings/content/profile/settings.profile.controller.ts"/>
 /// <reference path="settings/content/family/settings.family.controller.ts"/>
 /// <reference path="settings/content/family_application/settings.family_application.controller.ts"/>
+/// <reference path="settings/content/family_approval/settings.family_approval.controller.ts"/>
 /// <reference path="../app/components/navbar/navbar.controller.ts" />
 /// <reference path="../app/components/tabmenu/tabmenu.controller.ts"/>
 /// <reference path="./auth/services/auth-service.ts"/>
@@ -61,6 +62,7 @@ module chavo {
     .controller('SettingsChildController', SettingsChildController)
     .controller('SettingsFamilyController', SettingsFamilyController)
     .controller('SettingsFamilyApplicationController', SettingsFamilyApplicationController)
+    .controller('SettingsFamilyApprovalController', SettingsFamilyApprovalController)
 
   .config(function ($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) {
     $stateProvider
@@ -108,6 +110,10 @@ module chavo {
       .state('settings.family_application', {
         url: '/family_application',
         templateUrl: 'app/settings/content/family_application/settings.family_application.html'
+      })
+      .state('settings.family_approval', {
+        url: '/family_approval',
+        templateUrl: 'app/settings/content/family_approval/settings.family_approval.html'
       })
       .state('login', {
         url: '/login',
