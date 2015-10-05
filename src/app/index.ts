@@ -63,6 +63,7 @@ module chavo {
     .controller('SettingsFamilyController', SettingsFamilyController)
     .controller('SettingsFamilyApplicationController', SettingsFamilyApplicationController)
     .controller('SettingsFamilyApprovalController', SettingsFamilyApprovalController)
+    .controller('RejectOrApproveConfirmModalController', RejectOrApproveConfirmModalController)
 
   .config(function ($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) {
     $stateProvider

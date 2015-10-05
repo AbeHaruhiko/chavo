@@ -1,15 +1,39 @@
 <div ng-controller="SettingsFamilyApprovalController as settings_family_approval" class="panel panel-default">
   <div class="panel-heading">かぞく承認</div>
   <div class="panel-body">
-    <alert type="info">かぞくとして承認するとかぞくとして登録されます。登録済みのこどもの設定を共有できたりおたがいの非公開の投稿を見られるようになります。</alert>
-    <alert type="info">かぞく申請して相手に承認されるとかぞくとして登録されます。登録済みのこどもの設定を共有できたりおたがいの非公開の投稿を見られるようになります。</alert>
-    <!-- <form class="form-horizontal">
-      <div class="form-group">
-      </div>
-    </form> -->
+    <alert type="info">
+      かぞく申請して相手に承認されるとかぞくとして登録されます。登録済みのこどもの設定を共有できたりおたがいの非公開の投稿を見られるようになります。
+    </alert>
   </div>
   <ul class="list-group">
-    <li class="list-group-item">aさん</li>
-    <li class="list-group-item">aさん</li>
+    <li ng-repeat="familyApplication in settings_family_approval.familyApplicationList"
+        class="list-group-item">
+        <div class="media-left">
+          <div ng-style="{ 'background-image': 'url(' + familyApplication.fromUserIconUrl + ')' }"
+            class="img-circle icon-post">
+          </div>
+        </div>
+        <div class="media-body">
+          <h5>{{ familyApplication.fromUserId }}</h5>
+          <button
+              class="btn btn-primary btn-outline pull-right"
+              ng-click="settings_family_approval.openConfirmModal('reject', familyApplication)">
+            否認する
+          </button>
+          <button
+              class="btn btn-primary btn-outline pull-right"
+              id="btn-family-approve"
+              ng-click="settings_family_approval.openConfirmModal('approve', familyApplication)">
+            承認する
+          </button>
+          <script type="text/ng-template" id="rejectOrApproveConfirmModal.html">
+            <div class="modal-body">{{ rejecrt_apprive_modal.familyApplication.fromUserId }} さんの申請を{{ rejecrt_apprive_modal.modeDispText }}しますか？</div>
+            <div class="modal-footer">
+              <button class="btn btn-primary" type="button" ng-click="rejecrt_apprive_modal.process()">{{ rejecrt_apprive_modal.modeDispText }}する</button>
+              <button class="btn btn-default" type="button" ng-click="rejecrt_apprive_modal.cancel()">キャンセル</button>
+            </div>
+          </script>
+        </div>
+    </li>
   </ul>
 </div>

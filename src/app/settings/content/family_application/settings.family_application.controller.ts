@@ -39,10 +39,9 @@ module chavo {
         } else {
           // 今回が初申請
           let familyApplication = new ParseFamilyApplication();
-          // familyApplication.set(Const.FamilyApplication.COL_FROM_USER_ID, Parse.User.current().getUsername());
-          // familyApplication.set(Const.FamilyApplication.COL_FROM_USER_OBJECT_ID, Parse.User.current().id);
-          // familyApplication.set(Const.FamilyApplication.COL_TO_USER_ID, this.ngTags[0].text);
-          // familyApplication.set(Const.FamilyApplication.COL_TO_USER_OBJECT_ID, this.ngTags[0].objectId);
+          // var voiceACL = new Parse.ACL(Parse.User.current());
+          // voiceACL.
+
           familyApplication.set(Const.FamilyApplication.COL_FROM_USER, Parse.User.current());
           familyApplication.set(Const.FamilyApplication.COL_TO_USER, toUser);
           familyApplication.save();

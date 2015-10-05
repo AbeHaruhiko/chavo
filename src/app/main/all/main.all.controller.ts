@@ -115,7 +115,7 @@ module chavo {
         controllerAs: 'delete_post_modal',
         size: 'sm',
         resolve: {
-          voice: function () {
+          voice: () => {
             return voice;
           }
         }
@@ -160,5 +160,7 @@ module chavo {
 
       this.$scope.$apply();
     }
+
+    // .DeletePostConfirmModalControllerはmain.myposts.controller.tsに
   }
 }

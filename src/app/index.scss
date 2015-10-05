@@ -232,12 +232,12 @@ tags-input .tags .tag-item.selected {
 }
 // ngTagsInpuのスタイルを上書きここまで
 
-// .tag-item {
-//     color: #fff;
-//     background: #fff;
-//     border: 0px;
-//     border-radius: 0px;
-// }
+// かぞく承認ボタン
+#btn-family-approve {
+  margin-right: 12px;
+}
+// かぞく承認ボタン
+
 /* Do not remove this comments bellow. It's the markers used by gulp-inject to inject
    all your sass files automatically */
 // injector

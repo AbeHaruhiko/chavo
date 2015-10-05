@@ -35,6 +35,7 @@ var chavo;
         .controller('SettingsFamilyController', chavo.SettingsFamilyController)
         .controller('SettingsFamilyApplicationController', chavo.SettingsFamilyApplicationController)
         .controller('SettingsFamilyApprovalController', chavo.SettingsFamilyApprovalController)
+        .controller('RejectOrApproveConfirmModalController', chavo.RejectOrApproveConfirmModalController)
         .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('home', {

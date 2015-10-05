@@ -26,7 +26,6 @@ var chavo;
                     console.error('Error: ' + error.code + ' ' + error.message);
                 }
             }).then(function (results) {
-                // 投稿者のアイコンを取得するため、fetchする。
                 parseVoices = results;
                 var promises = [];
                 results.forEach(function (voice) {
@@ -45,7 +44,6 @@ var chavo;
             });
         };
         MainAllController.prototype.toggleLike = function (voice) {
-            // cloud Codeへ移動
             var _this = this;
             voice.like = !voice.like;
             Parse.Cloud.run('toggleLike', { voice: voice })

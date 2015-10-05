@@ -6,9 +6,11 @@ module chavo {
     constructor(
         public fromUserId: string,
         public fromUserObjectId: string,
+        public fromUserIconUrl: string,
         public toUserId: string,
         public toUserObjectId: string,
-        public applyDateTime: Date
+        public applyDateTime: Date,
+        public objectId: string
       ) {
     }
   }

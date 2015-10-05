@@ -113,7 +113,7 @@ module chavo {
         controllerAs: 'delete_post_modal',
         size: 'sm',
         resolve: {
-          voice: function () {
+          voice: () => {
             return voice;
           }
         }
