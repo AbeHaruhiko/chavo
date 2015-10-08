@@ -39,9 +39,6 @@ module chavo {
         } else {
           // 今回が初申請
           let familyApplication = new ParseFamilyApplication();
-          // var voiceACL = new Parse.ACL(Parse.User.current());
-          // voiceACL.
-
           familyApplication.set(Const.FamilyApplication.COL_FROM_USER, Parse.User.current());
           familyApplication.set(Const.FamilyApplication.COL_TO_USER, toUser);
           familyApplication.save();

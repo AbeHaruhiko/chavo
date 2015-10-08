@@ -76,6 +76,7 @@ var chavo;
         };
         SettingsFamilyApprovalController.prototype.doFamilyApproval = function (familyApplication) {
             console.dir(familyApplication.objectId);
+            Parse.Cloud.run('addFamily', { familyApplication: familyApplication });
         };
         return SettingsFamilyApprovalController;
     })();

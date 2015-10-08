@@ -119,6 +119,10 @@ module chavo {
     // 承認時、こども情報の共有等の設定を行う。
     private doFamilyApproval(familyApplication: FamilyApplication) {
       console.dir(familyApplication.objectId);
+
+      // todo: fromUserとParse.User.current()は同じでなきゃだめよ。
+      Parse.Cloud.run('addFamily', { familyApplication: familyApplication });
+
     }
   }
 

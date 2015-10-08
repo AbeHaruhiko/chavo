@@ -1,4 +1,3 @@
-/// <reference path="../../../.tmp/typings/tsd.d.ts" />
 Parse.Cloud.define('hello', function (request, response) {
     response.success('Hello world!');
 });
@@ -52,6 +51,48 @@ Parse.Cloud.define('saveTag', function (request, response) {
             if (parseTag) {
                 console.log('saved tag: ' + parseTag.get('tag'));
             }
+        });
+    });
+});
+Parse.Cloud.define('addFamily', function (request, response) {
+    var familyApplication = request.params.familyApplication;
+    var toUser = new Parse.User();
+    var fromUser = new Parse.User();
+    toUser.id = request.user.id;
+    fromUser.id = request.params.familyApplication.fromUserId;
+    var familyQuery = new Parse.Query('Family');
+    var familyRole;
+    roleQuery.equalTo('member', request.user.id);
+    roleQuery.first().then(function (role) {
+        role.getUsers().add(fromUser);
+        role.getUsers().add(toUser);
+        return role.save();
+    }).then(function (role) {
+        familyRole = role;
+        var ParseChild = Parse.Object.extend('Child');
+        var query = new Parse.Query(ParseChild);
+        return query.find();
+    }).then(function (children) {
+        Parse.Cloud.useMasterKey();
+        children.forEach(function (child) {
+            var childACL = new Parse.ACL();
+            childACL.setRoleReadAccess(familyRole, true);
+            childACL.setRoleWriteAccess(familyRole, true);
+            child.setACL(childACL);
+            child.save();
+        });
+    });
+    response.success('Success!');
+    var ParseChild = Parse.Object.extend('Child');
+    var query = new Parse.Query(ParseChild);
+    query.find().then(function (children) {
+        Parse.Cloud.useMasterKey();
+        children.forEach(function (child) {
+            var childACL = new Parse.ACL();
+            childACL.setReadAccess(familyApplication.fromUserId, true);
+            childACL.setWriteAccess(familyApplication.fromUserId, true);
+            child.setACL(childACL);
+            child.save();
         });
     });
 });
