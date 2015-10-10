@@ -67,7 +67,8 @@ Parse.Cloud.define('addFamily', function (request, response) {
     var familyQuery = Parse.Query.or(toUserFamilyQuery, fromUserFamilyQuery);
     var family;
     var familyRole;
-    familyQuery.first().then(function (family) {
+    familyQuery.first()
+        .then(function (family) {
         console.log('enter 1');
         console.log(family);
         if (!family) {
@@ -125,5 +126,24 @@ Parse.Cloud.define('addFamily', function (request, response) {
         response.success('Success!');
     }, function (error) {
         console.error('Error: ' + error.code + ' ' + error.message);
+        response.error('Error! see log on Parse.com.');
+    });
+});
+Parse.Cloud.define('getRequestUsersFamilyRole', function (request, response) {
+    Parse.Cloud.useMasterKey();
+    var familyQuery = new Parse.Query('Family');
+    familyQuery.equalTo('member', request.user.id);
+    familyQuery.first()
+        .then(function (result) {
+        if (result) {
+            var roleQuery = new Parse.Query(Parse.Role);
+            roleQuery.equalTo('name', result.id);
+            return roleQuery.first();
+        }
+        else {
+            return Parse.Promise.as(null);
+        }
+    }).then(function (result) {
+        response.success(result);
     });
 });

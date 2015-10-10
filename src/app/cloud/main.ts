@@ -87,6 +87,7 @@ Parse.Cloud.define('addFamily', function(request: Parse.Cloud.FunctionRequest, r
   // 申請元ユーザ（申請者）
   fromUser.id = request.params.familyApplication.fromUserObjectId;
 
+  // 申請者、承認者のFamilyデータを検索する。
   var toUserFamilyQuery = new Parse.Query('Family');
   toUserFamilyQuery.equalTo('member', request.user.id);
 
@@ -97,7 +98,8 @@ Parse.Cloud.define('addFamily', function(request: Parse.Cloud.FunctionRequest, r
   var familyQuery = Parse.Query.or(toUserFamilyQuery, fromUserFamilyQuery);
   var family: Parse.Object;
   var familyRole: Parse.Role;
-  familyQuery.first().then((family: Parse.Object) => {
+  familyQuery.first()
+  .then((family: Parse.Object) => {
     console.log('enter 1');
     console.log(family);
 
@@ -144,7 +146,7 @@ Parse.Cloud.define('addFamily', function(request: Parse.Cloud.FunctionRequest, r
     console.log('enter 4');
     console.log(result);
 
-    // 承認者のこども情報を取得
+    // 承認者と申請者のこども情報を取得
     var ParseChild = Parse.Object.extend('Child');
     var query = new Parse.Query(ParseChild);
     query.containedIn('createdBy', [ toUser, fromUser ]);
@@ -153,6 +155,7 @@ Parse.Cloud.define('addFamily', function(request: Parse.Cloud.FunctionRequest, r
   }).then((children: Parse.Object[]) => {
     console.log('enter 5');
 
+    // 各こどものACLを家族Roleに置き換え。
     var promises = [];
     children.forEach((child: Parse.Object) => {
 
@@ -174,5 +177,27 @@ Parse.Cloud.define('addFamily', function(request: Parse.Cloud.FunctionRequest, r
   },
   (error: Parse.Error) => {
     console.error('Error: ' + error.code + ' ' + error.message);
+    response.error('Error! see log on Parse.com.');
+  });
+});
+
+Parse.Cloud.define('getRequestUsersFamilyRole', function(request: Parse.Cloud.FunctionRequest, response: Parse.Cloud.FunctionResponse) {
+
+  Parse.Cloud.useMasterKey();
+
+  var familyQuery = new Parse.Query('Family');
+  familyQuery.equalTo('member', request.user.id);
+  familyQuery.first()
+  .then((result: Parse.Object) => {
+
+      if (result) {
+        var roleQuery = new Parse.Query(Parse.Role);
+        roleQuery.equalTo('name', result.id);
+        return roleQuery.first();
+      } else {
+        return Parse.Promise.as(null);
+      }
+  }).then((result: Parse.Role) => {
+    response.success(result);
   });
 });
