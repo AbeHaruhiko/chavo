@@ -64,6 +64,7 @@ var chavo;
                     child.set('nickName', _this.$rootScope.targetChild ? _this.$rootScope.targetChild.nickName : null);
                     child.set('birthday', _this.getInputBirthday());
                     child.set('gender', +_this.$rootScope.targetChild.gender);
+                    child.set('createdBy', Parse.User.current());
                     child.setACL(new Parse.ACL(Parse.User.current()));
                     return child.save({
                         error: function (child, error) {

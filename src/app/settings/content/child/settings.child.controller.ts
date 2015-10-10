@@ -99,6 +99,7 @@ module chavo {
           child.set('nickName', this.$rootScope.targetChild ? this.$rootScope.targetChild.nickName : null);
           child.set('birthday', this.getInputBirthday());
           child.set('gender', +this.$rootScope.targetChild.gender); /* gender is number. '+' casts string to number. */
+          child.set('createdBy', Parse.User.current());
           child.setACL(new Parse.ACL(Parse.User.current()));
 
           return child.save({
