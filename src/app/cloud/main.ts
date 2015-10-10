@@ -66,7 +66,7 @@ Parse.Cloud.define('saveTag', function(request: Parse.Cloud.FunctionRequest, res
     })
     .then((parseTag: Parse.Object) => {
       if (parseTag) {
-        console.log('saved tag: ' + parseTag.get('tag'))
+        console.log('saved tag: ' + parseTag.get('tag'));
       }
     });
   });
@@ -75,70 +75,104 @@ Parse.Cloud.define('saveTag', function(request: Parse.Cloud.FunctionRequest, res
 
 Parse.Cloud.define('addFamily', function(request: Parse.Cloud.FunctionRequest, response: Parse.Cloud.FunctionResponse) {
 
-  var familyApplication: chavo.FamilyApplication = request.params.familyApplication;
+  // 人のChildを共有するようにACLを編集したりRoleを作ったりするのでマスターキー使用。
+  Parse.Cloud.useMasterKey();
 
   // toUserIdかfromUserIdの家族を表すRoleがあるか
   var toUser = new Parse.User();
   var fromUser = new Parse.User();
 
+  // 申請先ユーザ（承認者）
   toUser.id = request.user.id;
-  fromUser.id = request.params.familyApplication.fromUserId;
+  // 申請元ユーザ（申請者）
+  fromUser.id = request.params.familyApplication.fromUserObjectId;
 
-  // var roleName = 'familyOf_' + request.user.id;
-  var familyQuery = new Parse.Query('Family');
+  var toUserFamilyQuery = new Parse.Query('Family');
+  toUserFamilyQuery.equalTo('member', request.user.id);
+
+  var fromUserFamilyQuery = new Parse.Query('Family');
+  fromUserFamilyQuery.equalTo('member', request.params.familyApplication.fromUserId);
+
+ // orでクエリを作る。
+  var familyQuery = Parse.Query.or(toUserFamilyQuery, fromUserFamilyQuery);
+  var family: Parse.Object;
   var familyRole: Parse.Role;
-  roleQuery.equalTo('member', request.user.id);
-  roleQuery.first().then((role: Parse.Role) => {
-    role.getUsers().add(fromUser);
-    role.getUsers().add(toUser);
-    return role.save();
+  familyQuery.first().then((family: Parse.Object) => {
+    console.log('enter 1');
+    console.log(family);
 
-  }).then(function(role: Parse.Role) {
-    familyRole = role;
+    if (!family) {
+      console.log('既存familyなし');
+      // 既存のFamilyがないので作る。
+      var ParseFamily = Parse.Object.extend('Family');
+      family = new ParseFamily();
+    }
+    family.addUnique('member', toUser.id);
+    family.addUnique('member', fromUser.id);
+    return family.save();
 
+  }).then((result: Parse.Object) => {
+    console.log('enter 2');
+    console.log(result);
+
+    family = result;
+
+    // .FamilyのオブジェクトIDをnameに持つRoleを探す。
+    var familyRoleQuery = new Parse.Query(Parse.Role);
+    console.log(result.id);
+    familyRoleQuery.equalTo('name', result.id);
+    return familyRoleQuery.first();
+
+  }).then((result: Parse.Role) => {
+    console.log('enter 3');
+    console.log(result);
+
+    if (result) {
+      console.log('ロールあり: name = ' + family.id + ': ' + result);
+      familyRole = result;
+    } else {
+      // 既存Roleがなければ作る。
+      familyRole = new Parse.Role(family.id, new Parse.ACL());
+      console.log('ロールなし: name = ' + family.id + 'を作ります。');
+    }
+    console.log(familyRole.getUsers());
+    familyRole.getUsers().add(toUser);
+    familyRole.getUsers().add(fromUser);
+    return familyRole.save();
+
+  }).then((result: Parse.Role) => {
+    console.log('enter 4');
+    console.log(result);
+
+    // 承認者のこども情報を取得
     var ParseChild = Parse.Object.extend('Child');
     var query = new Parse.Query(ParseChild);
+    query.containedIn('createdBy', [ toUser, fromUser ]);
     return query.find();
 
   }).then((children: Parse.Object[]) => {
+    console.log('enter 5');
 
-    // 人のChildを共有するようにACLを編集するのでマスターキー使用。
-    Parse.Cloud.useMasterKey();
+    var promises = [];
     children.forEach((child: Parse.Object) => {
 
-      // 現在のACLを取得
+      console.log(child.get('nickName') + ':' + familyRole.getName() + 'を追加します。');
+
       var childACL = new Parse.ACL();
-      // childACL.setReadAccess(request.user.id, true);
-      // childACL.setWriteAccess(request.user.id, true);
       childACL.setRoleReadAccess(familyRole, true);
       childACL.setRoleWriteAccess(familyRole, true);
       child.setACL(childACL);
-      // todo: promise化
-      child.save();
+
+      promises.push(child.save());
     });
-  });
+    return Parse.Promise.when(promises);
 
+  }).then(() => {
+    console.log('enter 6');
 
-  response.success('Success!');
-
-
-
-
-  var ParseChild = Parse.Object.extend('Child');
-  var query = new Parse.Query(ParseChild);
-  query.find().then((children: Parse.Object[]) => {
-
-    // 人のChildを共有するようにACLを編集するのでマスターキー使用。
-    Parse.Cloud.useMasterKey();
-    children.forEach((child: Parse.Object) => {
-
-      // 現在のACLを取得
-      var childACL = new Parse.ACL();
-      childACL.setReadAccess(familyApplication.fromUserId, true);
-      childACL.setWriteAccess(familyApplication.fromUserId, true);
-      child.setACL(childACL);
-      // todo: promise化
-      child.save();
-    });
+    response.success('Success!');
+  },
+  (error: Parse.Error) => {
+    console.error('Error: ' + error.code + ' ' + error.message);
   });
 });

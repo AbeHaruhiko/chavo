@@ -29,7 +29,7 @@ var chavo;
                     }
                     cfpLoadingBar.complete();
                     _this.$scope.$apply(function () {
-                        _this.children.push(new chavo.Child(parseChild.get('dispOrder'), parseChild.get('nickName'), parseChild.get('birthday'), parseChild.get('gender'), years ? years : null, months ? months : null, !parseChild.get('birthday')));
+                        _this.children.push(new chavo.Child(parseChild.get('dispOrder'), parseChild.get('nickName'), parseChild.get('birthday'), parseChild.get('gender'), years ? years : null, months ? months : null, !parseChild.get('birthday'), Parse.User.current()));
                     });
                 });
             });

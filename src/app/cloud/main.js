@@ -55,44 +55,75 @@ Parse.Cloud.define('saveTag', function (request, response) {
     });
 });
 Parse.Cloud.define('addFamily', function (request, response) {
-    var familyApplication = request.params.familyApplication;
+    Parse.Cloud.useMasterKey();
     var toUser = new Parse.User();
     var fromUser = new Parse.User();
     toUser.id = request.user.id;
-    fromUser.id = request.params.familyApplication.fromUserId;
-    var familyQuery = new Parse.Query('Family');
+    fromUser.id = request.params.familyApplication.fromUserObjectId;
+    var toUserFamilyQuery = new Parse.Query('Family');
+    toUserFamilyQuery.equalTo('member', request.user.id);
+    var fromUserFamilyQuery = new Parse.Query('Family');
+    fromUserFamilyQuery.equalTo('member', request.params.familyApplication.fromUserId);
+    var familyQuery = Parse.Query.or(toUserFamilyQuery, fromUserFamilyQuery);
+    var family;
     var familyRole;
-    roleQuery.equalTo('member', request.user.id);
-    roleQuery.first().then(function (role) {
-        role.getUsers().add(fromUser);
-        role.getUsers().add(toUser);
-        return role.save();
-    }).then(function (role) {
-        familyRole = role;
+    familyQuery.first().then(function (family) {
+        console.log('enter 1');
+        console.log(family);
+        if (!family) {
+            console.log('既存familyなし');
+            var ParseFamily = Parse.Object.extend('Family');
+            family = new ParseFamily();
+        }
+        family.addUnique('member', toUser.id);
+        family.addUnique('member', fromUser.id);
+        return family.save();
+    }).then(function (result) {
+        console.log('enter 2');
+        console.log(result);
+        family = result;
+        var familyRoleQuery = new Parse.Query(Parse.Role);
+        console.log(result.id);
+        familyRoleQuery.equalTo('name', result.id);
+        return familyRoleQuery.first();
+    }).then(function (result) {
+        console.log('enter 3');
+        console.log(result);
+        if (result) {
+            console.log('ロールあり: name = ' + family.id + ': ' + result);
+            familyRole = result;
+        }
+        else {
+            familyRole = new Parse.Role(family.id, new Parse.ACL());
+            console.log('ロールなし: name = ' + family.id + 'を作ります。');
+        }
+        console.log(familyRole.getUsers());
+        familyRole.getUsers().add(toUser);
+        familyRole.getUsers().add(fromUser);
+        return familyRole.save();
+    }).then(function (result) {
+        console.log('enter 4');
+        console.log(result);
         var ParseChild = Parse.Object.extend('Child');
         var query = new Parse.Query(ParseChild);
+        query.containedIn('createdBy', [toUser, fromUser]);
         return query.find();
     }).then(function (children) {
-        Parse.Cloud.useMasterKey();
+        console.log('enter 5');
+        var promises = [];
         children.forEach(function (child) {
+            console.log(child.get('nickName') + ':' + familyRole.getName() + 'を追加します。');
             var childACL = new Parse.ACL();
             childACL.setRoleReadAccess(familyRole, true);
             childACL.setRoleWriteAccess(familyRole, true);
             child.setACL(childACL);
-            child.save();
+            promises.push(child.save());
         });
-    });
-    response.success('Success!');
-    var ParseChild = Parse.Object.extend('Child');
-    var query = new Parse.Query(ParseChild);
-    query.find().then(function (children) {
-        Parse.Cloud.useMasterKey();
-        children.forEach(function (child) {
-            var childACL = new Parse.ACL();
-            childACL.setReadAccess(familyApplication.fromUserId, true);
-            childACL.setWriteAccess(familyApplication.fromUserId, true);
-            child.setACL(childACL);
-            child.save();
-        });
+        return Parse.Promise.when(promises);
+    }).then(function () {
+        console.log('enter 6');
+        response.success('Success!');
+    }, function (error) {
+        console.error('Error: ' + error.code + ' ' + error.message);
     });
 });
