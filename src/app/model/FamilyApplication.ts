@@ -9,6 +9,7 @@ module chavo {
         public fromUserIconUrl: string,
         public toUserId: string,
         public toUserObjectId: string,
+        public toUserIconUrl: string,
         public applyDateTime: Date,
         public objectId: string
       ) {

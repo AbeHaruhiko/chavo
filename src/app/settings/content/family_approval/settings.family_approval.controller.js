@@ -30,7 +30,7 @@ var chavo;
                 results.forEach(function (parseFamilyApplication) {
                     cfpLoadingBar.complete();
                     _this.$scope.$apply(function () {
-                        _this.familyApplicationList.push(new chavo.FamilyApplication(parseFamilyApplication.get(Const.FamilyApplication.COL_FROM_USER).get('username'), parseFamilyApplication.get(Const.FamilyApplication.COL_FROM_USER).id, parseFamilyApplication.get(Const.FamilyApplication.COL_FROM_USER).get('iconUrl'), parseFamilyApplication.get(Parse.User.current().get('usename')), parseFamilyApplication.get(Parse.User.current().id), parseFamilyApplication.get(Const.FamilyApplication.COL_APPLY_DATE_TIME), parseFamilyApplication.id));
+                        _this.familyApplicationList.push(new chavo.FamilyApplication(parseFamilyApplication.get(Const.FamilyApplication.COL_FROM_USER).get('username'), parseFamilyApplication.get(Const.FamilyApplication.COL_FROM_USER).id, parseFamilyApplication.get(Const.FamilyApplication.COL_FROM_USER).get('iconUrl'), parseFamilyApplication.get(Parse.User.current().get('usename')), parseFamilyApplication.get(Parse.User.current().id), parseFamilyApplication.get(Parse.User.current().get('iconUrl')), parseFamilyApplication.get(Const.FamilyApplication.COL_APPLY_DATE_TIME), parseFamilyApplication.id));
                     });
                 });
             });

@@ -61,9 +61,9 @@ Parse.Cloud.define('addFamily', function (request, response) {
     toUser.id = request.user.id;
     fromUser.id = request.params.familyApplication.fromUserObjectId;
     var toUserFamilyQuery = new Parse.Query('Family');
-    toUserFamilyQuery.equalTo('member', request.user.id);
+    toUserFamilyQuery.equalTo('member', request.user);
     var fromUserFamilyQuery = new Parse.Query('Family');
-    fromUserFamilyQuery.equalTo('member', request.params.familyApplication.fromUserId);
+    fromUserFamilyQuery.equalTo('member', fromUser);
     var familyQuery = Parse.Query.or(toUserFamilyQuery, fromUserFamilyQuery);
     var family;
     var familyRole;
@@ -75,9 +75,11 @@ Parse.Cloud.define('addFamily', function (request, response) {
             console.log('既存familyなし');
             var ParseFamily = Parse.Object.extend('Family');
             family = new ParseFamily();
+            family.setACL(new Parse.ACL());
         }
-        family.addUnique('member', toUser.id);
-        family.addUnique('member', fromUser.id);
+        var relation = family.relation('member');
+        relation.add(toUser);
+        relation.add(fromUser);
         return family.save();
     }).then(function (result) {
         console.log('enter 2');
@@ -132,7 +134,7 @@ Parse.Cloud.define('addFamily', function (request, response) {
 Parse.Cloud.define('getRequestUsersFamilyRole', function (request, response) {
     Parse.Cloud.useMasterKey();
     var familyQuery = new Parse.Query('Family');
-    familyQuery.equalTo('member', request.user.id);
+    familyQuery.equalTo('member', request.user);
     familyQuery.first()
         .then(function (result) {
         if (result) {
@@ -145,5 +147,49 @@ Parse.Cloud.define('getRequestUsersFamilyRole', function (request, response) {
         }
     }).then(function (result) {
         response.success(result);
+    });
+});
+Parse.Cloud.define('getRequestUsersFamilyMember', function (request, response) {
+    Parse.Cloud.useMasterKey();
+    var familyQuery = new Parse.Query('Family');
+    familyQuery.equalTo('member', request.user);
+    familyQuery.first()
+        .then(function (result) {
+        console.log(result);
+        var query = result.relation('member').query();
+        query.select('username', 'iconUrl');
+        return query.find();
+    }).then(function (result) {
+        console.log(result);
+        response.success(result);
+    });
+});
+Parse.Cloud.define('getFamilyAppToRequestUser', function (request, response) {
+    Parse.Cloud.useMasterKey();
+    var ParseFamilyApplication = Parse.Object.extend('FamilyApplication');
+    var query = new Parse.Query(ParseFamilyApplication);
+    query.descending('createdAt');
+    query.equalTo('toUser', request.user);
+    query.include('fromUser');
+    query.find()
+        .then(function (result) {
+        response.success(result);
+    }, function (error) {
+        response.error(error);
+    });
+});
+Parse.Cloud.define('getFamilyAppFromRequestUser', function (request, response) {
+    Parse.Cloud.useMasterKey();
+    var ParseFamilyApplication = Parse.Object.extend('FamilyApplication');
+    var query = new Parse.Query(ParseFamilyApplication);
+    query.descending('createdAt');
+    query.equalTo('fromUser', request.user);
+    query.include('fromUser');
+    query.include('toUser');
+    query.find()
+        .then(function (result) {
+        response.success(result);
+    }, function (error) {
+        response.error(error);
     });
 });

@@ -8,30 +8,23 @@ var chavo;
             this.$rootScope = $rootScope;
             this.$state = $state;
             this.cfpLoadingBar = cfpLoadingBar;
-            this.children = new Array();
-            var ParseChild = Parse.Object.extend('Child');
-            var query = new Parse.Query(ParseChild);
+            this.familyMembers = new Array();
+            this.familyApps = new Array();
             cfpLoadingBar.start();
-            query.ascending('dispOrder');
-            query.find({
-                error: function (error) {
-                    console.log('Error: ' + error.code + ' ' + error.message);
-                }
-            }).then(function (results) {
-                if (results.length <= 0) {
-                    cfpLoadingBar.complete();
-                    return;
-                }
-                results.forEach(function (parseChild) {
-                    if (parseChild.get('birthday')) {
-                        var years = '' + moment().diff(moment(parseChild.get('birthday')), 'years');
-                        var months = '' + (moment().diff(moment(parseChild.get('birthday')), 'months') - (12 * +years));
-                    }
-                    cfpLoadingBar.complete();
-                    _this.$scope.$apply(function () {
-                        _this.children.push(new chavo.Child(parseChild.get('dispOrder'), parseChild.get('nickName'), parseChild.get('birthday'), parseChild.get('gender'), years ? years : null, months ? months : null, !parseChild.get('birthday')));
-                    });
+            Parse.Cloud.run('getRequestUsersFamilyMember')
+                .then(function (parseFamilyList) {
+                parseFamilyList.forEach(function (family) {
+                    _this.familyMembers.push(new chavo.Profile(family.get('username'), null, null, family.get('iconUrl'), null));
                 });
+                cfpLoadingBar.complete();
+            });
+            Parse.Cloud.run('getFamilyAppFromRequestUser')
+                .then(function (parseFamilyAppList) {
+                console.dir(parseFamilyAppList);
+                parseFamilyAppList.forEach(function (parseFamilyApplication) {
+                    _this.familyApps.push(new chavo.FamilyApplication(parseFamilyApplication.get(Parse.User.current().get('usename')), parseFamilyApplication.get(Parse.User.current().id), parseFamilyApplication.get(Parse.User.current().get('iconUrl')), parseFamilyApplication.get(Const.FamilyApplication.COL_TO_USER).get('username'), parseFamilyApplication.get(Const.FamilyApplication.COL_TO_USER).id, parseFamilyApplication.get(Const.FamilyApplication.COL_TO_USER).get('iconUrl'), parseFamilyApplication.get(Const.FamilyApplication.COL_APPLY_DATE_TIME), parseFamilyApplication.id));
+                });
+                console.dir(_this.familyApps);
             });
         }
         SettingsFamilyController.prototype.go = function (child) {

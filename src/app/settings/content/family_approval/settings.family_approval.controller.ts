@@ -50,6 +50,7 @@ module chavo {
                 parseFamilyApplication.get(Const.FamilyApplication.COL_FROM_USER).get('iconUrl'),
                 parseFamilyApplication.get(Parse.User.current().get('usename')),
                 parseFamilyApplication.get(Parse.User.current().id),
+                parseFamilyApplication.get(Parse.User.current().get('iconUrl')),
                 parseFamilyApplication.get(Const.FamilyApplication.COL_APPLY_DATE_TIME),
                 parseFamilyApplication.id
               )

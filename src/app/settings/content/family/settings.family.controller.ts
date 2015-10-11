@@ -6,7 +6,8 @@ module chavo {
 
   export class SettingsFamilyController {
 
-    children = new Array<Child>();
+    familyMembers = new Array<Profile>();
+    familyApps = new Array<FamilyApplication>();
 
     /* @ngInject */
     constructor (public $scope: ISettingsChildren,
@@ -14,44 +15,46 @@ module chavo {
       public $state: ng.ui.IStateService,
       public cfpLoadingBar: any) {
 
-      // parseから取得
-      var ParseChild = Parse.Object.extend('Child');
-      var query = new Parse.Query(ParseChild);
-
       cfpLoadingBar.start();
 
-  		query.ascending('dispOrder');
-  		query.find({
-  		  error: function(error: Parse.Error) {
-  		    console.log('Error: ' + error.code + ' ' + error.message);
-  		  }
-  		}).then((results: Parse.Object[]) => {
-        if (results.length <= 0) {
-          cfpLoadingBar.complete();
-          return;
-        }
 
-        results.forEach((parseChild: Parse.Object) => {
-
-          if (parseChild.get('birthday')) {
-            // 年齢
-            var years: string = '' + moment().diff(moment(parseChild.get('birthday')), 'years');
-            // ヶ月（誕生日からの月数 - 年齢分の月数）
-            var months: string = '' + (moment().diff(moment(parseChild.get('birthday')), 'months') - (12 * +years));
-          }
-
-          cfpLoadingBar.complete();
-
-          this.$scope.$apply(() => {
-            this.children.push(new Child(parseChild.get('dispOrder'),
-                parseChild.get('nickName'),
-                parseChild.get('birthday'),
-                parseChild.get('gender'),
-                years ? years : null,
-                months ? months : null,
-                !parseChild.get('birthday')));    // 誕生日が保存されていたらunableBirthdayはfalse, 未登録ならtrueとする。
-          });
+      // 家族一覧取得
+      Parse.Cloud.run('getRequestUsersFamilyMember')
+      .then((parseFamilyList: Parse.Object[]) => {
+        parseFamilyList.forEach((family: Parse.Object) => {
+          this.familyMembers.push(
+            new Profile(
+              family.get('username'),
+              null,
+              null,
+              family.get('iconUrl'),
+              null
+            )
+          );
         });
+        // forEachから抜けた後。
+        cfpLoadingBar.complete();
+      });
+
+      // 申請中一覧
+      Parse.Cloud.run('getFamilyAppFromRequestUser')
+      .then((parseFamilyAppList: Parse.Object[]) => {
+        console.dir(parseFamilyAppList);
+        parseFamilyAppList.forEach((parseFamilyApplication: Parse.Object) => {
+          this.familyApps.push(
+            new FamilyApplication(
+              parseFamilyApplication.get(Parse.User.current().get('usename')),
+              parseFamilyApplication.get(Parse.User.current().id),
+              parseFamilyApplication.get(Parse.User.current().get('iconUrl')),
+              parseFamilyApplication.get(Const.FamilyApplication.COL_TO_USER).get('username'),
+              parseFamilyApplication.get(Const.FamilyApplication.COL_TO_USER).id,
+              parseFamilyApplication.get(Const.FamilyApplication.COL_TO_USER).get('iconUrl'),
+              parseFamilyApplication.get(Const.FamilyApplication.COL_APPLY_DATE_TIME),
+              parseFamilyApplication.id
+            )
+          );
+        });
+        console.dir(this.familyApps);
       });
     }
 
