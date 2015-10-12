@@ -12,17 +12,9 @@ var chavo;
             this.$q = $q;
             this.$modal = $modal;
             this.familyApplicationList = [];
-            var ParseFamilyApplication = Parse.Object.extend('FamilyApplication');
-            var query = new Parse.Query(ParseFamilyApplication);
             cfpLoadingBar.start();
-            query.descending('createdAt');
-            query.equalTo(Const.FamilyApplication.COL_TO_USER, Parse.User.current());
-            query.include(Const.FamilyApplication.COL_FROM_USER);
-            query.find({
-                error: function (error) {
-                    console.log('Error: ' + error.code + ' ' + error.message);
-                }
-            }).then(function (results) {
+            Parse.Cloud.run('getFamilyAppToRequestUser')
+                .then(function (results) {
                 if (results.length <= 0) {
                     cfpLoadingBar.complete();
                     return;

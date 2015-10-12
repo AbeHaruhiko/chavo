@@ -19,20 +19,10 @@ module chavo {
         public $q: angular.IQService,
         public $modal: any) {
 
-      var ParseFamilyApplication = Parse.Object.extend('FamilyApplication');
-      var query = new Parse.Query(ParseFamilyApplication);
-
       cfpLoadingBar.start();
 
-  		query.descending('createdAt');
-      // 自分宛て
-      query.equalTo(Const.FamilyApplication.COL_TO_USER, Parse.User.current());
-      query.include(Const.FamilyApplication.COL_FROM_USER);
-  		query.find({
-  		  error: function(error: Parse.Error) {
-  		    console.log('Error: ' + error.code + ' ' + error.message);
-  		  }
-  		}).then((results: Parse.Object[]) => {
+      Parse.Cloud.run('getFamilyAppToRequestUser')
+      .then((results: Parse.Object[]) => {
         if (results.length <= 0) {
           cfpLoadingBar.complete();
           return;

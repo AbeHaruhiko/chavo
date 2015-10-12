@@ -98,6 +98,7 @@ Parse.Cloud.define('addFamily', function(request: Parse.Cloud.FunctionRequest, r
   var familyQuery = Parse.Query.or(toUserFamilyQuery, fromUserFamilyQuery);
   var family: Parse.Object;
   var familyRole: Parse.Role;
+  var children: Parse.Object[];
   familyQuery.first()
   .then((family: Parse.Object) => {
     console.log('enter 1');
@@ -149,28 +150,94 @@ Parse.Cloud.define('addFamily', function(request: Parse.Cloud.FunctionRequest, r
     console.log(result);
 
     // 承認者と申請者のこども情報を取得
-    var ParseChild = Parse.Object.extend('Child');
-    var query = new Parse.Query(ParseChild);
-    query.containedIn('createdBy', [ toUser, fromUser ]);
-    return query.find();
+    let ParseChild = Parse.Object.extend('Child');
+    let toUserQuery = new Parse.Query(ParseChild);
+    let fromUserQuery = new Parse.Query(ParseChild);
 
-  }).then((children: Parse.Object[]) => {
-    console.log('enter 5');
+    // containedInはParse.Objectには使えない模様
+    // query.containedIn('createdBy', [ toUser, fromUser ]);
+    console.log('toUser:' + toUser);
+    console.log('fromUser:' + fromUser);
 
-    // 各こどものACLを家族Roleに置き換え。
+    toUserQuery.equalTo('createdBy', toUser);
+    fromUserQuery.equalTo('createdBy', fromUser);
+    console.log(1);
+
+    return Parse.Query.or(toUserQuery, fromUserQuery).find();
+  }).then((parseChildren: Parse.Object[]) => {
+    console.log('parseChildren:' + parseChildren);
+
     var promises = [];
-    children.forEach((child: Parse.Object) => {
 
-      console.log(child.get('nickName') + ':' + familyRole.getName() + 'を追加します。');
-
+    parseChildren.forEach((parseChild: Parse.Object) => {
+      console.log('parseChild:' + parseChild);
       var childACL = new Parse.ACL();
       childACL.setRoleReadAccess(familyRole, true);
       childACL.setRoleWriteAccess(familyRole, true);
-      child.setACL(childACL);
-
-      promises.push(child.save());
+      parseChild.setACL(childACL);
     });
+    promises.push(Parse.Object.saveAll(parseChildren));
     return Parse.Promise.when(promises);
+
+  }).then(() => {
+    console.log('enter 5');
+
+    // 全投稿を取得
+    let ParseVoice = Parse.Object.extend('Voice');
+    // TODO: 'user'でなく'createdBy'にしたい。
+
+    // containedInはParse.Objectには使えない模様
+    // query.containedIn('user', [ toUser, fromUser ]);
+
+    let toUserQuery = new Parse.Query(ParseVoice);
+    let fromUserQuery = new Parse.Query(ParseVoice);
+
+    toUserQuery.equalTo('user', toUser);
+    fromUserQuery.equalTo('user', fromUser);
+    var voiceQuery = Parse.Query.or(toUserQuery, fromUserQuery);
+
+    return voiceQuery.count();
+
+  }).then((countResult: number) => {
+
+    console.log('countResult:' + countResult);
+
+    var promises = [];
+
+    let ParseVoice = Parse.Object.extend('Voice');
+    let toUserQuery = new Parse.Query(ParseVoice);
+    let fromUserQuery = new Parse.Query(ParseVoice);
+
+    toUserQuery.equalTo('user', toUser);
+    fromUserQuery.equalTo('user', fromUser);
+    var voiceQuery = Parse.Query.or(toUserQuery, fromUserQuery);
+
+    for (let i = 0; i < countResult / 1000; i++) {
+      voiceQuery.limit(1000);
+      voiceQuery.skip(1000 * i);
+      promises.push(voiceQuery.find());
+    }
+    return Parse.Promise.when(promises);
+
+  }).then((...voicesArray: Parse.Object[][]) => {
+
+    console.log('voices:' + voicesArray);
+
+    var promises = [];
+
+    voicesArray.forEach((voices: Parse.Object[]) => {
+
+      voices.forEach((voice: Parse.Object) => {
+        console.log('voice:' + voice);
+        var voiceACL = new Parse.ACL();
+        voiceACL.setRoleReadAccess(familyRole, true);
+        voiceACL.setRoleWriteAccess(familyRole, true);
+        voice.setACL(voiceACL);
+      });
+      promises.push(Parse.Object.saveAll(voices));
+      return Parse.Promise.when(promises);
+
+    });
 
   }).then(() => {
     console.log('enter 6');

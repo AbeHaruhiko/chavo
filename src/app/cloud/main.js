@@ -67,6 +67,7 @@ Parse.Cloud.define('addFamily', function (request, response) {
     var familyQuery = Parse.Query.or(toUserFamilyQuery, fromUserFamilyQuery);
     var family;
     var familyRole;
+    var children;
     familyQuery.first()
         .then(function (family) {
         console.log('enter 1');
@@ -108,21 +109,68 @@ Parse.Cloud.define('addFamily', function (request, response) {
         console.log('enter 4');
         console.log(result);
         var ParseChild = Parse.Object.extend('Child');
-        var query = new Parse.Query(ParseChild);
-        query.containedIn('createdBy', [toUser, fromUser]);
-        return query.find();
-    }).then(function (children) {
-        console.log('enter 5');
+        var toUserQuery = new Parse.Query(ParseChild);
+        var fromUserQuery = new Parse.Query(ParseChild);
+        console.log('toUser:' + toUser);
+        console.log('fromUser:' + fromUser);
+        toUserQuery.equalTo('createdBy', toUser);
+        fromUserQuery.equalTo('createdBy', fromUser);
+        console.log(1);
+        return Parse.Query.or(toUserQuery, fromUserQuery).find();
+    }).then(function (parseChildren) {
+        console.log('parseChildren:' + parseChildren);
         var promises = [];
-        children.forEach(function (child) {
-            console.log(child.get('nickName') + ':' + familyRole.getName() + 'を追加します。');
+        parseChildren.forEach(function (parseChild) {
+            console.log('parseChild:' + parseChild);
             var childACL = new Parse.ACL();
             childACL.setRoleReadAccess(familyRole, true);
             childACL.setRoleWriteAccess(familyRole, true);
-            child.setACL(childACL);
-            promises.push(child.save());
+            parseChild.setACL(childACL);
         });
+        promises.push(Parse.Object.saveAll(parseChildren));
         return Parse.Promise.when(promises);
+    }).then(function () {
+        console.log('enter 5');
+        var ParseVoice = Parse.Object.extend('Voice');
+        var toUserQuery = new Parse.Query(ParseVoice);
+        var fromUserQuery = new Parse.Query(ParseVoice);
+        toUserQuery.equalTo('user', toUser);
+        fromUserQuery.equalTo('user', fromUser);
+        var voiceQuery = Parse.Query.or(toUserQuery, fromUserQuery);
+        return voiceQuery.count();
+    }).then(function (countResult) {
+        console.log('countResult:' + countResult);
+        var promises = [];
+        var ParseVoice = Parse.Object.extend('Voice');
+        var toUserQuery = new Parse.Query(ParseVoice);
+        var fromUserQuery = new Parse.Query(ParseVoice);
+        toUserQuery.equalTo('user', toUser);
+        fromUserQuery.equalTo('user', fromUser);
+        var voiceQuery = Parse.Query.or(toUserQuery, fromUserQuery);
+        for (var i = 0; i < countResult / 1000; i++) {
+            voiceQuery.limit(1000);
+            voiceQuery.skip(1000 * i);
+            promises.push(voiceQuery.find());
+        }
+        return Parse.Promise.when(promises);
+    }).then(function () {
+        var voicesArray = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            voicesArray[_i - 0] = arguments[_i];
+        }
+        console.log('voices:' + voicesArray);
+        var promises = [];
+        voicesArray.forEach(function (voices) {
+            voices.forEach(function (voice) {
+                console.log('voice:' + voice);
+                var voiceACL = new Parse.ACL();
+                voiceACL.setRoleReadAccess(familyRole, true);
+                voiceACL.setRoleWriteAccess(familyRole, true);
+                voice.setACL(voiceACL);
+            });
+            promises.push(Parse.Object.saveAll(voices));
+            return Parse.Promise.when(promises);
+        });
     }).then(function () {
         console.log('enter 6');
         response.success('Success!');
