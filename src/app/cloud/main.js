@@ -60,14 +60,10 @@ Parse.Cloud.define('addFamily', function (request, response) {
     var fromUser = new Parse.User();
     toUser.id = request.user.id;
     fromUser.id = request.params.familyApplication.fromUserObjectId;
-    var toUserFamilyQuery = new Parse.Query('Family');
-    toUserFamilyQuery.equalTo('member', request.user);
-    var fromUserFamilyQuery = new Parse.Query('Family');
-    fromUserFamilyQuery.equalTo('member', fromUser);
-    var familyQuery = Parse.Query.or(toUserFamilyQuery, fromUserFamilyQuery);
+    var familyQuery = new Parse.Query('Family');
+    familyQuery.containedIn('member', [request.user, fromUser]);
     var family;
     var familyRole;
-    var children;
     familyQuery.first()
         .then(function (family) {
         console.log('enter 1');
@@ -109,14 +105,9 @@ Parse.Cloud.define('addFamily', function (request, response) {
         console.log('enter 4');
         console.log(result);
         var ParseChild = Parse.Object.extend('Child');
-        var toUserQuery = new Parse.Query(ParseChild);
-        var fromUserQuery = new Parse.Query(ParseChild);
-        console.log('toUser:' + toUser);
-        console.log('fromUser:' + fromUser);
-        toUserQuery.equalTo('createdBy', toUser);
-        fromUserQuery.equalTo('createdBy', fromUser);
-        console.log(1);
-        return Parse.Query.or(toUserQuery, fromUserQuery).find();
+        var query = new Parse.Query(ParseChild);
+        query.containedIn('createdBy', [toUser, fromUser]);
+        return query.find();
     }).then(function (parseChildren) {
         console.log('parseChildren:' + parseChildren);
         var promises = [];
@@ -132,25 +123,19 @@ Parse.Cloud.define('addFamily', function (request, response) {
     }).then(function () {
         console.log('enter 5');
         var ParseVoice = Parse.Object.extend('Voice');
-        var toUserQuery = new Parse.Query(ParseVoice);
-        var fromUserQuery = new Parse.Query(ParseVoice);
-        toUserQuery.equalTo('user', toUser);
-        fromUserQuery.equalTo('user', fromUser);
-        var voiceQuery = Parse.Query.or(toUserQuery, fromUserQuery);
-        return voiceQuery.count();
+        var query = new Parse.Query(ParseVoice);
+        query.containedIn('user', [toUser, fromUser]);
+        return query.count();
     }).then(function (countResult) {
         console.log('countResult:' + countResult);
         var promises = [];
         var ParseVoice = Parse.Object.extend('Voice');
-        var toUserQuery = new Parse.Query(ParseVoice);
-        var fromUserQuery = new Parse.Query(ParseVoice);
-        toUserQuery.equalTo('user', toUser);
-        fromUserQuery.equalTo('user', fromUser);
-        var voiceQuery = Parse.Query.or(toUserQuery, fromUserQuery);
+        var query = new Parse.Query(ParseVoice);
+        query.containedIn('user', [toUser, fromUser]);
         for (var i = 0; i < countResult / 1000; i++) {
-            voiceQuery.limit(1000);
-            voiceQuery.skip(1000 * i);
-            promises.push(voiceQuery.find());
+            query.limit(1000);
+            query.skip(1000 * i);
+            promises.push(query.find());
         }
         return Parse.Promise.when(promises);
     }).then(function () {

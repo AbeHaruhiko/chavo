@@ -88,17 +88,11 @@ Parse.Cloud.define('addFamily', function(request: Parse.Cloud.FunctionRequest, r
   fromUser.id = request.params.familyApplication.fromUserObjectId;
 
   // 申請者、承認者のFamilyデータを検索する。
-  var toUserFamilyQuery = new Parse.Query('Family');
-  toUserFamilyQuery.equalTo('member', request.user);
+  var familyQuery = new Parse.Query('Family');
+  familyQuery.containedIn('member', [ request.user, fromUser ]);
 
-  var fromUserFamilyQuery = new Parse.Query('Family');
-  fromUserFamilyQuery.equalTo('member', fromUser);
-
- // orでクエリを作る。
-  var familyQuery = Parse.Query.or(toUserFamilyQuery, fromUserFamilyQuery);
   var family: Parse.Object;
   var familyRole: Parse.Role;
-  var children: Parse.Object[];
   familyQuery.first()
   .then((family: Parse.Object) => {
     console.log('enter 1');
@@ -151,19 +145,10 @@ Parse.Cloud.define('addFamily', function(request: Parse.Cloud.FunctionRequest, r
 
     // 承認者と申請者のこども情報を取得
     let ParseChild = Parse.Object.extend('Child');
-    let toUserQuery = new Parse.Query(ParseChild);
-    let fromUserQuery = new Parse.Query(ParseChild);
+    let query = new Parse.Query(ParseChild);
+    query.containedIn('createdBy', [ toUser, fromUser ]);
+    return query.find();
 
-    // containedInはParse.Objectには使えない模様
-    // query.containedIn('createdBy', [ toUser, fromUser ]);
-    console.log('toUser:' + toUser);
-    console.log('fromUser:' + fromUser);
-
-    toUserQuery.equalTo('createdBy', toUser);
-    fromUserQuery.equalTo('createdBy', fromUser);
-    console.log(1);
-
-    return Parse.Query.or(toUserQuery, fromUserQuery).find();
   }).then((parseChildren: Parse.Object[]) => {
     console.log('parseChildren:' + parseChildren);
 
@@ -186,17 +171,9 @@ Parse.Cloud.define('addFamily', function(request: Parse.Cloud.FunctionRequest, r
     let ParseVoice = Parse.Object.extend('Voice');
     // TODO: 'user'でなく'createdBy'にしたい。
 
-    // containedInはParse.Objectには使えない模様
-    // query.containedIn('user', [ toUser, fromUser ]);
-
-    let toUserQuery = new Parse.Query(ParseVoice);
-    let fromUserQuery = new Parse.Query(ParseVoice);
-
-    toUserQuery.equalTo('user', toUser);
-    fromUserQuery.equalTo('user', fromUser);
-    var voiceQuery = Parse.Query.or(toUserQuery, fromUserQuery);
-
-    return voiceQuery.count();
+    let query = new Parse.Query(ParseVoice);
+    query.containedIn('user', [ toUser, fromUser ]);
+    return query.count();
 
   }).then((countResult: number) => {
 
@@ -205,17 +182,15 @@ Parse.Cloud.define('addFamily', function(request: Parse.Cloud.FunctionRequest, r
     var promises = [];
 
     let ParseVoice = Parse.Object.extend('Voice');
-    let toUserQuery = new Parse.Query(ParseVoice);
-    let fromUserQuery = new Parse.Query(ParseVoice);
+    // TODO: 'user'でなく'createdBy'にしたい。
 
-    toUserQuery.equalTo('user', toUser);
-    fromUserQuery.equalTo('user', fromUser);
-    var voiceQuery = Parse.Query.or(toUserQuery, fromUserQuery);
+    let query = new Parse.Query(ParseVoice);
+    query.containedIn('user', [ toUser, fromUser ]);
 
     for (let i = 0; i < countResult / 1000; i++) {
-      voiceQuery.limit(1000);
-      voiceQuery.skip(1000 * i);
-      promises.push(voiceQuery.find());
+      query.limit(1000);
+      query.skip(1000 * i);
+      promises.push(query.find());
     }
     return Parse.Promise.when(promises);
 

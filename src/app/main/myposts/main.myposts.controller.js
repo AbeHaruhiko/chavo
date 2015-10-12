@@ -18,9 +18,9 @@ var chavo;
             var parseVoices;
             this.cfpLoadingBar.start();
             query.descending('createdAt');
-            query.equalTo('user', Parse.User.current());
             query.find({
                 success: function (results) {
+                    console.log('success.');
                 },
                 error: function (error) {
                     console.error('Error: ' + error.code + ' ' + error.message);
@@ -77,10 +77,8 @@ var chavo;
                     .then(function () {
                     _this.$state.reload();
                 });
-                console.info('1: Modal dismissed at: ' + new Date());
                 console.dir(voice);
             }, function () {
-                console.info('2: Modal dismissed at: ' + new Date());
                 console.dir(voice);
             });
         };

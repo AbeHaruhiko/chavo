@@ -24,9 +24,12 @@ module chavo {
       this.cfpLoadingBar.start();
 
       query.descending('createdAt');
-      query.equalTo('user', Parse.User.current());
+
+      // 自分とかぞくの投稿だけ抽出
+
       query.find({
         success: (results: Parse.Object[]) => {
+          console.log('success.');
         },
         error: function(error: Parse.Error) {
           console.error('Error: ' + error.code + ' ' + error.message);
@@ -55,6 +58,7 @@ module chavo {
         console.error(error);
         this.applyFoundVoices(parseVoices);
       });
+
     }
 
     toggleLike(voice: Voice) {
@@ -130,10 +134,10 @@ module chavo {
           }
         );
 
-        console.info('1: Modal dismissed at: ' + new Date());
+        // console.info('1: Modal dismissed at: ' + new Date());
         console.dir(voice);
       }, () => {
-        console.info('2: Modal dismissed at: ' + new Date());
+        // console.info('2: Modal dismissed at: ' + new Date());
         console.dir(voice);
       });
     }
@@ -158,10 +162,10 @@ module chavo {
 
       this.$scope.$apply();
     }
+
+    // .DeletePostConfirmModalControllerはmain.myposts.controller.tsに
   }
 
-  // angular.module('chavo')
-  // .controller('DeletePostConfirmModalController', DeletePostConfirmModalController);
 
   export class DeletePostConfirmModalController {
 

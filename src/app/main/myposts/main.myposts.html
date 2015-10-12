@@ -16,16 +16,16 @@
             </span>
             <span class="pull-right">
               <span ng-click="main_myposts.toggleLike(voice)" id="like" ng-class="{ 'like-active': voice.like }">
-                <span class="glyphicon glyphicon-heart cursor-pointer" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
               </span>
               <span id="like-count">{{ voice.likeCount }}</span>
-              <span dropdown class="dropdown"><!-- ここのclass="dropdown"がないと動かない -->
+              <span ng-show="{{voice.userObjectId === main_myposts.$rootScope.currentUser.id}}" dropdown class="dropdown"><!-- ここのclass="dropdown"がないと動かない -->
                 <span
                     class="glyphicon glyphicon-option-horizontal cursor-pointer dropdown-toggle"
                     dropdown-toggle>
                 </span>
                 <ul class="dropdown-menu dropdown-menu-right">
-                  <li><a ui-sref="home.compose({ voice: voice })">編集する</a></li>
+                  <li><a ui-sref="home.compose({ voice: voice, voiceId: voice.objectId })">編集する</a></li>
                   <li><a ng-click="main_myposts.openDeletePostConfirmModal(voice)">削除する</a></li>
                   <script type="text/ng-template" id="deletePostConfirmModal.html">
                     <div class="modal-body">この投稿を削除しますか？</div>
@@ -39,6 +39,7 @@
             </span>
           </div>
           <p class="pre-line">{{ voice.description }}</p>
+          <p><a ng-repeat="tag in voice.tags" ui-sref="home.tag({ tag: tag })"><span class="badge tag-badge">{{ tag }}</span></a></p>
           <p class="text-right"><small>{{ voice.speaker }} {{ voice.age }} {{ voice.gender }}</small></p>
           <p ng-show="voice.photoUrl"><img ng-src="{{voice.photoUrl}}" class="img-responsive img-thumbnail"/></p>
         </div>
@@ -46,43 +47,4 @@
       </div>
     </div>
   </div>
-
-
-
-  <!-- <div class="mdl-card mdl-shadow--4dp posted-voice" ng-repeat="voice in main_myposts.voices">
-        <a href="#">
-          <img class="media-object img-circle icon-size"  ng-src="assets/images/ic_hal.jpg" alt="{{voice.get('author')}}">
-        </a>
-        <div class="text-right"><small>{{ voice.createdAt }}</small></div>
-        <div class="">{{ voice.description }}</div>
-        <div class="text-right"><small>{{ voice.author }} {{ voice.age }} {{ voice.gender }}</small></div>
-  </div> -->
-
-
-  <!-- <div class="mdl-card mdl-shadow--4dp posted-voice" ng-repeat="voice in main_myposts.voices">
-    <div class="mdl-card__media">
-      <img class="media-object img-circle icon-size avatar"  ng-src="assets/images/ic_hal.jpg" alt="{{voice.get('author')}}"/>
-      <div class="mdl-card__supporting-text">{{ voice.createdAt }}</div>
-    </div>
-    <div class="mdl-card__supporting-text">{{ voice.description }}</div>
-  </div> -->
-
-  <!-- <div class="mdl-grid" ng-repeat="voice in main_myposts.voices">
-    <div class="mdl-cell mdl-cell--3-col">
-    </div>
-    <div class="mdl-card mdl-cell mdl-cell--6-col mdl-shadow--4dp posted-voice">
-      <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
-        <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
-          <img class="media-object img-circle icon-size avatar"  ng-src="{{ voice.icon }}" alt="{{ voice.user }}"/>
-        </div>
-        <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-          <div class="mdl-card__supporting-text"><div>{{ voice.user }}</div><div>{{ voice.createdAt }}</div></div>
-          <div class="mdl-card__supporting-text">{{ voice.description }}</div>
-          <div class="mdl-card__supporting-text">{{ voice.author }} {{ voice.age }} {{ voice.gender }}</div>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
-
 </div>
