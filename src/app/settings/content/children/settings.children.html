@@ -3,15 +3,15 @@
     <div class="list-group-item text-right">
       <a class="btn btn-primary btn-outline" ng-click="settings_children.go(null)"><i class="fa fa-user-plus"> 追加</i></a>
     </div>
-      <a ng-click="settings_children.go(child)" class="list-group-item" ng-repeat="child in settings_children.children">
-        <span>{{child.nickName || '（未登録）'}}</span>
-        <div class="pull-right">
-          <!-- <span ng-if="child.birthday">{{child.birthday + '生まれ'}}</span> -->
-          <span ng-if="child.ageYears">{{ child.ageYears + '歳' }}</span>
-          <span ng-if="child.ageMonths">{{ child.ageMonths + 'ヶ月' }}</span>
-          <span ng-if="child.gender ===  0">男の子</span>
-          <span ng-if="child.gender ===  1">女の子</span>
-        </div>
-      </a>
+    <a ng-click="settings_children.go(child)" class="list-group-item" ng-repeat="child in settings_children.children">
+      <span>{{child.nickName || '（未登録）'}}</span>
+      <div class="pull-right">
+        <!-- <span ng-if="child.birthday">{{child.birthday + '生まれ'}}</span> -->
+        <span ng-if="child.ageYears">{{ child.ageYears + '歳' }}</span>
+        <span ng-if="child.ageMonths">{{ child.ageMonths + 'ヶ月' }}</span>
+        <span ng-if="child.gender ===  0">男の子</span>
+        <span ng-if="child.gender ===  1">女の子</span>
+      </div>
+    </a>
   </div>
 </div>
