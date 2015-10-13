@@ -17,24 +17,29 @@ module chavo {
     }
 
     init() {
-      var ParseVoice = Parse.Object.extend('Voice');
-      var query = new Parse.Query(ParseVoice);
-      var parseVoices: Parse.Object[];
 
       this.cfpLoadingBar.start();
 
-      query.descending('createdAt');
+      var parseVoices: Parse.Object[];
 
-      // 自分とかぞくの投稿だけ抽出
+      // 家族一覧取得
+      Parse.Cloud.run('getRequestUsersFamilyMember')
+      .then((parseFamilyList: Parse.Object[]) => {
+        var ParseVoice = Parse.Object.extend('Voice');
+        var query = new Parse.Query(ParseVoice);
+        query.descending('createdAt');
 
-      query.find({
-        success: (results: Parse.Object[]) => {
-          console.log('success.');
-        },
-        error: function(error: Parse.Error) {
-          console.error('Error: ' + error.code + ' ' + error.message);
+        if (parseFamilyList) {
+          // 自分とかぞくの投稿だけ抽出
+          query.containedIn('user', parseFamilyList);
+        } else {
+          query.equalTo('user', Parse.User.current());
         }
+
+        return query.find();
+
       }).then((results: Parse.Object[]) => {
+        // TODO: includeで置き換えられそう
         // 投稿者のアイコンを取得するため、fetchする。
 
         parseVoices = results;
@@ -52,11 +57,13 @@ module chavo {
       })
       .then(() => {
         this.applyFoundVoices(parseVoices);
+        this.cfpLoadingBar.complete();
       },
       (error: any) => {
         // 投稿ユーザがいない場合などエラーになる
         console.error(error);
         this.applyFoundVoices(parseVoices);
+        this.cfpLoadingBar.complete();
       });
 
     }
@@ -143,6 +150,11 @@ module chavo {
     }
 
     private applyFoundVoices(parseVoices: Parse.Object[]) {
+
+      if (!parseVoices) {
+        this.cfpLoadingBar.complete();
+        return;
+      }
       // 自分がlike済みの投稿
       var myLikes: string[] = !this.$rootScope.currentUser ? []
                                   : !this.$rootScope.currentUser.get('likes') ? []

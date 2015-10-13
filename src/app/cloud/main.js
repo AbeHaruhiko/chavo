@@ -147,10 +147,14 @@ Parse.Cloud.define('addFamily', function (request, response) {
         var promises = [];
         voicesArray.forEach(function (voices) {
             voices.forEach(function (voice) {
-                console.log('voice:' + voice);
+                console.log('voice:' + voice.id + ':' + familyRole.id);
                 var voiceACL = new Parse.ACL();
                 voiceACL.setRoleReadAccess(familyRole, true);
                 voiceACL.setRoleWriteAccess(familyRole, true);
+                if (voice.getACL().getPublicReadAccess()) {
+                    voiceACL.setPublicReadAccess(true);
+                    console.log('voice: setPublicReadAccess');
+                }
                 voice.setACL(voiceACL);
             });
             promises.push(Parse.Object.saveAll(voices));
@@ -185,16 +189,23 @@ Parse.Cloud.define('getRequestUsersFamilyRole', function (request, response) {
 Parse.Cloud.define('getRequestUsersFamilyMember', function (request, response) {
     Parse.Cloud.useMasterKey();
     var familyQuery = new Parse.Query('Family');
-    familyQuery.equalTo('member', request.user);
+    familyQuery.containedIn('member', [request.user]);
     familyQuery.first()
         .then(function (result) {
         console.log(result);
-        var query = result.relation('member').query();
-        query.select('username', 'iconUrl');
-        return query.find();
+        if (result) {
+            var query = result.relation('member').query();
+            query.select('username', 'iconUrl');
+            return query.find();
+        }
+        else {
+            return;
+        }
     }).then(function (result) {
         console.log(result);
         response.success(result);
+    }, function (error) {
+        response.error(error);
     });
 });
 Parse.Cloud.define('getFamilyAppToRequestUser', function (request, response) {

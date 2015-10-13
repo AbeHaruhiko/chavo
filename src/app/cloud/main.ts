@@ -203,10 +203,15 @@ Parse.Cloud.define('addFamily', function(request: Parse.Cloud.FunctionRequest, r
     voicesArray.forEach((voices: Parse.Object[]) => {
 
       voices.forEach((voice: Parse.Object) => {
-        console.log('voice:' + voice);
+        console.log('voice:' + voice.id + ':' + familyRole.id);
         var voiceACL = new Parse.ACL();
         voiceACL.setRoleReadAccess(familyRole, true);
         voiceACL.setRoleWriteAccess(familyRole, true);
+
+        if (voice.getACL().getPublicReadAccess()) {
+          voiceACL.setPublicReadAccess(true);
+          console.log('voice: setPublicReadAccess');
+        }
         voice.setACL(voiceACL);
       });
       promises.push(Parse.Object.saveAll(voices));
@@ -251,17 +256,27 @@ Parse.Cloud.define('getRequestUsersFamilyMember', function(request: Parse.Cloud.
   Parse.Cloud.useMasterKey();
 
   var familyQuery = new Parse.Query('Family');
-  familyQuery.equalTo('member', request.user);
+  familyQuery.containedIn('member', [ request.user ]);
   familyQuery.first()
   .then((result: Parse.Object) => {
     console.log(result);
-    var query = result.relation('member').query();
-    // 他ユーザに返却するのでパスワードなどは返さない。
-    query.select('username', 'iconUrl');
-    return query.find();
+    if (result) {
+
+      var query = result.relation('member').query();
+      // 他ユーザに返却するのでパスワードなどは返さない。
+      query.select('username', 'iconUrl');
+      return query.find();
+
+    } else {
+      return;
+    }
+
   }).then((result: Parse.Object[]) => {
     console.log(result);
     response.success(result);
+  },
+  (error: Parse.Error) => {
+    response.error(error);
   });
 });
 

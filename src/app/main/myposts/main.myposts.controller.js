@@ -13,18 +13,20 @@ var chavo;
         }
         MainMyPostsController.prototype.init = function () {
             var _this = this;
-            var ParseVoice = Parse.Object.extend('Voice');
-            var query = new Parse.Query(ParseVoice);
-            var parseVoices;
             this.cfpLoadingBar.start();
-            query.descending('createdAt');
-            query.find({
-                success: function (results) {
-                    console.log('success.');
-                },
-                error: function (error) {
-                    console.error('Error: ' + error.code + ' ' + error.message);
+            var parseVoices;
+            Parse.Cloud.run('getRequestUsersFamilyMember')
+                .then(function (parseFamilyList) {
+                var ParseVoice = Parse.Object.extend('Voice');
+                var query = new Parse.Query(ParseVoice);
+                query.descending('createdAt');
+                if (parseFamilyList) {
+                    query.containedIn('user', parseFamilyList);
                 }
+                else {
+                    query.equalTo('user', Parse.User.current());
+                }
+                return query.find();
             }).then(function (results) {
                 parseVoices = results;
                 var promises = [];
@@ -38,9 +40,11 @@ var chavo;
             })
                 .then(function () {
                 _this.applyFoundVoices(parseVoices);
+                _this.cfpLoadingBar.complete();
             }, function (error) {
                 console.error(error);
                 _this.applyFoundVoices(parseVoices);
+                _this.cfpLoadingBar.complete();
             });
         };
         MainMyPostsController.prototype.toggleLike = function (voice) {
@@ -84,6 +88,10 @@ var chavo;
         };
         MainMyPostsController.prototype.applyFoundVoices = function (parseVoices) {
             var _this = this;
+            if (!parseVoices) {
+                this.cfpLoadingBar.complete();
+                return;
+            }
             var myLikes = !this.$rootScope.currentUser ? []
                 : !this.$rootScope.currentUser.get('likes') ? []
                     : this.$rootScope.currentUser.get('likes');
