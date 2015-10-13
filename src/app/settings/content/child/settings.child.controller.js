@@ -59,12 +59,23 @@ var chavo;
                         this.cfpLoadingBar.complete();
                     }
                 }).then(function () {
+                    return Parse.Cloud.run('getRequestUsersFamilyRole');
+                }).then(function (role) {
                     var child = new ParseChild();
                     child.set('dispOrder', dispOrder + 1);
                     child.set('nickName', _this.$rootScope.targetChild ? _this.$rootScope.targetChild.nickName : null);
                     child.set('birthday', _this.getInputBirthday());
                     child.set('gender', +_this.$rootScope.targetChild.gender);
-                    child.setACL(new Parse.ACL(Parse.User.current()));
+                    child.set('createdBy', Parse.User.current());
+                    if (role) {
+                        var childACL = new Parse.ACL();
+                        childACL.setRoleReadAccess(role, true);
+                        childACL.setRoleWriteAccess(role, true);
+                        child.setACL(childACL);
+                    }
+                    else {
+                        child.setACL(new Parse.ACL(Parse.User.current()));
+                    }
                     return child.save({
                         error: function (child, error) {
                             console.log('Error: ' + error.code + ' ' + error.message);

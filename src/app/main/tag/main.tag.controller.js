@@ -10,7 +10,17 @@ var chavo;
             this.cfpLoadingBar = cfpLoadingBar;
             this.$modal = $modal;
             this.voices = new Array();
-            this.sampleTagList = ['おもしろ', '迷言', '名言', '一発ネタ', '謎ワード', '感動', '成長したなあ。', '苦笑', 'ほのぼの'];
+            this.sampleTagList = [
+                'おもしろ',
+                '迷言',
+                '名言',
+                '一発ネタ',
+                '謎ワード',
+                '感動',
+                '成長したなあ。',
+                '苦笑',
+                'ほのぼの'
+            ];
             this.init();
         }
         MainTagController.prototype.init = function () {

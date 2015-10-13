@@ -82,6 +82,8 @@ declare namespace Parse {
 
       // 2015/09/24 安部追加
       static as(result: any): Promise<any>;
+      // 2015/10/12 安部追加
+      static error(result: any): Promise<any>;
 
         always(callback: Function): Promise<T>;
         as(): Promise<T>;

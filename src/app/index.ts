@@ -12,6 +12,9 @@
 /// <reference path="settings/content/children/settings.children.controller.ts"/>
 /// <reference path="settings/content/child/settings.child.controller.ts"/>
 /// <reference path="settings/content/profile/settings.profile.controller.ts"/>
+/// <reference path="settings/content/family/settings.family.controller.ts"/>
+/// <reference path="settings/content/family_application/settings.family_application.controller.ts"/>
+/// <reference path="settings/content/family_approval/settings.family_approval.controller.ts"/>
 /// <reference path="../app/components/navbar/navbar.controller.ts" />
 /// <reference path="../app/components/tabmenu/tabmenu.controller.ts"/>
 /// <reference path="./auth/services/auth-service.ts"/>
@@ -57,6 +60,10 @@ module chavo {
     .controller('SettingsProfileController', SettingsProfileController)
     .controller('SettingsChildrenController', SettingsChildrenController)
     .controller('SettingsChildController', SettingsChildController)
+    .controller('SettingsFamilyController', SettingsFamilyController)
+    .controller('SettingsFamilyApplicationController', SettingsFamilyApplicationController)
+    .controller('SettingsFamilyApprovalController', SettingsFamilyApprovalController)
+    .controller('RejectOrApproveConfirmModalController', RejectOrApproveConfirmModalController)
 
   .config(function ($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) {
     $stateProvider
@@ -94,8 +101,20 @@ module chavo {
         templateUrl: 'app/settings/content/children/settings.children.html'
       })
       .state('settings.child', {
-        url: '/children/:childId',
+        url: '/child/:childId',
         templateUrl: 'app/settings/content/child/settings.child.html'
+      })
+      .state('settings.family', {
+        url: '/family',
+        templateUrl: 'app/settings/content/family/settings.family.html'
+      })
+      .state('settings.family_application', {
+        url: '/family_application',
+        templateUrl: 'app/settings/content/family_application/settings.family_application.html'
+      })
+      .state('settings.family_approval', {
+        url: '/family_approval',
+        templateUrl: 'app/settings/content/family_approval/settings.family_approval.html'
       })
       .state('login', {
         url: '/login',

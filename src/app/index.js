@@ -1,20 +1,3 @@
-/// <reference path="../../.tmp/typings/tsd.d.ts" />
-/// <reference path="main/main.controller.ts" />
-/// <reference path="main/all/main.all.controller.ts" />
-/// <reference path="main/myposts/main.myposts.controller.ts" />
-/// <reference path="main/tag/main.tag.controller.ts" />
-/// <reference path="main/compose/main.compose.controller.ts" />
-/// <reference path="login/login.controller.ts"/>
-/// <reference path="signup/signup.controller.ts"/>
-/// <reference path="settings/menu/settings.menu.controller.ts"/>
-/// <reference path="settings/content/settings.content.controller.ts"/>
-/// <reference path="settings/content/children/settings.children.controller.ts"/>
-/// <reference path="settings/content/child/settings.child.controller.ts"/>
-/// <reference path="settings/content/profile/settings.profile.controller.ts"/>
-/// <reference path="../app/components/navbar/navbar.controller.ts" />
-/// <reference path="../app/components/tabmenu/tabmenu.controller.ts"/>
-/// <reference path="./auth/services/auth-service.ts"/>
-/// <reference path="./facebook/services/facebook-service.ts"/>
 var chavo;
 (function (chavo) {
     'use strict';
@@ -49,6 +32,10 @@ var chavo;
         .controller('SettingsProfileController', chavo.SettingsProfileController)
         .controller('SettingsChildrenController', chavo.SettingsChildrenController)
         .controller('SettingsChildController', chavo.SettingsChildController)
+        .controller('SettingsFamilyController', chavo.SettingsFamilyController)
+        .controller('SettingsFamilyApplicationController', chavo.SettingsFamilyApplicationController)
+        .controller('SettingsFamilyApprovalController', chavo.SettingsFamilyApprovalController)
+        .controller('RejectOrApproveConfirmModalController', chavo.RejectOrApproveConfirmModalController)
         .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('home', {
@@ -85,8 +72,20 @@ var chavo;
             templateUrl: 'app/settings/content/children/settings.children.html'
         })
             .state('settings.child', {
-            url: '/children/:childId',
+            url: '/child/:childId',
             templateUrl: 'app/settings/content/child/settings.child.html'
+        })
+            .state('settings.family', {
+            url: '/family',
+            templateUrl: 'app/settings/content/family/settings.family.html'
+        })
+            .state('settings.family_application', {
+            url: '/family_application',
+            templateUrl: 'app/settings/content/family_application/settings.family_application.html'
+        })
+            .state('settings.family_approval', {
+            url: '/family_approval',
+            templateUrl: 'app/settings/content/family_approval/settings.family_approval.html'
         })
             .state('login', {
             url: '/login',

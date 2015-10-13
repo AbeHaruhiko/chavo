@@ -91,7 +91,11 @@ module chavo {
     		    console.error('Error: ' + error.code + ' ' + error.message);
             this.cfpLoadingBar.complete();
     		  }
-    		}).then(() => {
+        }).then(() => {
+
+          return Parse.Cloud.run('getRequestUsersFamilyRole');
+
+        }).then((role: Parse.Role) => {
 
           var child = new ParseChild();
 
@@ -99,7 +103,15 @@ module chavo {
           child.set('nickName', this.$rootScope.targetChild ? this.$rootScope.targetChild.nickName : null);
           child.set('birthday', this.getInputBirthday());
           child.set('gender', +this.$rootScope.targetChild.gender); /* gender is number. '+' casts string to number. */
-          child.setACL(new Parse.ACL(Parse.User.current()));
+          child.set('createdBy', Parse.User.current());
+          if (role) {
+            var childACL = new Parse.ACL();
+            childACL.setRoleReadAccess(role, true);
+            childACL.setRoleWriteAccess(role, true);
+            child.setACL(childACL);
+          } else {
+            child.setACL(new Parse.ACL(Parse.User.current()));
+          }
 
           return child.save({
       		  error: function(child: Child, error: Parse.Error) {

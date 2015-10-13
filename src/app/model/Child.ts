@@ -8,7 +8,8 @@ module chavo {
         public gender: GENDER = GENDER.OTHER,
         public ageYears: string = null,
         public ageMonths: string = null,
-        public unableBirthday: boolean = true) {
+        public unableBirthday: boolean = true,
+        public createdBy: Parse.User = null) {
     }
   }
 }

@@ -13,20 +13,21 @@ var chavo;
         }
         MainMyPostsController.prototype.init = function () {
             var _this = this;
-            var ParseVoice = Parse.Object.extend('Voice');
-            var query = new Parse.Query(ParseVoice);
-            var parseVoices;
             this.cfpLoadingBar.start();
-            query.descending('createdAt');
-            query.equalTo('user', Parse.User.current());
-            query.find({
-                success: function (results) {
-                },
-                error: function (error) {
-                    console.error('Error: ' + error.code + ' ' + error.message);
+            var parseVoices;
+            Parse.Cloud.run('getRequestUsersFamilyMember')
+                .then(function (parseFamilyList) {
+                var ParseVoice = Parse.Object.extend('Voice');
+                var query = new Parse.Query(ParseVoice);
+                query.descending('createdAt');
+                if (parseFamilyList) {
+                    query.containedIn('user', parseFamilyList);
                 }
+                else {
+                    query.equalTo('user', Parse.User.current());
+                }
+                return query.find();
             }).then(function (results) {
-                // 投稿者のアイコンを取得するため、fetchする。
                 parseVoices = results;
                 var promises = [];
                 results.forEach(function (voice) {
@@ -39,13 +40,14 @@ var chavo;
             })
                 .then(function () {
                 _this.applyFoundVoices(parseVoices);
+                _this.cfpLoadingBar.complete();
             }, function (error) {
                 console.error(error);
                 _this.applyFoundVoices(parseVoices);
+                _this.cfpLoadingBar.complete();
             });
         };
         MainMyPostsController.prototype.toggleLike = function (voice) {
-            // cloud Codeへ移動
             var _this = this;
             voice.like = !voice.like;
             Parse.Cloud.run('toggleLike', { voice: voice })
@@ -79,15 +81,17 @@ var chavo;
                     .then(function () {
                     _this.$state.reload();
                 });
-                console.info('1: Modal dismissed at: ' + new Date());
                 console.dir(voice);
             }, function () {
-                console.info('2: Modal dismissed at: ' + new Date());
                 console.dir(voice);
             });
         };
         MainMyPostsController.prototype.applyFoundVoices = function (parseVoices) {
             var _this = this;
+            if (!parseVoices) {
+                this.cfpLoadingBar.complete();
+                return;
+            }
             var myLikes = !this.$rootScope.currentUser ? []
                 : !this.$rootScope.currentUser.get('likes') ? []
                     : this.$rootScope.currentUser.get('likes');

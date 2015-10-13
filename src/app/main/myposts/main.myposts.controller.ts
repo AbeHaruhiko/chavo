@@ -17,21 +17,29 @@ module chavo {
     }
 
     init() {
-      var ParseVoice = Parse.Object.extend('Voice');
-      var query = new Parse.Query(ParseVoice);
-      var parseVoices: Parse.Object[];
 
       this.cfpLoadingBar.start();
 
-      query.descending('createdAt');
-      query.equalTo('user', Parse.User.current());
-      query.find({
-        success: (results: Parse.Object[]) => {
-        },
-        error: function(error: Parse.Error) {
-          console.error('Error: ' + error.code + ' ' + error.message);
+      var parseVoices: Parse.Object[];
+
+      // 家族一覧取得
+      Parse.Cloud.run('getRequestUsersFamilyMember')
+      .then((parseFamilyList: Parse.Object[]) => {
+        var ParseVoice = Parse.Object.extend('Voice');
+        var query = new Parse.Query(ParseVoice);
+        query.descending('createdAt');
+
+        if (parseFamilyList) {
+          // 自分とかぞくの投稿だけ抽出
+          query.containedIn('user', parseFamilyList);
+        } else {
+          query.equalTo('user', Parse.User.current());
         }
+
+        return query.find();
+
       }).then((results: Parse.Object[]) => {
+        // TODO: includeで置き換えられそう
         // 投稿者のアイコンを取得するため、fetchする。
 
         parseVoices = results;
@@ -49,12 +57,15 @@ module chavo {
       })
       .then(() => {
         this.applyFoundVoices(parseVoices);
+        this.cfpLoadingBar.complete();
       },
       (error: any) => {
         // 投稿ユーザがいない場合などエラーになる
         console.error(error);
         this.applyFoundVoices(parseVoices);
+        this.cfpLoadingBar.complete();
       });
+
     }
 
     toggleLike(voice: Voice) {
@@ -113,7 +124,7 @@ module chavo {
         controllerAs: 'delete_post_modal',
         size: 'sm',
         resolve: {
-          voice: function () {
+          voice: () => {
             return voice;
           }
         }
@@ -130,15 +141,20 @@ module chavo {
           }
         );
 
-        console.info('1: Modal dismissed at: ' + new Date());
+        // console.info('1: Modal dismissed at: ' + new Date());
         console.dir(voice);
       }, () => {
-        console.info('2: Modal dismissed at: ' + new Date());
+        // console.info('2: Modal dismissed at: ' + new Date());
         console.dir(voice);
       });
     }
 
     private applyFoundVoices(parseVoices: Parse.Object[]) {
+
+      if (!parseVoices) {
+        this.cfpLoadingBar.complete();
+        return;
+      }
       // 自分がlike済みの投稿
       var myLikes: string[] = !this.$rootScope.currentUser ? []
                                   : !this.$rootScope.currentUser.get('likes') ? []
@@ -158,10 +174,10 @@ module chavo {
 
       this.$scope.$apply();
     }
+
+    // .DeletePostConfirmModalControllerはmain.myposts.controller.tsに
   }
 
-  // angular.module('chavo')
-  // .controller('DeletePostConfirmModalController', DeletePostConfirmModalController);
 
   export class DeletePostConfirmModalController {
 

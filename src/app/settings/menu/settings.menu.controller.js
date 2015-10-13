@@ -6,9 +6,10 @@ var chavo;
             this.$scope = $scope;
             this.$rootScope = $rootScope;
             this.$state = $state;
-            this.menus = [
+            this.menuItems = [
                 { title: 'プロフィール', route: 'settings.profile' },
                 { title: 'こどもの情報', route: 'settings.children' },
+                { title: 'かぞくの情報', route: 'settings.family' }
             ];
         }
         return SettingsMenuController;

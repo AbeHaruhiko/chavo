@@ -49,7 +49,10 @@ module chavo {
                 parseChild.get('gender'),
                 years ? years : null,
                 months ? months : null,
-                !parseChild.get('birthday')));    // 誕生日が保存されていたらunableBirthdayはfalse, 未登録ならtrueとする。
+                !parseChild.get('birthday'), // 誕生日が保存されていたらunableBirthdayはfalse, 未登録ならtrueとする。
+                Parse.User.current()
+              )
+            );
           });
         });
       });
