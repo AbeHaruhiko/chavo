@@ -1,0 +1,33 @@
+<div ng-controller="SettingsFamilyController as settings_family">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      かぞく一覧
+      <span class="pull-right">
+        <a class="btn btn-primary btn-outline btn-xs" ui-sref="settings.family_application"><i class="fa fa-user-plus"> 追加</i></a>
+      </span>
+    </div>
+    <div class="list-group">
+      <a ng-click="settings_family.go(familyMember)" class="list-group-item" ng-repeat="familyMember in settings_family.familyMembers">
+        <div class="media-left">
+          <div ng-style="{ 'background-image': 'url(' + familyMember.icon + ')' }"
+            class="img-circle icon-post">
+          </div>
+        </div>
+        <div class="media-body"><h5>{{ familyMember.username }}</h5></div>
+      </a>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">かぞく申請中のユーザー</div>
+    <div class="list-group">
+      <a ng-click="settings_family.go(familyMember)" class="list-group-item" ng-repeat="familyApp in settings_family.familyApps">
+        <div class="media-left">
+          <div ng-style="{ 'background-image': 'url(' + familyApp.toUserIconUrl + ')' }"
+            class="img-circle icon-post">
+          </div>
+        </div>
+        <div class="media-body"><h5>{{ familyApp.toUserId }}</h5></div>
+      </a>
+    </div>
+  </div>
+</div>
