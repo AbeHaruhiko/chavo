@@ -55,14 +55,7 @@ module chavo {
             });
             this.$rootScope.$apply();
             this.$rootScope.currentUser.set('iconUrl', response[1].data.url);
-            this.$rootScope.currentUser.save({
-                error: (user: Parse.User, error: Parse.Error) => {
-                  console.error(error.code + ':' + error.message);
-                }
-              },
-              null,
-              null
-            )
+            this.$rootScope.currentUser.save()
             .then(() => {
               this.$state.go('home.all');
             });
