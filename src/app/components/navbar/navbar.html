@@ -59,9 +59,9 @@
         <ul class="nav navbar-nav navbar-right">
           <li dropdown>
             <a href="#" dropdown-toggle data-toggle="dropdown" role="button">
-              <span class="badge">42</span>
+              <span class="badge">{{ navbar.notificationCount }}</span>
             </a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu" ng-if="navbar.notificationCount > 0">
               <li>
                 <div class="navbar-login">
                   <div class="row">

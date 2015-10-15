@@ -10,11 +10,14 @@ var chavo;
             this.$location = $location;
             this.$q = $q;
             this.FacebookService = FacebookService;
+            this.notificationCount = 0;
+            this.updateNotification();
         }
         NavbarController.prototype.logIn = function (formData) {
             var _this = this;
             this.AuthService.logIn(formData, {
                 success: function (user) {
+                    _this.updateNotification();
                     _this.$state.go('home.all');
                 },
                 error: function (user, error) {
@@ -24,9 +27,11 @@ var chavo;
             });
         };
         NavbarController.prototype.logOut = function () {
+            this.updateNotification();
             this.AuthService.logOut();
         };
         NavbarController.prototype.loginWithFacebook = function () {
+            this.updateNotification();
             this.FacebookService.loginWithFacebookAndGoHome();
         };
         NavbarController.prototype.fetchUser = function () {
@@ -38,6 +43,15 @@ var chavo;
                 });
             }, function (error) {
                 console.error('Error: ' + error.code + ' ' + error.message);
+            });
+        };
+        NavbarController.prototype.updateNotification = function () {
+            var _this = this;
+            Parse.Cloud.run('getCountOfFamilyAppToRequestUser')
+                .then(function (count) {
+                _this.$scope.$apply(function () {
+                    _this.notificationCount = count;
+                });
             });
         };
         return NavbarController;

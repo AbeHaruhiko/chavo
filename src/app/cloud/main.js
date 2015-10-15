@@ -222,6 +222,20 @@ Parse.Cloud.define('getFamilyAppToRequestUser', function (request, response) {
         response.error(error);
     });
 });
+Parse.Cloud.define('getCountOfFamilyAppToRequestUser', function (request, response) {
+    Parse.Cloud.useMasterKey();
+    var ParseFamilyApplication = Parse.Object.extend('FamilyApplication');
+    var query = new Parse.Query(ParseFamilyApplication);
+    query.descending('createdAt');
+    query.equalTo('toUser', request.user);
+    query.include('fromUser');
+    query.count()
+        .then(function (count) {
+        response.success(count);
+    }, function (error) {
+        response.error(error);
+    });
+});
 Parse.Cloud.define('getFamilyAppFromRequestUser', function (request, response) {
     Parse.Cloud.useMasterKey();
     var ParseFamilyApplication = Parse.Object.extend('FamilyApplication');

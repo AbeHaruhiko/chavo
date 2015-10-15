@@ -5,19 +5,25 @@ module chavo {
   }
 
   export class NavbarController {
+
+    notificationCount: number = 0;
+
     /* @ngInject */
     constructor (public $scope: INavbarScope,
-      public $rootScope: IChavoRootScope,
-      public AuthService: AuthService,
-      public $state: angular.ui.IStateService,
-      public $location: angular.ILocationService,
-      public $q: angular.IQService,
-      public FacebookService: FacebookService) {
+        public $rootScope: IChavoRootScope,
+        public AuthService: AuthService,
+        public $state: angular.ui.IStateService,
+        public $location: angular.ILocationService,
+        public $q: angular.IQService,
+        public FacebookService: FacebookService) {
+
+      this.updateNotification();
     }
 
     logIn(formData: { username: string; password: string; }) {
       this.AuthService.logIn(formData, {
         success: (user: Parse.User) => {
+          this.updateNotification();
           // this.$rootScope.currentUser = user;
           this.$state.go('home.all');
         },
@@ -30,10 +36,12 @@ module chavo {
     }
 
     logOut() {
+      this.updateNotification();
       this.AuthService.logOut();
     }
 
     loginWithFacebook() {
+      this.updateNotification();
       this.FacebookService.loginWithFacebookAndGoHome();
     }
 
@@ -46,6 +54,15 @@ module chavo {
       },
       (error: Parse.Error) => {
         console.error('Error: ' + error.code + ' ' + error.message);
+      });
+    }
+
+    updateNotification() {
+      Parse.Cloud.run('getCountOfFamilyAppToRequestUser')
+      .then((count: number) => {
+        this.$scope.$apply(() => {
+          this.notificationCount = count;
+        });
       });
     }
   }

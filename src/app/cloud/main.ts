@@ -299,6 +299,25 @@ Parse.Cloud.define('getFamilyAppToRequestUser', function(request: Parse.Cloud.Fu
   });
 });
 
+Parse.Cloud.define('getCountOfFamilyAppToRequestUser', function(request: Parse.Cloud.FunctionRequest, response: Parse.Cloud.FunctionResponse) {
+
+  Parse.Cloud.useMasterKey();
+
+  var ParseFamilyApplication = Parse.Object.extend('FamilyApplication');
+  var query = new Parse.Query(ParseFamilyApplication);
+  query.descending('createdAt');
+  // 自分宛て
+  query.equalTo('toUser', request.user);
+  query.include('fromUser');
+  query.count()
+  .then((count: number) => {
+    response.success(count);
+  },
+  (error: Parse.Error) => {
+    response.error(error);
+  });
+});
+
 Parse.Cloud.define('getFamilyAppFromRequestUser', function(request: Parse.Cloud.FunctionRequest, response: Parse.Cloud.FunctionResponse) {
 
   Parse.Cloud.useMasterKey();
