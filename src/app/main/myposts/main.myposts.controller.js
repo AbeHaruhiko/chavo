@@ -9,6 +9,7 @@ var chavo;
             this.cfpLoadingBar = cfpLoadingBar;
             this.$modal = $modal;
             this.voices = new Array();
+            this.pageCount = 0;
             this.init();
         }
         MainMyPostsController.prototype.init = function () {
@@ -20,6 +21,8 @@ var chavo;
                 var ParseVoice = Parse.Object.extend('Voice');
                 var query = new Parse.Query(ParseVoice);
                 query.descending('createdAt');
+                query.limit(10);
+                query.skip(10 * _this.pageCount);
                 if (parseFamilyList) {
                     query.containedIn('user', parseFamilyList);
                 }
@@ -58,6 +61,10 @@ var chavo;
             }, function (error) {
                 console.error('Error: ' + error.code + ' ' + error.message);
             });
+        };
+        MainMyPostsController.prototype.loadMore = function () {
+            this.pageCount++;
+            this.init();
         };
         MainMyPostsController.prototype.openDeletePostConfirmModal = function (voice) {
             var _this = this;

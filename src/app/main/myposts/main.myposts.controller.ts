@@ -4,6 +4,7 @@ module chavo {
   export class MainMyPostsController {
 
     voices = new Array<Voice>();
+    pageCount = 0;
 
     /* @ngInject */
     constructor (
@@ -28,6 +29,8 @@ module chavo {
         var ParseVoice = Parse.Object.extend('Voice');
         var query = new Parse.Query(ParseVoice);
         query.descending('createdAt');
+        query.limit(10);
+        query.skip(10 * this.pageCount);
 
         if (parseFamilyList) {
           // 自分とかぞくの投稿だけ抽出
@@ -114,6 +117,11 @@ module chavo {
       //   console.error('Error: ' + error.code + ' ' + error.message);
       // })
       ;
+    }
+
+    loadMore() {
+      this.pageCount++;
+      this.init();
     }
 
     openDeletePostConfirmModal(voice: Voice) {

@@ -13,7 +13,8 @@ var chavo;
         'ui.validate',
         'toggle-switch',
         'cfp.loadingBar',
-        'ngTagsInput'
+        'ngTagsInput',
+        'infinite-scroll'
     ])
         .service('AuthService', chavo.AuthService)
         .service('FacebookService', chavo.FacebookService)

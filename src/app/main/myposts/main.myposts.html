@@ -1,6 +1,6 @@
 <div ng-controller="MainMyPostsController as main_myposts" class="row">
   <div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3">
-    <div class="media-list">
+    <div class="media-list" infinite-scroll="main_myposts.loadMore()">
       <div class="media panel panel-default" ng-repeat="voice in main_myposts.voices">
         <div class="media-left">
           <a href="#">

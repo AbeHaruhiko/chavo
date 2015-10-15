@@ -4,6 +4,7 @@ module chavo {
   export class MainAllController {
 
     voices = new Array<Voice>();
+    pageCount = 0;
 
     /* @ngInject */
     constructor (
@@ -24,6 +25,8 @@ module chavo {
       this.cfpLoadingBar.start();
 
       query.descending('createdAt');
+      query.limit(10);
+      query.skip(10 * this.pageCount);
 
       query.find({
         success: (results: Parse.Object[]) => {
@@ -105,6 +108,11 @@ module chavo {
       //   console.error('Error: ' + error.code + ' ' + error.message);
       // })
       ;
+    }
+
+    loadMore() {
+      this.pageCount++;
+      this.init();
     }
 
     openDeletePostConfirmModal(voice: Voice) {

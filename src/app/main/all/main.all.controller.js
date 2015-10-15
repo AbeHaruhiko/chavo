@@ -9,6 +9,7 @@ var chavo;
             this.cfpLoadingBar = cfpLoadingBar;
             this.$modal = $modal;
             this.voices = new Array();
+            this.pageCount = 0;
             this.init();
         }
         MainAllController.prototype.init = function () {
@@ -18,6 +19,8 @@ var chavo;
             var parseVoices;
             this.cfpLoadingBar.start();
             query.descending('createdAt');
+            query.limit(10);
+            query.skip(10 * this.pageCount);
             query.find({
                 success: function (results) {
                     console.log('success.');
@@ -54,6 +57,10 @@ var chavo;
             }, function (error) {
                 console.error('Error: ' + error.code + ' ' + error.message);
             });
+        };
+        MainAllController.prototype.loadMore = function () {
+            this.pageCount++;
+            this.init();
         };
         MainAllController.prototype.openDeletePostConfirmModal = function (voice) {
             var _this = this;
