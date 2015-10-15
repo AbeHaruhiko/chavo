@@ -39,6 +39,7 @@
         "./src/app/settings/content/children/settings.children.controller.ts",
         "./src/app/settings/content/family/settings.family.controller.ts",
         "./src/app/settings/content/family_application/settings.family_application.controller.ts",
+        "./src/app/settings/content/family_approval/settings.family_approval.controller.ts",
         "./src/app/settings/content/profile/settings.profile.controller.ts",
         "./src/app/settings/content/settings.content.controller.ts",
         "./src/app/settings/menu/settings.menu.controller.ts",

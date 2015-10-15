@@ -115,6 +115,12 @@ body {
   margin-bottom: 32px;
 }
 
+// ニックネーム、月齢、性別など（なぜかpaddingがなくなるので）
+#voice-author-info {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 // login画面のパスワードリセットポップオーバー
 #resetPwPopoverContainer .popover {
   width: 100%;

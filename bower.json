@@ -20,6 +20,7 @@
     "moment": "~2.10.3",
     "ng-facebook": "~0.1.6",
     "ng-tags-input": "~3.0.0",
+    "ngInfiniteScroll": "1.0.0",
     "restangular": "~1.4.0"
   },
   "devDependencies": {},

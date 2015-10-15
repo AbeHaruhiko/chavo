@@ -11,3 +11,4 @@
 /// <reference path="node/node.d.ts" />
 /// <reference path="parse/parse.d.ts" />
 /// <reference path="underscore/underscore.d.ts" />
+/// <reference path="angular-loading-bar/angular-loading-bar.d.ts" />

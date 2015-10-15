@@ -45,11 +45,7 @@ var chavo;
                         });
                         _this.$rootScope.$apply();
                         _this.$rootScope.currentUser.set('iconUrl', response[1].data.url);
-                        _this.$rootScope.currentUser.save({
-                            error: function (user, error) {
-                                console.error(error.code + ':' + error.message);
-                            }
-                        }, null, null)
+                        _this.$rootScope.currentUser.save()
                             .then(function () {
                             _this.$state.go('home.all');
                         });
