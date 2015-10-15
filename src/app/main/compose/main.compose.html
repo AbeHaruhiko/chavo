@@ -38,11 +38,6 @@
                 </script>
               </div>
               <div ng-show="main_compose.voice.photoUrl"><img ng-src="{{main_compose.voice.photoUrl}}" class="img-responsive img-thumbnail"/></div>
-              <div class="form-group">
-                <tags-input ng-model="main_compose.voice.tags" add-on-paste="true">
-                  <auto-complete source="main_compose.loadTags($query)"></auto-complete>
-                </tags-input>
-              </div>
               <input id="photo-selector" type="file" />
               <alert type="danger" ng-if="main_compose.children.length <= 0">まだこどもが登録されていません。登録すると投稿のとき毎回入力する手間を省けます。<br/>
                 <a ui-sref="settings.children">登録はこちらから</a>
