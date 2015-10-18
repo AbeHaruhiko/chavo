@@ -10,17 +10,19 @@ var chavo;
             this.$modal = $modal;
             this.voices = new Array();
             this.pageCount = 0;
+            this.loading = false;
             this.init();
         }
         MainAllController.prototype.init = function () {
             var _this = this;
+            this.loading = true;
             var ParseVoice = Parse.Object.extend('Voice');
             var query = new Parse.Query(ParseVoice);
             var parseVoices;
             this.cfpLoadingBar.start();
             query.descending('createdAt');
-            query.limit(10);
-            query.skip(10 * this.pageCount);
+            query.limit(20);
+            query.skip(20 * this.pageCount);
             query.find({
                 success: function (results) {
                     console.log('success.');
@@ -59,8 +61,10 @@ var chavo;
             });
         };
         MainAllController.prototype.loadMore = function () {
-            this.pageCount++;
-            this.init();
+            if (!this.loading) {
+                this.pageCount++;
+                this.init();
+            }
         };
         MainAllController.prototype.openDeletePostConfirmModal = function (voice) {
             var _this = this;
@@ -101,6 +105,7 @@ var chavo;
             });
             this.cfpLoadingBar.complete();
             this.$scope.$apply();
+            this.loading = false;
         };
         return MainAllController;
     })();

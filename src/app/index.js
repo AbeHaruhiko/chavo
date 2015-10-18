@@ -13,11 +13,11 @@ var chavo;
         'ui.validate',
         'toggle-switch',
         'cfp.loadingBar',
-        'ngTagsInput',
-        'infinite-scroll'
+        'ngTagsInput'
     ])
         .service('AuthService', chavo.AuthService)
         .service('FacebookService', chavo.FacebookService)
+        .directive('cvWhenScroll', chavo.WhenScrollDerective.ddo)
         .controller('MainController', chavo.MainController)
         .controller('MainAllController', chavo.MainAllController)
         .controller('MainTagController', chavo.MainTagController)

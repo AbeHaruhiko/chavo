@@ -7,7 +7,6 @@ var $ = require('gulp-load-plugins')();
 var wiredep = require('wiredep');
 var karma = require('karma');
 var concat = require('concat-stream');
-var _ = require('lodash');
 
 module.exports = function(options) {
   function listFiles(callback) {

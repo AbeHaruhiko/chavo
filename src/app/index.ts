@@ -19,6 +19,7 @@
 /// <reference path="../app/components/tabmenu/tabmenu.controller.ts"/>
 /// <reference path="./auth/services/auth-service.ts"/>
 /// <reference path="./facebook/services/facebook-service.ts"/>
+/// <reference path="./components/whenscroll/whenscroll.ts"/>
 
 
 module chavo {
@@ -41,11 +42,11 @@ module chavo {
     'ui.validate',
     'toggle-switch',
     'cfp.loadingBar',
-    'ngTagsInput',
-    'infinite-scroll'
+    'ngTagsInput'
     ])
     .service('AuthService', AuthService)
     .service('FacebookService', FacebookService)
+    .directive('cvWhenScroll', WhenScrollDerective.ddo)
     .controller('MainController', MainController)
     .controller('MainAllController', MainAllController)
     .controller('MainTagController', MainTagController)

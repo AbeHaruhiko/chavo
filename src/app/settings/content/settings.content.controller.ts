@@ -1,7 +1,7 @@
 module chavo {
   'use strict';
 
-  interface ISettingsContent extends ng.IScope {
+  interface ISettingsContent extends angular.IScope {
   }
 
   export class SettingsContentController {

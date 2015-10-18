@@ -21,8 +21,10 @@ var chavo;
                 var ParseVoice = Parse.Object.extend('Voice');
                 var query = new Parse.Query(ParseVoice);
                 query.descending('createdAt');
-                query.limit(10);
-                query.skip(10 * _this.pageCount);
+                query.limit(20);
+                if (_this.pageCount) {
+                    query.skip(20 * _this.pageCount);
+                }
                 if (parseFamilyList) {
                     query.containedIn('user', parseFamilyList);
                 }
@@ -63,7 +65,9 @@ var chavo;
             });
         };
         MainMyPostsController.prototype.loadMore = function () {
+            console.log('loadMore()');
             this.pageCount++;
+            console.log('page: ' + this.pageCount);
             this.init();
         };
         MainMyPostsController.prototype.openDeletePostConfirmModal = function (voice) {

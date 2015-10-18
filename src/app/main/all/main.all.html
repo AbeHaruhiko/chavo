@@ -1,6 +1,6 @@
 <div ng-controller="MainAllController as main_all" class="row">
   <div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3">
-    <div class="media-list" infinite-scroll="main_all.loadMore()">
+    <cv-when-scroll class="media-list" cv-run="main_all.loadMore()">
       <div class="media panel panel-default" ng-repeat="voice in main_all.voices">
         <div class="media-left">
           <a href="#">
@@ -45,6 +45,6 @@
         </div>
         <!-- <pre>{{voice|json}}</pre> -->
       </div>
-    </div>
+    </cv-when-scroll>
   </div>
 </div>

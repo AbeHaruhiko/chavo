@@ -19,6 +19,7 @@
         "./cloud/main.ts",
         "./components/navbar/navbar.controller.ts",
         "./components/tabmenu/tabmenu.controller.ts",
+        "./components/whenscroll/whenscroll.ts",
         "./const/const.ts",
         "./facebook/services/facebook-service.ts",
         "./index.ts",

@@ -5,6 +5,7 @@ module chavo {
 
     voices = new Array<Voice>();
     pageCount = 0;
+    loading = false;
 
     /* @ngInject */
     constructor (
@@ -18,6 +19,7 @@ module chavo {
     }
 
     init() {
+      this.loading = true;
       var ParseVoice = Parse.Object.extend('Voice');
       var query = new Parse.Query(ParseVoice);
       var parseVoices: Parse.Object[];
@@ -25,8 +27,8 @@ module chavo {
       this.cfpLoadingBar.start();
 
       query.descending('createdAt');
-      query.limit(10);
-      query.skip(10 * this.pageCount);
+      query.limit(20);
+      query.skip(20 * this.pageCount);
 
       query.find({
         success: (results: Parse.Object[]) => {
@@ -111,8 +113,10 @@ module chavo {
     }
 
     loadMore() {
-      this.pageCount++;
-      this.init();
+      if (!this.loading) {
+        this.pageCount++;
+        this.init();
+      }
     }
 
     openDeletePostConfirmModal(voice: Voice) {
@@ -167,6 +171,8 @@ module chavo {
       this.cfpLoadingBar.complete();
 
       this.$scope.$apply();
+
+      this.loading = false;
     }
 
     // .DeletePostConfirmModalControllerはmain.myposts.controller.tsに
