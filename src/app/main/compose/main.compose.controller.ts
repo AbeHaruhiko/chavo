@@ -77,10 +77,7 @@ module chavo {
         showCaption: false,
         showPreview: true,
         browseClass: 'photo-browse-btn btn btn-primary btn-outline',
-        browseLabel: '画像選択',
-        resizeImage: true,
-        maxImageWidth: 480,
-        maxImageHeight: 480
+        browseLabel: '画像選択'
       });
     }
 

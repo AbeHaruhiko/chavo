@@ -251,3 +251,50 @@ Parse.Cloud.define('getFamilyAppFromRequestUser', function (request, response) {
         response.error(error);
     });
 });
+var ParseImage = require('parse-image');
+Parse.Cloud.beforeSave('_User', function (request, response) {
+    var user = request.object;
+    if (!user.get('icon')) {
+        response.error('This user uses Facebook login or has not resist icon.');
+        return;
+    }
+    if (!user.dirty('icon')) {
+        response.success('');
+        return;
+    }
+    Parse.Cloud.httpRequest({
+        url: user.get('icon').url()
+    }).then(function (response) {
+        var image = new ParseImage();
+        return image.setData(response.buffer);
+    }).then(function (image) {
+        var size = Math.min(image.width(), image.height());
+        return image.crop({
+            left: (image.width() - size) / 2,
+            top: (image.height() - size) / 2,
+            width: size,
+            height: size
+        });
+    }).then(function (image) {
+        return image.scale({
+            width: 160,
+            height: 160
+        });
+    }).then(function (image) {
+        return image.setFormat('JPEG');
+    }).then(function (image) {
+        return image.data();
+    }).then(function (buffer) {
+        var base64 = buffer.toString('base64');
+        var cropped = new Parse.File('photo.jpg', { base64: base64 });
+        return cropped.save();
+    }).then(function (cropped) {
+        user.set('icon', cropped);
+        user.set('iconUrl', cropped.url());
+    }).then(function () {
+        response.success('');
+    }, function (error) {
+        console.log(9);
+        response.error(error);
+    });
+});

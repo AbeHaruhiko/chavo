@@ -14,6 +14,7 @@
     "angular-ui-router": "~0.2.13",
     "angular-ui-router-tabs": "~1.5.0",
     "angular-ui-utils": "bower-validate",
+    "blueimp-canvas-to-blob": "https://github.com/blueimp/JavaScript-Canvas-to-Blob.git#2.2.0",
     "bootstrap-fileinput": "~4.2.5",
     "bootstrap-sass-official": "~3.3.1",
     "jquery": "~2.1.1",

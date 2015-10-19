@@ -337,3 +337,71 @@ Parse.Cloud.define('getFamilyAppFromRequestUser', function(request: Parse.Cloud.
     response.error(error);
   });
 });
+
+var ParseImage: any = require('parse-image');
+
+Parse.Cloud.beforeSave('_User', (request: Parse.Cloud.BeforeSaveRequest, response: Parse.Cloud.BeforeSaveResponse) => {
+
+  var user = request.object;
+  if (!user.get('icon')) {
+    response.error('This user uses Facebook login or has not resist icon.');
+    return;
+  }
+
+  if (!user.dirty('icon')) {
+    // .The profile photo isn't being modified.
+    response.success('');
+    return;
+  }
+
+  Parse.Cloud.httpRequest({
+    // _UserのbeforeSaveなので、iconUrlはまだ更新されていないのでicon.url()を使う。
+    url: user.get('icon').url()
+
+  }).then((response: Parse.Cloud.HttpResponse) => {
+    var image = new ParseImage();
+    return image.setData(response.buffer);
+
+  }).then((image: any) => {
+    // .Crop the image to the smaller of width or height.
+    var size = Math.min(image.width(), image.height());
+    return image.crop({
+      left: (image.width() - size) / 2,
+      top: (image.height() - size) / 2,
+      width: size,
+      height: size
+    });
+
+  }).then((image: any) => {
+    // .Resize the image to 64x64.
+    return image.scale({
+      width: 160,
+      height: 160
+    });
+
+  }).then((image: any) => {
+    // .Make sure it's a JPEG to save disk space and bandwidth.
+    return image.setFormat('JPEG');
+
+  }).then((image: any) => {
+    // .Get the image data in a Buffer.
+    return image.data();
+
+  }).then((buffer: any) => {
+    // .Save the image into a new file.
+    var base64 = buffer.toString('base64');
+    var cropped = new Parse.File('photo.jpg', { base64: base64 });
+    return cropped.save();
+
+  }).then((cropped: any) => {
+    // .Attach the image file to the original object.
+    user.set('icon', cropped);
+    user.set('iconUrl', cropped.url());
+
+  }).then(() => {
+    response.success('');
+  }, (error: Parse.Error) => {
+    console.log(9);
+    response.error(error);
+  });
+});

@@ -865,7 +865,9 @@ declare namespace Parse {
         interface AfterDeleteRequest extends FunctionRequest {}
         interface BeforeDeleteRequest extends FunctionRequest {}
         interface BeforeDeleteResponse extends FunctionResponse {}
-        interface BeforeSaveRequest extends FunctionRequest {}
+        interface BeforeSaveRequest extends FunctionRequest {
+          object: Parse.Object;
+        }
         interface BeforeSaveResponse extends FunctionResponse {}
 
         function afterDelete(arg1: any, func?: (request: AfterDeleteRequest) => void): void;
