@@ -340,6 +340,9 @@ Parse.Cloud.define('getFamilyAppFromRequestUser', function(request: Parse.Cloud.
 
 var ParseImage: any = require('parse-image');
 
+/*
+ * プロフィール保存時に画像を160pxにリサイズ
+ */
 Parse.Cloud.beforeSave('_User', (request: Parse.Cloud.BeforeSaveRequest, response: Parse.Cloud.BeforeSaveResponse) => {
 
   var user = request.object;
@@ -397,6 +400,66 @@ Parse.Cloud.beforeSave('_User', (request: Parse.Cloud.BeforeSaveRequest, respons
     // .Attach the image file to the original object.
     user.set('icon', cropped);
     user.set('iconUrl', cropped.url());
+
+  }).then(() => {
+    response.success('');
+  }, (error: Parse.Error) => {
+    console.log(9);
+    response.error(error);
+  });
+});
+
+/*
+ * 投稿に画像を480pxにリサイズ
+ */
+Parse.Cloud.beforeSave('Voice', (request: Parse.Cloud.BeforeSaveRequest, response: Parse.Cloud.BeforeSaveResponse) => {
+
+  var voice = request.object;
+  if (!voice.get('photo')) {
+    response.error('This user uses Facebook login or has not resist icon.');
+    return;
+  }
+
+  if (!voice.dirty('photo')) {
+    // .The profile photo isn't being modified.
+    response.success('');
+    return;
+  }
+
+  Parse.Cloud.httpRequest({
+    // .VoiceのbeforeSaveなので、photoUrlはまだ更新されていないのでphoto.url()を使う。
+    url: voice.get('photo').url()
+
+  }).then((response: Parse.Cloud.HttpResponse) => {
+    var image = new ParseImage();
+    return image.setData(response.buffer);
+
+  }).then((image: any) => {
+    // .Resize the image to 64x64.
+    var scale = 480 / Math.max(image.width(), image.height());
+    return image.scale({
+      width: image.width() * scale,
+      height: image.height() * scale
+    });
+
+  }).then((image: any) => {
+    // .Make sure it's a JPEG to save disk space and bandwidth.
+    return image.setFormat('JPEG');
+
+  }).then((image: any) => {
+    // .Get the image data in a Buffer.
+    return image.data();
+
+  }).then((buffer: any) => {
+    // .Save the image into a new file.
+    var base64 = buffer.toString('base64');
+    var cropped = new Parse.File('photo.jpg', { base64: base64 });
+    return cropped.save();
+
+  }).then((cropped: any) => {
+    // .Attach the image file to the original object.
+    voice.set('photo', cropped);
+    voice.set('photoUrl', cropped.url());
 
   }).then(() => {
     response.success('');

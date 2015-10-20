@@ -298,3 +298,42 @@ Parse.Cloud.beforeSave('_User', function (request, response) {
         response.error(error);
     });
 });
+Parse.Cloud.beforeSave('Voice', function (request, response) {
+    var voice = request.object;
+    if (!voice.get('photo')) {
+        response.error('This user uses Facebook login or has not resist icon.');
+        return;
+    }
+    if (!voice.dirty('photo')) {
+        response.success('');
+        return;
+    }
+    Parse.Cloud.httpRequest({
+        url: voice.get('photo').url()
+    }).then(function (response) {
+        var image = new ParseImage();
+        return image.setData(response.buffer);
+    }).then(function (image) {
+        var scale = 480 / Math.max(image.width(), image.height());
+        return image.scale({
+            width: image.width() * scale,
+            height: image.height() * scale
+        });
+    }).then(function (image) {
+        return image.setFormat('JPEG');
+    }).then(function (image) {
+        return image.data();
+    }).then(function (buffer) {
+        var base64 = buffer.toString('base64');
+        var cropped = new Parse.File('photo.jpg', { base64: base64 });
+        return cropped.save();
+    }).then(function (cropped) {
+        voice.set('photo', cropped);
+        voice.set('photoUrl', cropped.url());
+    }).then(function () {
+        response.success('');
+    }, function (error) {
+        console.log(9);
+        response.error(error);
+    });
+});
