@@ -13,6 +13,10 @@ var chavo;
             cfpLoadingBar.start();
             Parse.Cloud.run('getRequestUsersFamilyMember')
                 .then(function (parseFamilyList) {
+                if (!parseFamilyList) {
+                    cfpLoadingBar.complete();
+                    return;
+                }
                 parseFamilyList.forEach(function (family) {
                     _this.familyMembers.push(new chavo.Profile(family.get('username'), null, null, family.get('iconUrl'), null));
                 });

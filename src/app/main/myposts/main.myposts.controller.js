@@ -22,9 +22,8 @@ var chavo;
                 var query = new Parse.Query(ParseVoice);
                 query.descending('createdAt');
                 query.limit(20);
-                if (_this.pageCount) {
-                    query.skip(20 * _this.pageCount);
-                }
+                console.log('this.pageCount: ' + _this.pageCount);
+                query.skip(20 * _this.pageCount);
                 if (parseFamilyList) {
                     query.containedIn('user', parseFamilyList);
                 }
@@ -65,7 +64,7 @@ var chavo;
             });
         };
         MainMyPostsController.prototype.loadMore = function () {
-            console.log('loadMore()');
+            console.log('loadMore() called.');
             this.pageCount++;
             console.log('page: ' + this.pageCount);
             this.init();

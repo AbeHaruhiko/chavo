@@ -30,9 +30,8 @@ module chavo {
         var query = new Parse.Query(ParseVoice);
         query.descending('createdAt');
         query.limit(20);
-        if (this.pageCount) {
-          query.skip(20 * this.pageCount);
-        }
+        console.log('this.pageCount: ' + this.pageCount);
+        query.skip(20 * this.pageCount);
 
         if (parseFamilyList) {
           // 自分とかぞくの投稿だけ抽出
@@ -122,7 +121,7 @@ module chavo {
     }
 
     loadMore() {
-      console.log('loadMore()');
+      console.log('loadMore() called.');
       this.pageCount++;
       console.log('page: ' + this.pageCount);
       this.init();

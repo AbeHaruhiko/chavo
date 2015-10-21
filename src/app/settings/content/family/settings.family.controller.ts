@@ -21,6 +21,10 @@ module chavo {
       // 家族一覧取得
       Parse.Cloud.run('getRequestUsersFamilyMember')
       .then((parseFamilyList: Parse.Object[]) => {
+        if (!parseFamilyList) {
+          cfpLoadingBar.complete();
+          return;
+        }
         parseFamilyList.forEach((family: Parse.Object) => {
           this.familyMembers.push(
             new Profile(
