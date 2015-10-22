@@ -4,6 +4,8 @@ module chavo {
   export class MainTagController {
 
     voices = new Array<Voice>();
+    pageCount = 0;
+    loading = false;
 
     sampleTagList: string[] = [
       'おもしろ',
@@ -30,6 +32,7 @@ module chavo {
     }
 
     init() {
+      this.loading = true;
       var ParseVoice = Parse.Object.extend('Voice');
       var query = new Parse.Query(ParseVoice);
       var parseVoices: Parse.Object[];
@@ -38,6 +41,8 @@ module chavo {
 
       query.descending('createdAt');
       query.equalTo('tags', this.$stateParams['tag']);
+      query.limit(5);
+      query.skip(5 * this.pageCount);
 
       query.find({
         success: (results: Parse.Object[]) => {
@@ -112,6 +117,14 @@ module chavo {
       });
     }
 
+    loadMore() {
+      if (this.loading) {
+        return;
+      }
+      this.pageCount++;
+      this.init();
+    }
+
     openDeletePostConfirmModal(voice: Voice) {
       var modalInstance = this.$modal.open({
         animation: true,
@@ -164,6 +177,8 @@ module chavo {
       this.cfpLoadingBar.complete();
 
       this.$scope.$apply();
+
+      this.loading = false;
     }
   }
 }

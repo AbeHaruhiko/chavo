@@ -10,6 +10,8 @@ var chavo;
             this.cfpLoadingBar = cfpLoadingBar;
             this.$modal = $modal;
             this.voices = new Array();
+            this.pageCount = 0;
+            this.loading = false;
             this.sampleTagList = [
                 'おもしろ',
                 '迷言',
@@ -25,12 +27,15 @@ var chavo;
         }
         MainTagController.prototype.init = function () {
             var _this = this;
+            this.loading = true;
             var ParseVoice = Parse.Object.extend('Voice');
             var query = new Parse.Query(ParseVoice);
             var parseVoices;
             this.cfpLoadingBar.start();
             query.descending('createdAt');
             query.equalTo('tags', this.$stateParams['tag']);
+            query.limit(5);
+            query.skip(5 * this.pageCount);
             query.find({
                 success: function (results) {
                     console.log('success.');
@@ -39,7 +44,6 @@ var chavo;
                     console.error('Error: ' + error.code + ' ' + error.message);
                 }
             }).then(function (results) {
-                // 投稿者のアイコンを取得するため、fetchする。
                 parseVoices = results;
                 var promises = [];
                 results.forEach(function (voice) {
@@ -58,7 +62,6 @@ var chavo;
             });
         };
         MainTagController.prototype.toggleLike = function (voice) {
-            // cloud Codeへ移動
             var _this = this;
             voice.like = !voice.like;
             Parse.Cloud.run('toggleLike', { voice: voice })
@@ -69,6 +72,13 @@ var chavo;
             }, function (error) {
                 console.error('Error: ' + error.code + ' ' + error.message);
             });
+        };
+        MainTagController.prototype.loadMore = function () {
+            if (this.loading) {
+                return;
+            }
+            this.pageCount++;
+            this.init();
         };
         MainTagController.prototype.openDeletePostConfirmModal = function (voice) {
             var _this = this;
@@ -109,6 +119,7 @@ var chavo;
             });
             this.cfpLoadingBar.complete();
             this.$scope.$apply();
+            this.loading = false;
         };
         return MainTagController;
     })();
