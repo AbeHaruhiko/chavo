@@ -21,6 +21,7 @@ var chavo;
         .controller('MainController', chavo.MainController)
         .controller('MainAllController', chavo.MainAllController)
         .controller('MainTagController', chavo.MainTagController)
+        .controller('MainPostController', chavo.MainPostController)
         .controller('MainMyPostsController', chavo.MainMyPostsController)
         .controller('DeletePostConfirmModalController', chavo.DeletePostConfirmModalController)
         .controller('MainComposeController', chavo.MainComposeController)
@@ -50,6 +51,11 @@ var chavo;
             .state('home.all', {
             url: '/all',
             templateUrl: 'app/main/all/main.all.html'
+        })
+            .state('home.post', {
+            url: '/post/:voiceId',
+            templateUrl: 'app/main/post/main.post.html',
+            params: { voice: {} }
         })
             .state('home.tag', {
             url: '/tag/:tag',
