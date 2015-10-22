@@ -66,10 +66,11 @@ var chavo;
             });
         };
         MainMyPostsController.prototype.loadMore = function () {
-            if (!this.loading) {
-                this.pageCount++;
-                this.init();
+            if (this.loading) {
+                return;
             }
+            this.pageCount++;
+            this.init();
         };
         MainMyPostsController.prototype.openDeletePostConfirmModal = function (voice) {
             var _this = this;

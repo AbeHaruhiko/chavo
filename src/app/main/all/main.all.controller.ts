@@ -113,10 +113,11 @@ module chavo {
     }
 
     loadMore() {
-      if (!this.loading) {
-        this.pageCount++;
-        this.init();
+      if (this.loading) {
+        return;
       }
+      this.pageCount++;
+      this.init();
     }
 
     openDeletePostConfirmModal(voice: Voice) {

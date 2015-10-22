@@ -61,10 +61,11 @@ var chavo;
             });
         };
         MainAllController.prototype.loadMore = function () {
-            if (!this.loading) {
-                this.pageCount++;
-                this.init();
+            if (this.loading) {
+                return;
             }
+            this.pageCount++;
+            this.init();
         };
         MainAllController.prototype.openDeletePostConfirmModal = function (voice) {
             var _this = this;
