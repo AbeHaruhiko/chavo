@@ -5,6 +5,7 @@ module chavo {
 
     voices = new Array<Voice>();
     pageCount = 0;
+    loading = false;
 
     /* @ngInject */
     constructor (
@@ -18,6 +19,7 @@ module chavo {
     }
 
     init() {
+      this.loading = true;
 
       this.cfpLoadingBar.start();
 
@@ -121,10 +123,10 @@ module chavo {
     }
 
     loadMore() {
-      console.log('loadMore() called.');
-      this.pageCount++;
-      console.log('page: ' + this.pageCount);
-      this.init();
+      if (!this.loading) {
+        this.pageCount++;
+        this.init();
+      }
     }
 
     openDeletePostConfirmModal(voice: Voice) {
@@ -184,6 +186,8 @@ module chavo {
       this.cfpLoadingBar.complete();
 
       this.$scope.$apply();
+
+      this.loading = false;
     }
 
     // .DeletePostConfirmModalControllerはmain.myposts.controller.tsに

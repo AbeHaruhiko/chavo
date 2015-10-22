@@ -10,10 +10,12 @@ var chavo;
             this.$modal = $modal;
             this.voices = new Array();
             this.pageCount = 0;
+            this.loading = false;
             this.init();
         }
         MainMyPostsController.prototype.init = function () {
             var _this = this;
+            this.loading = true;
             this.cfpLoadingBar.start();
             var parseVoices;
             Parse.Cloud.run('getRequestUsersFamilyMember')
@@ -64,10 +66,10 @@ var chavo;
             });
         };
         MainMyPostsController.prototype.loadMore = function () {
-            console.log('loadMore() called.');
-            this.pageCount++;
-            console.log('page: ' + this.pageCount);
-            this.init();
+            if (!this.loading) {
+                this.pageCount++;
+                this.init();
+            }
         };
         MainMyPostsController.prototype.openDeletePostConfirmModal = function (voice) {
             var _this = this;
@@ -112,6 +114,7 @@ var chavo;
             });
             this.cfpLoadingBar.complete();
             this.$scope.$apply();
+            this.loading = false;
         };
         return MainMyPostsController;
     })();
