@@ -3,19 +3,26 @@ var chavo;
     'use strict';
     var WhenScrollController = (function () {
         function WhenScrollController($scope, $rootScope, $element, $attrs, $document, $window) {
+            var _this = this;
             this.$scope = $scope;
             this.$rootScope = $rootScope;
             this.$element = $element;
             this.$attrs = $attrs;
             this.$document = $document;
             this.$window = $window;
-            angular.element($window).bind('scroll', function () {
+            angular.element($window).bind('scroll', _.throttle(function () {
                 var docHeight = angular.element(document).height();
                 var scrollPosition = angular.element(window).height() + angular.element(window).scrollTop();
-                if ((docHeight - scrollPosition) < 100) {
-                    $scope.$apply($scope.run);
+                var distanceToBottome = docHeight - scrollPosition;
+                if (_this.prevDistanceToBottom < distanceToBottome) {
+                    return;
                 }
-            });
+                if ((distanceToBottome) > 100) {
+                    return;
+                }
+                $scope.$apply($scope.run);
+                _this.prevDistanceToBottom = distanceToBottome;
+            }, 200));
         }
         return WhenScrollController;
     })();

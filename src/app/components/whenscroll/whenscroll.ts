@@ -6,6 +6,9 @@ module chavo {
   }
 
   export class WhenScrollController {
+
+    prevDistanceToBottom: number;
+
     /* @ngInject */
     constructor (
       public $scope: IWhenScrollScope,
@@ -18,16 +21,24 @@ module chavo {
 // $scope.$parent['main_all'].loadMore();
 
 
-      angular.element($window).bind('scroll', () => {
+      angular.element($window).bind('scroll', _.throttle(() => {
         var docHeight = angular.element(document).height();
       	var scrollPosition = angular.element(window).height() + angular.element(window).scrollTop();
+        var distanceToBottome = docHeight - scrollPosition;
+        if (this.prevDistanceToBottom < distanceToBottome) {
+          // 上にスクロールしているときはなにもしない
+          return;
+        }
+
         // console.log(docHeight - scrollPosition);
-      	if ((docHeight - scrollPosition)  < 100) {
-          // ページ最下部手前100pxまでスクロールしてきた
-          // console.log('got to end');
-          $scope.$apply($scope.run);
-      	}
-      });
+      	if ((distanceToBottome)  > 100) {
+          return;
+        }
+        // ページ最下部手前100pxまでスクロールしてきた
+        // console.log('got to end');
+        $scope.$apply($scope.run);
+        this.prevDistanceToBottom = distanceToBottome;
+      }, 200));
     }
   }
 
