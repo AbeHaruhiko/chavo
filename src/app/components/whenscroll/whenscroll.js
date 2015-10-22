@@ -24,6 +24,9 @@ var chavo;
                 _this.prevDistanceToBottom = distanceToBottome;
             }, 200));
         }
+        WhenScrollController.unbind = function () {
+            angular.element(window).unbind('scroll');
+        };
         return WhenScrollController;
     })();
     chavo.WhenScrollController = WhenScrollController;

@@ -152,5 +152,17 @@ module chavo {
       js.src = '//connect.facebook.net/en_US/sdk.js';
       fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
+
+    // all, myposts等の無限スクロールを解除
+    $rootScope.$on('$stateChangeSuccess',
+        (event: angular.IAngularEvent,
+          toState: ng.ui.IState,
+          toParams: any,
+          fromState: ng.ui.IState,
+          fromParams: any) => {
+        if (fromState.name === 'home.all' || fromState.name === 'home.myposts' || fromState.name === 'home.tag') {
+          WhenScrollController.unbind();
+        }
+    });
   });
 }

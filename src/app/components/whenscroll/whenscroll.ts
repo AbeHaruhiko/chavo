@@ -40,6 +40,10 @@ module chavo {
         this.prevDistanceToBottom = distanceToBottome;
       }, 200));
     }
+
+    static unbind() {
+      angular.element(window).unbind('scroll');
+    }
   }
 
   export class WhenScrollDerective {
