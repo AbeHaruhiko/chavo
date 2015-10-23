@@ -21,6 +21,7 @@ var chavo;
             var parseVoices;
             this.cfpLoadingBar.start();
             query.descending('createdAt');
+            query.include('user');
             query.limit(20);
             query.skip(20 * this.pageCount);
             query.find({
@@ -32,14 +33,12 @@ var chavo;
                 }
             }).then(function (results) {
                 parseVoices = results;
-                var promises = [];
-                results.forEach(function (voice) {
-                    promises.push(voice.get('user').fetch());
-                });
                 if (Parse.User.current()) {
-                    promises.push(Parse.User.current().fetch());
+                    return Parse.User.current().fetch();
                 }
-                return Parse.Promise.when(promises);
+                else {
+                    return Parse.Promise.as('');
+                }
             })
                 .then(function () {
                 _this.applyFoundVoices(parseVoices);

@@ -27,6 +27,7 @@ module chavo {
       this.cfpLoadingBar.start();
 
       query.descending('createdAt');
+      query.include('user');
       query.limit(20);
       query.skip(20 * this.pageCount);
 
@@ -38,20 +39,15 @@ module chavo {
           console.error('Error: ' + error.code + ' ' + error.message);
         }
       }).then((results: Parse.Object[]) => {
-        // 投稿者のアイコンを取得するため、fetchする。
 
         parseVoices = results;
-        var promises: Parse.Promise<any>[] = [];
-        results.forEach((voice: Parse.Object) => {
-          promises.push(voice.get('user').fetch());
-        });
 
         if (Parse.User.current()) {
           // ユーザをfetchして最新のlikesを取得しておく
-          promises.push(Parse.User.current().fetch());
+          return Parse.User.current().fetch();
+        } else {
+          return Parse.Promise.as('');
         }
-
-        return Parse.Promise.when(promises);
       })
       .then(() => {
         this.applyFoundVoices(parseVoices);

@@ -23,6 +23,7 @@ var chavo;
                 var ParseVoice = Parse.Object.extend('Voice');
                 var query = new Parse.Query(ParseVoice);
                 query.descending('createdAt');
+                query.include('user');
                 query.limit(20);
                 console.log('this.pageCount: ' + _this.pageCount);
                 query.skip(20 * _this.pageCount);
@@ -35,14 +36,12 @@ var chavo;
                 return query.find();
             }).then(function (results) {
                 parseVoices = results;
-                var promises = [];
-                results.forEach(function (voice) {
-                    promises.push(voice.get('user').fetch());
-                });
                 if (Parse.User.current()) {
-                    promises.push(Parse.User.current().fetch());
+                    return Parse.User.current().fetch();
                 }
-                return Parse.Promise.when(promises);
+                else {
+                    return Parse.Promise.as('');
+                }
             })
                 .then(function () {
                 _this.applyFoundVoices(parseVoices);

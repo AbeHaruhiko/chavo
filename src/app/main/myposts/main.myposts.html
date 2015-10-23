@@ -12,7 +12,7 @@
           <div class="media-header">
             <span>
               <small>{{ voice.user }}</small>
-              <small>{{ voice.createdAt }}</small>
+              <small><a ui-sref="home.post({ voice: voice, voiceId: voice.objectId })">{{ voice.createdAt }}</a></small>
             </span>
             <span class="pull-right">
               <span ng-click="main_myposts.toggleLike(voice)" id="like" ng-class="{ 'like-active': voice.like }">
