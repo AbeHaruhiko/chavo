@@ -55,7 +55,7 @@ var chavo;
             .state('home.post', {
             url: '/post/:voiceId',
             templateUrl: 'app/main/post/main.post.html',
-            params: { voice: {} }
+            params: { voice: null }
         })
             .state('home.tag', {
             url: '/tag/:tag',
@@ -64,7 +64,7 @@ var chavo;
             .state('home.compose', {
             url: '/compose/:voiceId',
             templateUrl: 'app/main/compose/main.compose.html',
-            params: { voice: {} }
+            params: { voice: null }
         })
             .state('settings', {
             url: '/settings',

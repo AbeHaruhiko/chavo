@@ -12,10 +12,34 @@ var chavo;
             this.init();
         }
         MainPostController.prototype.init = function () {
+            var _this = this;
             if (this.$stateParams['voice']) {
                 this.voice = this.$stateParams['voice'];
             }
             else {
+                var ParseVoice = Parse.Object.extend('Voice');
+                var query = new Parse.Query(ParseVoice);
+                var parseVoice;
+                this.cfpLoadingBar.start();
+                query.descending('createdAt');
+                query.include('user');
+                query.equalTo('objectId', this.$stateParams['voiceId']);
+                query.first()
+                    .then(function (result) {
+                    parseVoice = result;
+                    if (Parse.User.current()) {
+                        return Parse.User.current().fetch();
+                    }
+                    else {
+                        return Parse.Promise.as('');
+                    }
+                })
+                    .then(function () {
+                    _this.applyFoundVoices(parseVoice);
+                }, function (error) {
+                    console.error(error);
+                    _this.applyFoundVoices(parseVoice);
+                });
             }
         };
         MainPostController.prototype.toggleLike = function (voice) {
@@ -57,16 +81,13 @@ var chavo;
                 console.dir(voice);
             });
         };
-        MainPostController.prototype.applyFoundVoices = function (parseVoices) {
-            var _this = this;
+        MainPostController.prototype.applyFoundVoices = function (parseVoice) {
             var myLikes = !this.$rootScope.currentUser ? []
                 : !this.$rootScope.currentUser.get('likes') ? []
                     : this.$rootScope.currentUser.get('likes');
-            parseVoices.forEach(function (voice) {
-                if (voice.get('user').get('username') !== undefined) {
-                    _this.voice = new chavo.Voice(voice, myLikes);
-                }
-            });
+            if (parseVoice.get('user').get('username') !== undefined) {
+                this.voice = new chavo.Voice(parseVoice, myLikes);
+            }
             this.cfpLoadingBar.complete();
             this.$scope.$apply();
         };

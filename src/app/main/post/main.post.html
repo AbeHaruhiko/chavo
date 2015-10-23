@@ -18,7 +18,7 @@
               <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
             </span>
             <span id="like-count">{{ main_post.voice.likeCount }}</span>
-            <span ng-show="{{ main_post.voice.userObjectId === main_post.$rootScope.currentUser.id }}" dropdown class="dropdown"><!-- ここのclass="dropdown"がないと動かない -->
+            <span ng-if="main_post.voice.userObjectId === main_post.$rootScope.currentUser.id" dropdown class="dropdown"><!-- ここのclass="dropdown"がないと動かない -->
               <span
                   class="glyphicon glyphicon-option-horizontal cursor-pointer dropdown-toggle"
                   dropdown-toggle>

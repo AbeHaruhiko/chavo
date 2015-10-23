@@ -22,7 +22,37 @@ module chavo {
         // voiceがある場合は画面にセット
         this.voice = this.$stateParams['voice'];
       } else {
-        
+
+        var ParseVoice = Parse.Object.extend('Voice');
+        var query = new Parse.Query(ParseVoice);
+        var parseVoice: Parse.Object;
+
+        this.cfpLoadingBar.start();
+
+        query.descending('createdAt');
+        query.include('user');
+        query.equalTo('objectId', this.$stateParams['voiceId']);
+
+        query.first()
+        .then((result: Parse.Object) => {
+
+          parseVoice = result;
+
+          if (Parse.User.current()) {
+            // ユーザをfetchして最新のlikesを取得しておく
+            return Parse.User.current().fetch();
+          } else {
+            return Parse.Promise.as('');
+          }
+        })
+        .then(() => {
+          this.applyFoundVoices(parseVoice);
+        },
+        (error: any) => {
+          // 投稿ユーザがいない場合などエラーになる
+          console.error(error);
+          this.applyFoundVoices(parseVoice);
+        });
       }
     }
 
@@ -79,7 +109,7 @@ module chavo {
       });
     }
 
-    private applyFoundVoices(parseVoices: Parse.Object[]) {
+    private applyFoundVoices(parseVoice: Parse.Object) {
       // 自分がlike済みの投稿
       var myLikes: string[] = !this.$rootScope.currentUser ? []
                                   : !this.$rootScope.currentUser.get('likes') ? []
@@ -87,13 +117,11 @@ module chavo {
       // console.log('myLikes: ' + myLikes);
 
       // 表示用にVoiceクラスへ移し替え
-      parseVoices.forEach((voice: Parse.Object) => {
-        if (voice.get('user').get('username') !== undefined) {
-          // すでにいないユーザの投稿は表示しない
+      if (parseVoice.get('user').get('username') !== undefined) {
+        // すでにいないユーザの投稿は表示しない
 
-          this.voice = new Voice(voice, myLikes);
-        }
-      });
+        this.voice = new Voice(parseVoice, myLikes);
+      }
 
       this.cfpLoadingBar.complete();
 
