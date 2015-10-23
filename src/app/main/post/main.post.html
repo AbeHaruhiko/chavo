@@ -1,0 +1,48 @@
+<div ng-controller="MainPostController as main_post" class="row">
+  <div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3">
+    <div class="media panel panel-default">
+      <div class="media-left">
+        <a href="#">
+          <div ng-style="{ 'background-image': 'url(' + main_post.voice.icon + ')' }"
+            class="media-object img-circle icon-post"></div>
+        </a>
+      </div>
+      <div class="media-body">
+        <div class="media-header">
+          <span>
+            <small>{{ main_post.voice.user }}</small>
+            <small>{{ main_post.voice.createdAt }}</small>
+          </span>
+          <span class="pull-right">
+            <span ng-click="main_post.toggleLike(voice)" id="like" ng-class="{ 'like-active': main_post.voice.like }">
+              <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+            </span>
+            <span id="like-count">{{ main_post.voice.likeCount }}</span>
+            <span ng-show="{{ main_post.voice.userObjectId === main_post.$rootScope.currentUser.id }}" dropdown class="dropdown"><!-- ここのclass="dropdown"がないと動かない -->
+              <span
+                  class="glyphicon glyphicon-option-horizontal cursor-pointer dropdown-toggle"
+                  dropdown-toggle>
+              </span>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li><a ui-sref="home.compose({ voice: main_post.voice, voiceId: main_post.voice.objectId })">編集する</a></li>
+                <li><a ng-click="main_post.openDeletePostConfirmModal(main_post.voice)">削除する</a></li>
+                <script type="text/ng-template" id="deletePostConfirmModal.html">
+                  <div class="modal-body">この投稿を削除しますか？</div>
+                  <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" ng-click="delete_post_modal.ok()">OK</button>
+                    <button class="btn btn-default" type="button" ng-click="delete_post_modal.cancel()">Cancel</button>
+                  </div>
+                </script>
+              </ul>
+            </span>
+          </span>
+        </div>
+        <p class="pre-line">{{ main_post.voice.description }}</p>
+        <p><a ng-repeat="tag in main_post.voice.tags" ui-sref="home.tag({ tag: tag })"><span class="badge tag-badge">{{ tag }}</span></a></p>
+        <p class="text-right"><small>{{ main_post.voice.speaker }} {{ main_post.voice.age }} {{ main_post.voice.gender }}</small></p>
+        <p ng-show="main_post.voice.photoUrl"><img ng-src="{{ main_post.voice.photoUrl }}" class="img-responsive img-thumbnail"/></p>
+      </div>
+      <!-- <pre>{{voice|json}}</pre> -->
+    </div>
+  </div>
+</div>
