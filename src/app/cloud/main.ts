@@ -29,11 +29,6 @@ Parse.Cloud.define('toggleLike', function(request: Parse.Cloud.FunctionRequest, 
     console.log('user: ' + user);
     console.log('likes: ' + user.get('likes'));
     return parseVoice.save();
-  },
-  (error: Parse.Error) => {
-    console.error('Error: ' + error.code + ' ' + error.message);
-
-    response.error('Error: ' + error.code + ' ' + error.message);
   })
   .then((parseVoice: Parse.Object) => {
     console.log('likeCound: ' + parseVoice.get('likeCount'));
@@ -41,7 +36,6 @@ Parse.Cloud.define('toggleLike', function(request: Parse.Cloud.FunctionRequest, 
   },
   (error: Parse.Error) => {
     console.error('Error: ' + error.code + ' ' + error.message);
-
     response.error('Error: ' + error.code + ' ' + error.message);
   });
 
@@ -68,6 +62,7 @@ Parse.Cloud.define('saveTag', function(request: Parse.Cloud.FunctionRequest, res
       if (parseTag) {
         console.log('saved tag: ' + parseTag.get('tag'));
       }
+      response.success('');
     });
   });
 
@@ -347,13 +342,13 @@ Parse.Cloud.beforeSave('_User', (request: Parse.Cloud.BeforeSaveRequest, respons
 
   var user = request.object;
   if (!user.get('icon')) {
-    response.error('This user uses Facebook login or has not resist icon.');
+    response.success(user);
     return;
   }
 
   if (!user.dirty('icon')) {
     // .The profile photo isn't being modified.
-    response.success('');
+    response.success(user);
     return;
   }
 
@@ -362,6 +357,7 @@ Parse.Cloud.beforeSave('_User', (request: Parse.Cloud.BeforeSaveRequest, respons
     url: user.get('icon').url()
 
   }).then((response: Parse.Cloud.HttpResponse) => {
+    console.log(3);
     var image = new ParseImage();
     return image.setData(response.buffer);
 
@@ -402,7 +398,7 @@ Parse.Cloud.beforeSave('_User', (request: Parse.Cloud.BeforeSaveRequest, respons
     user.set('iconUrl', cropped.url());
 
   }).then(() => {
-    response.success('');
+    response.success(user);
   }, (error: Parse.Error) => {
     console.log(9);
     response.error(error);
@@ -413,16 +409,15 @@ Parse.Cloud.beforeSave('_User', (request: Parse.Cloud.BeforeSaveRequest, respons
  * 投稿に画像を480pxにリサイズ
  */
 Parse.Cloud.beforeSave('Voice', (request: Parse.Cloud.BeforeSaveRequest, response: Parse.Cloud.BeforeSaveResponse) => {
-
   var voice = request.object;
   if (!voice.get('photo')) {
-    response.error('This user uses Facebook login or has not resist icon.');
+    response.success(voice);
     return;
   }
 
   if (!voice.dirty('photo')) {
     // .The profile photo isn't being modified.
-    response.success('');
+    response.success(voice);
     return;
   }
 
@@ -431,6 +426,7 @@ Parse.Cloud.beforeSave('Voice', (request: Parse.Cloud.BeforeSaveRequest, respons
     url: voice.get('photo').url()
 
   }).then((response: Parse.Cloud.HttpResponse) => {
+    console.log('before save voice: 4')
     var image = new ParseImage();
     return image.setData(response.buffer);
 
@@ -462,7 +458,7 @@ Parse.Cloud.beforeSave('Voice', (request: Parse.Cloud.BeforeSaveRequest, respons
     voice.set('photoUrl', cropped.url());
 
   }).then(() => {
-    response.success('');
+    response.success(voice);
   }, (error: Parse.Error) => {
     console.log(9);
     response.error(error);

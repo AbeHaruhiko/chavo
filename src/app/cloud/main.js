@@ -20,9 +20,6 @@ Parse.Cloud.define('toggleLike', function (request, response) {
         console.log('user: ' + user);
         console.log('likes: ' + user.get('likes'));
         return parseVoice.save();
-    }, function (error) {
-        console.error('Error: ' + error.code + ' ' + error.message);
-        response.error('Error: ' + error.code + ' ' + error.message);
     })
         .then(function (parseVoice) {
         console.log('likeCound: ' + parseVoice.get('likeCount'));
@@ -51,6 +48,7 @@ Parse.Cloud.define('saveTag', function (request, response) {
             if (parseTag) {
                 console.log('saved tag: ' + parseTag.get('tag'));
             }
+            response.success('');
         });
     });
 });
@@ -255,16 +253,17 @@ var ParseImage = require('parse-image');
 Parse.Cloud.beforeSave('_User', function (request, response) {
     var user = request.object;
     if (!user.get('icon')) {
-        response.error('This user uses Facebook login or has not resist icon.');
+        response.success(user);
         return;
     }
     if (!user.dirty('icon')) {
-        response.success('');
+        response.success(user);
         return;
     }
     Parse.Cloud.httpRequest({
         url: user.get('icon').url()
     }).then(function (response) {
+        console.log(3);
         var image = new ParseImage();
         return image.setData(response.buffer);
     }).then(function (image) {
@@ -292,7 +291,7 @@ Parse.Cloud.beforeSave('_User', function (request, response) {
         user.set('icon', cropped);
         user.set('iconUrl', cropped.url());
     }).then(function () {
-        response.success('');
+        response.success(user);
     }, function (error) {
         console.log(9);
         response.error(error);
@@ -301,16 +300,17 @@ Parse.Cloud.beforeSave('_User', function (request, response) {
 Parse.Cloud.beforeSave('Voice', function (request, response) {
     var voice = request.object;
     if (!voice.get('photo')) {
-        response.error('This user uses Facebook login or has not resist icon.');
+        response.success(voice);
         return;
     }
     if (!voice.dirty('photo')) {
-        response.success('');
+        response.success(voice);
         return;
     }
     Parse.Cloud.httpRequest({
         url: voice.get('photo').url()
     }).then(function (response) {
+        console.log('before save voice: 4');
         var image = new ParseImage();
         return image.setData(response.buffer);
     }).then(function (image) {
@@ -331,7 +331,7 @@ Parse.Cloud.beforeSave('Voice', function (request, response) {
         voice.set('photo', cropped);
         voice.set('photoUrl', cropped.url());
     }).then(function () {
-        response.success('');
+        response.success(voice);
     }, function (error) {
         console.log(9);
         response.error(error);

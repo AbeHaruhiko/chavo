@@ -57,17 +57,19 @@ module chavo {
         });
       });
 
-      // voiceがある場合は画面にセット（編集モード）
-      this.voice = $stateParams['voice'];
-      // ngTagsInputのモデルは{ text: string; }[]なので変換しておく。
-      // （string[]のカラムはParse.Query.equalsToで検索できるので）
-      this.ngTags = Tag.stringArrayToTagsInputObjectArray(this.voice.tags);
-      this.voiceAuthor = this.voiceAuthor || new Child();
-      this.voiceAuthor.nickName = this.voice.speaker;
-      this.voiceAuthor.ageYears = this.voice.ageYears;
-      this.voiceAuthor.ageMonths = this.voice.ageMonths;
-      this.voiceAuthor.gender = this.voice.genderValue;
-      this.voiceIsPublic = this.voice.isPublic;
+      if (this.$stateParams['voice']) {
+        // voiceがある場合は画面にセット（編集モード）
+        this.voice = $stateParams['voice'];
+        // ngTagsInputのモデルは{ text: string; }[]なので変換しておく。
+        // （string[]のカラムはParse.Query.equalsToで検索できるので）
+        this.ngTags = Tag.stringArrayToTagsInputObjectArray(this.voice.tags);
+        this.voiceAuthor = this.voiceAuthor || new Child();
+        this.voiceAuthor.nickName = this.voice.speaker;
+        this.voiceAuthor.ageYears = this.voice.ageYears;
+        this.voiceAuthor.ageMonths = this.voice.ageMonths;
+        this.voiceAuthor.gender = this.voice.genderValue;
+        this.voiceIsPublic = this.voice.isPublic;
+      }
 
       // ファイルインプットの設定
       var fileSelector: any = angular.element('#photo-selector');

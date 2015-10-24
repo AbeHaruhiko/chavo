@@ -28,6 +28,7 @@
         "./main/compose/main.compose.controller.ts",
         "./main/main.controller.ts",
         "./main/myposts/main.myposts.controller.ts",
+        "./main/post/main.post.controller.ts",
         "./main/tag/main.tag.controller.ts",
         "./model/Child.ts",
         "./model/FamilyApplication.ts",

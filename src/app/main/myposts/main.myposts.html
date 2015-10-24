@@ -12,11 +12,15 @@
           <div class="media-header">
             <span>
               <small>{{ voice.user }}</small>
-              <small><a ui-sref="home.post({ voice: voice, voiceId: voice.objectId })">{{ voice.createdAt }}</a></small>
+              <small class="post-createdAt">
+                <a class="post-createdAt" ui-sref="home.post({ voice: voice, voiceId: voice.objectId })">
+                  {{ voice.createdAt }}
+                </a>
+              </small>
             </span>
             <span class="pull-right">
               <span ng-click="main_myposts.toggleLike(voice)" id="like" ng-class="{ 'like-active': voice.like }">
-                <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-heart cursor-pointer" aria-hidden="true"></span>
               </span>
               <span id="like-count">{{ voice.likeCount }}</span>
               <span ng-if="voice.userObjectId === main_myposts.$rootScope.currentUser.id" dropdown class="dropdown"><!-- ここのclass="dropdown"がないと動かない -->

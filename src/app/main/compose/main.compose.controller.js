@@ -35,14 +35,16 @@ var chavo;
                     });
                 });
             });
-            this.voice = $stateParams['voice'];
-            this.ngTags = chavo.Tag.stringArrayToTagsInputObjectArray(this.voice.tags);
-            this.voiceAuthor = this.voiceAuthor || new chavo.Child();
-            this.voiceAuthor.nickName = this.voice.speaker;
-            this.voiceAuthor.ageYears = this.voice.ageYears;
-            this.voiceAuthor.ageMonths = this.voice.ageMonths;
-            this.voiceAuthor.gender = this.voice.genderValue;
-            this.voiceIsPublic = this.voice.isPublic;
+            if (this.$stateParams['voice']) {
+                this.voice = $stateParams['voice'];
+                this.ngTags = chavo.Tag.stringArrayToTagsInputObjectArray(this.voice.tags);
+                this.voiceAuthor = this.voiceAuthor || new chavo.Child();
+                this.voiceAuthor.nickName = this.voice.speaker;
+                this.voiceAuthor.ageYears = this.voice.ageYears;
+                this.voiceAuthor.ageMonths = this.voice.ageMonths;
+                this.voiceAuthor.gender = this.voice.genderValue;
+                this.voiceIsPublic = this.voice.isPublic;
+            }
             var fileSelector = angular.element('#photo-selector');
             fileSelector.fileinput({
                 dropZoneEnabled: false,
