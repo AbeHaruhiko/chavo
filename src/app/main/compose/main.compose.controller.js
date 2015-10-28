@@ -28,7 +28,7 @@ var chavo;
                 results.forEach(function (parseChild) {
                     if (parseChild.get('birthday')) {
                         var years = '' + moment().diff(moment(parseChild.get('birthday')), 'years');
-                        var months = '' + (moment().diff(moment(parseChild.get('birthday')), 'months') - (12 * +years));
+                        var months = '' + (moment().diff(moment(parseChild.get('birthday')), 'months') - (12 * +years) + 1);
                     }
                     _this.$scope.$apply(function () {
                         _this.children.push(new chavo.Child(parseChild.get('dispOrder'), parseChild.get('nickName'), parseChild.get('birthday'), parseChild.get('gender'), years ? years : null, months ? months : null, !parseChild.get('birthday')));

@@ -1,5 +1,11 @@
 <div class="row" ng-controller="TabmenuController as tabmenu" id="tabmenu">
   <div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3">
-    <tabs data="tabmenu.tabs" type="tabs" justified="true" template-url="app/components/tabmenu/tabs.html"/>
+    <!-- <tabs data="tabmenu.tabs" type="tabs" justified="true" template-url="app/components/tabmenu/tabs.html"/> -->
+    <ul class="nav nav-tabs nav-justified">
+      <li role="presentation" ui-sref-active="active"><a ui-sref="home.all" target="_self">みんなの</a></li>
+      <li role="presentation" ui-sref-active="active"><a ui-sref="home.myposts" target="_self">あなたの</a></li>
+      <li role="presentation" ui-sref-active="active"><a ui-sref="home.tag" target="_self">タグ</a></li>
+      <li role="presentation" ui-sref-active="active"><a ui-sref="home.compose" target="_self"><i class="fa fa-pencil"></i></a></li>
+    </ul>
   </div>
 </div>
