@@ -5,12 +5,16 @@ module chavo {
 
     voice: Voice;
 
+    // server side script用(post.ejsでng-initする。)
+    targetVoiceId: string;
+
     /* @ngInject */
     constructor (
         public $scope: IMainScope,
         public $rootScope: IChavoRootScope,
         public $state: ng.ui.IStateService,
         public $stateParams: ng.ui.IStateParamsService,
+        public $attrs: angular.IAttributes,
         public cfpLoadingBar: any,
         public $modal: any) {
 
@@ -31,7 +35,7 @@ module chavo {
 
         query.descending('createdAt');
         query.include('user');
-        query.equalTo('objectId', this.$stateParams['voiceId']);
+        query.equalTo('objectId', this.$stateParams['voiceId'] || this.$attrs['voice']);
 
         query.first()
         .then((result: Parse.Object) => {

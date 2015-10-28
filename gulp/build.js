@@ -66,8 +66,14 @@ module.exports = function(options) {
 
   // 2015/09/01 安部追加
   gulp.task('cloud', function () {
-    return gulp.src(options.tmp + '/serve/app/cloud/**/*.js')
+    return gulp.src(options.tmp + '/serve/app/cloud/**/*.{js,ejs}')
       .pipe(gulp.dest(options.dist + '/../cloud/'));
+  });
+
+  // 2015/10/27 安部追加
+  gulp.task('cloud-view', function () {
+    return gulp.src(options.tmp + '/serve/app/cloud/views/*.ejs')
+      .pipe(gulp.dest(options.dist + '/../cloud/views'));
   });
 
   // Only applies for fonts from bower dependencies

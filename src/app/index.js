@@ -107,7 +107,7 @@ var chavo;
         .config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
             cfpLoadingBarProvider.includeSpinner = false;
         }])
-        .run(function ($rootScope, $window) {
+        .run(function ($rootScope, $window, $state) {
         Parse.initialize('FpENpUI2dIIOJu5J4UrssehUKwkB1afjOfEK92Zv', '1Wbddi5o4HemnLkhBCmHov121BuE8qS5d1jxPxKs');
         $rootScope.currentUser = Parse.User.current();
         $window.fbAsyncInit = function () {

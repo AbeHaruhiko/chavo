@@ -2,11 +2,12 @@ var chavo;
 (function (chavo) {
     'use strict';
     var MainPostController = (function () {
-        function MainPostController($scope, $rootScope, $state, $stateParams, cfpLoadingBar, $modal) {
+        function MainPostController($scope, $rootScope, $state, $stateParams, $attrs, cfpLoadingBar, $modal) {
             this.$scope = $scope;
             this.$rootScope = $rootScope;
             this.$state = $state;
             this.$stateParams = $stateParams;
+            this.$attrs = $attrs;
             this.cfpLoadingBar = cfpLoadingBar;
             this.$modal = $modal;
             this.init();
@@ -23,7 +24,7 @@ var chavo;
                 this.cfpLoadingBar.start();
                 query.descending('createdAt');
                 query.include('user');
-                query.equalTo('objectId', this.$stateParams['voiceId']);
+                query.equalTo('objectId', this.$stateParams['voiceId'] || this.$attrs['voice']);
                 query.first()
                     .then(function (result) {
                     parseVoice = result;

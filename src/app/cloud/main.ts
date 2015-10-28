@@ -1,4 +1,4 @@
-/// <reference path='../../../.tmp/typings/tsd.d.ts' />
+require('cloud/app.js');
 
 Parse.Cloud.define('hello', function(request: Parse.Cloud.FunctionRequest, response: Parse.Cloud.FunctionResponse) {
   response.success('Hello world!');

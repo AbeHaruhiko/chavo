@@ -74,7 +74,8 @@
             </ul>
           </li>
           <li>
-            <a role="button" ui-sref="settings"><span class="glyphicon glyphicon-cog"></span></a>
+            <!-- http://stackoverflow.com/questions/11580004/angular-js-link-behaviour-disable-deep-linking-for-specific-urls -->
+            <a role="button" ui-sref="settings" target="_self"><span class="glyphicon glyphicon-cog"></span></a>
           </li>
           <li dropdown>
             <a href="#" dropdown-toggle data-toggle="dropdown" role="button">

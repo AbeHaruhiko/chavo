@@ -17,13 +17,13 @@
     "files": [
         "./bower_components/angular-ui-router/api/angular-ui-router.d.ts",
         "./src/app/auth/services/auth-service.ts",
+        "./src/app/cloud/app.ts",
         "./src/app/cloud/main.ts",
         "./src/app/components/navbar/navbar.controller.ts",
         "./src/app/components/tabmenu/tabmenu.controller.ts",
         "./src/app/components/whenscroll/whenscroll.ts",
         "./src/app/const/const.ts",
         "./src/app/facebook/services/facebook-service.ts",
-        "./src/app/index.ts",
         "./src/app/login/login.controller.ts",
         "./src/app/main/all/main.all.controller.ts",
         "./src/app/main/compose/main.compose.controller.ts",
@@ -45,5 +45,6 @@
         "./src/app/settings/content/settings.content.controller.ts",
         "./src/app/settings/menu/settings.menu.controller.ts",
         "./src/app/signup/signup.controller.ts"
+        "./src/app/index.ts",
     ]
 }

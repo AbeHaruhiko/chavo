@@ -139,7 +139,7 @@ module chavo {
   .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider: any) {
     cfpLoadingBarProvider.includeSpinner = false;
   }])
-  .run(function($rootScope: IChavoRootScope, $window: any) {
+  .run(function($rootScope: IChavoRootScope, $window: any, $state: ng.ui.IState) {
     Parse.initialize('FpENpUI2dIIOJu5J4UrssehUKwkB1afjOfEK92Zv', '1Wbddi5o4HemnLkhBCmHov121BuE8qS5d1jxPxKs');
     $rootScope.currentUser = Parse.User.current();
 
