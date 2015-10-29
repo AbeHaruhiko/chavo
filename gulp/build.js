@@ -102,5 +102,9 @@ module.exports = function(options) {
     $.del([options.dist + '/'], done);
   });
 
+  gulp.task('clean-only-dist-js', function (done) {
+    $.del([options.dist + '/**/*.js'], done);
+  });
+
   gulp.task('build', ['html', 'fonts', 'other', 'cloud']);  // 2015/09/01 安部追加 cloud
 };

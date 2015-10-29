@@ -13,7 +13,7 @@
             <span>
               <small>{{ voice.user }}</small>
               <small class="post-createdAt">
-                <a class="post-createdAt" ui-sref="home.post({ voice: voice, voiceId: voice.objectId })">
+                <a href="/post/{{voice.objectId}}">
                   {{ voice.createdAt }}
                 </a>
               </small>
