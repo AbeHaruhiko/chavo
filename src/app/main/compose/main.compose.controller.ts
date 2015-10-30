@@ -19,6 +19,8 @@ module chavo {
     // ngTagsInput用フィールド
     private ngTags: { text: string; }[] = [];
 
+    private originalTagArray : string[] = [];
+
     /* @ngInject */
     constructor(
         public $scope: IMainScope,
@@ -63,6 +65,7 @@ module chavo {
         // ngTagsInputのモデルは{ text: string; }[]なので変換しておく。
         // （string[]のカラムはParse.Query.equalsToで検索できるので）
         this.ngTags = Tag.stringArrayToTagsInputObjectArray(this.voice.tags);
+        this.originalTagArray = angular.copy(this.voice.tags);
         this.voiceAuthor = this.voiceAuthor || new Child();
         this.voiceAuthor.nickName = this.voice.speaker;
         this.voiceAuthor.ageYears = this.voice.ageYears;
@@ -153,6 +156,34 @@ module chavo {
       // タグを保存
       Parse.Cloud.run('saveTag', { tags: this.voice.tags });
 
+
+      // タグ集計
+      // 削除されたタグを調べてカウントダウン
+      this.originalTagArray.forEach((originalTag: string) => {
+
+        if (this.voice.tags.indexOf(originalTag) >= 0) {
+          // 今回のVoiceのタグにもともとの（編集前の）タグが含まれている
+          // 何もしない
+        } else {
+          // 今回のVoiceのタグにもともとの（編集前の）タグが含まれていない（編集で削除された）
+          // カウントダウン
+
+          this.incrementDailyTagCount(originalTag, -1);
+        }
+      });
+
+      // 追加されたタグを調べてカウントアップ
+      this.voice.tags.forEach((tag: string) => {
+
+        if (this.originalTagArray.indexOf(tag) >= 0) {
+          // 今回のVoiceのタグにもともとの（編集前の）タグが含まれている
+          // 何もしない
+        } else {
+          // もともとのVoiceのタグに今回の（編集後の）タグが含まれていない（編集で追加された）
+          // カウントアップ
+          this.incrementDailyTagCount(tag, 1);
+        }
+      });
     }
 
     fetchUser() {
@@ -211,6 +242,24 @@ module chavo {
       parseVoice.setACL(voiceACL);  // 本人のRead, Write
 
       return parseVoice;
+    }
+
+    private incrementDailyTagCount(tag: string, amount: number) {
+
+      var DailyTagCount = Parse.Object.extend('DailyTagCount');
+      var today = moment().locale('ja').startOf('day').toDate();
+
+      let query = new Parse.Query(DailyTagCount);
+      query.equalTo('date', today);
+      query.equalTo('tag', tag);
+      query.first()
+      .then((result: Parse.Object) => {
+        let dailyTagCount = result ? result : new DailyTagCount();
+        dailyTagCount.set('date', today);
+        dailyTagCount.set('tag', tag);
+        dailyTagCount.increment('count', amount);
+        dailyTagCount.save();
+      });
     }
   }
 

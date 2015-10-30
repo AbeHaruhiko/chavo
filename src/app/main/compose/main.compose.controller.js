@@ -17,6 +17,7 @@ var chavo;
             this.voiceIsPublic = false;
             this.disableInput = false;
             this.ngTags = [];
+            this.originalTagArray = [];
             var ParseChild = Parse.Object.extend('Child');
             var query = new Parse.Query(ParseChild);
             query.ascending('dispOrder');
@@ -38,6 +39,7 @@ var chavo;
             if (this.$stateParams['voice']) {
                 this.voice = $stateParams['voice'];
                 this.ngTags = chavo.Tag.stringArrayToTagsInputObjectArray(this.voice.tags);
+                this.originalTagArray = angular.copy(this.voice.tags);
                 this.voiceAuthor = this.voiceAuthor || new chavo.Child();
                 this.voiceAuthor.nickName = this.voice.speaker;
                 this.voiceAuthor.ageYears = this.voice.ageYears;
@@ -106,6 +108,20 @@ var chavo;
                 });
             }
             Parse.Cloud.run('saveTag', { tags: this.voice.tags });
+            this.originalTagArray.forEach(function (originalTag) {
+                if (_this.voice.tags.indexOf(originalTag) >= 0) {
+                }
+                else {
+                    _this.incrementDailyTagCount(originalTag, -1);
+                }
+            });
+            this.voice.tags.forEach(function (tag) {
+                if (_this.originalTagArray.indexOf(tag) >= 0) {
+                }
+                else {
+                    _this.incrementDailyTagCount(tag, 1);
+                }
+            });
         };
         MainComposeController.prototype.fetchUser = function () {
             var _this = this;
@@ -152,6 +168,21 @@ var chavo;
             }
             parseVoice.setACL(voiceACL);
             return parseVoice;
+        };
+        MainComposeController.prototype.incrementDailyTagCount = function (tag, amount) {
+            var DailyTagCount = Parse.Object.extend('DailyTagCount');
+            var today = moment().locale('ja').startOf('day').toDate();
+            var query = new Parse.Query(DailyTagCount);
+            query.equalTo('date', today);
+            query.equalTo('tag', tag);
+            query.first()
+                .then(function (result) {
+                var dailyTagCount = result ? result : new DailyTagCount();
+                dailyTagCount.set('date', today);
+                dailyTagCount.set('tag', tag);
+                dailyTagCount.increment('count', amount);
+                dailyTagCount.save();
+            });
         };
         return MainComposeController;
     })();
