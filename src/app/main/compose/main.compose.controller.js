@@ -108,20 +108,9 @@ var chavo;
                 });
             }
             Parse.Cloud.run('saveTag', { tags: this.voice.tags });
-            this.originalTagArray.forEach(function (originalTag) {
-                if (_this.voice.tags.indexOf(originalTag) >= 0) {
-                }
-                else {
-                    _this.incrementDailyTagCount(originalTag, -1);
-                }
-            });
-            this.voice.tags.forEach(function (tag) {
-                if (_this.originalTagArray.indexOf(tag) >= 0) {
-                }
-                else {
-                    _this.incrementDailyTagCount(tag, 1);
-                }
-            });
+            if (this.voice.isPublic) {
+                this.checkAndIncrementDailyTagCount();
+            }
         };
         MainComposeController.prototype.fetchUser = function () {
             var _this = this;
@@ -168,6 +157,23 @@ var chavo;
             }
             parseVoice.setACL(voiceACL);
             return parseVoice;
+        };
+        MainComposeController.prototype.checkAndIncrementDailyTagCount = function () {
+            var _this = this;
+            this.originalTagArray.forEach(function (originalTag) {
+                if (_this.voice.tags.indexOf(originalTag) >= 0) {
+                }
+                else {
+                    _this.incrementDailyTagCount(originalTag, -1);
+                }
+            });
+            this.voice.tags.forEach(function (tag) {
+                if (_this.originalTagArray.indexOf(tag) >= 0) {
+                }
+                else {
+                    _this.incrementDailyTagCount(tag, 1);
+                }
+            });
         };
         MainComposeController.prototype.incrementDailyTagCount = function (tag, amount) {
             var DailyTagCount = Parse.Object.extend('DailyTagCount');

@@ -158,32 +158,11 @@ module chavo {
 
 
       // タグ集計
-      // 削除されたタグを調べてカウントダウン
-      this.originalTagArray.forEach((originalTag: string) => {
-
-        if (this.voice.tags.indexOf(originalTag) >= 0) {
-          // 今回のVoiceのタグにもともとの（編集前の）タグが含まれている
-          // 何もしない
-        } else {
-          // 今回のVoiceのタグにもともとの（編集前の）タグが含まれていない（編集で削除された）
-          // カウントダウン
-
-          this.incrementDailyTagCount(originalTag, -1);
-        }
-      });
-
-      // 追加されたタグを調べてカウントアップ
-      this.voice.tags.forEach((tag: string) => {
-
-        if (this.originalTagArray.indexOf(tag) >= 0) {
-          // 今回のVoiceのタグにもともとの（編集前の）タグが含まれている
-          // 何もしない
-        } else {
-          // もともとのVoiceのタグに今回の（編集後の）タグが含まれていない（編集で追加された）
-          // カウントアップ
-          this.incrementDailyTagCount(tag, 1);
-        }
-      });
+      if (this.voice.isPublic) {
+        // 一般公開のVoiceのときだけ集計
+        // .TODO: 最初非公開だった場合は、後で公開しても集計されない。（タグの変更を見ているので）
+        this.checkAndIncrementDailyTagCount();
+      }
     }
 
     fetchUser() {
@@ -242,6 +221,36 @@ module chavo {
       parseVoice.setACL(voiceACL);  // 本人のRead, Write
 
       return parseVoice;
+    }
+
+    private checkAndIncrementDailyTagCount() {
+
+      // 削除されたタグを調べてカウントダウン
+      this.originalTagArray.forEach((originalTag: string) => {
+
+        if (this.voice.tags.indexOf(originalTag) >= 0) {
+          // 今回のVoiceのタグにもともとの（編集前の）タグが含まれている
+          // 何もしない
+        } else {
+          // 今回のVoiceのタグにもともとの（編集前の）タグが含まれていない（編集で削除された）
+          // カウントダウン
+
+          this.incrementDailyTagCount(originalTag, -1);
+        }
+      });
+
+      // 追加されたタグを調べてカウントアップ
+      this.voice.tags.forEach((tag: string) => {
+
+        if (this.originalTagArray.indexOf(tag) >= 0) {
+          // 今回のVoiceのタグにもともとの（編集前の）タグが含まれている
+          // 何もしない
+        } else {
+          // もともとのVoiceのタグに今回の（編集後の）タグが含まれていない（編集で追加された）
+          // カウントアップ
+          this.incrementDailyTagCount(tag, 1);
+        }
+      });
     }
 
     private incrementDailyTagCount(tag: string, amount: number) {

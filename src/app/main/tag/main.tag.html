@@ -3,7 +3,9 @@
     <div class="panel panel-default">
       <div class="panel-heading">人気のタグ</div>
       <div class="panel-body">
-        <a ng-repeat="sampleTag in main_tag.sampleTagList" ui-sref="home.tag({ tag: sampleTag })"><span class="badge tag-badge">{{ sampleTag }}</span></a>
+        <a ng-repeat="popularTag in main_tag.popularTagList" ui-sref="home.tag({ tag: popularTag.tag })">
+          <span class="badge tag-badge">{{ popularTag.tag }}({{ popularTag.count }})</span>
+        </a>
       </div>
     </div>
     <cv-when-scroll class="media-list" cv-run="main_tag.loadMore()">

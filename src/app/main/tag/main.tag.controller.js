@@ -23,27 +23,67 @@ var chavo;
                 '苦笑',
                 'ほのぼの'
             ];
+            this.popularTagList = [];
             this.init();
         }
+        MainTagController.prototype.initPopularTags = function () {
+            var _this = this;
+            var DailyTagCount = Parse.Object.extend('DailyTagCount');
+            var query = new Parse.Query(DailyTagCount);
+            query.greaterThanOrEqualTo('date', moment().locale('ja').subtract(1, 'week').toDate());
+            query.ascending('tag');
+            query.find()
+                .then(function (results) {
+                var tagCountMap = {};
+                results.forEach(function (dailyTagCount) {
+                    var currentSum = tagCountMap[dailyTagCount.get('tag')] ? tagCountMap[dailyTagCount.get('tag')] : 0;
+                    tagCountMap[dailyTagCount.get('tag')] = currentSum + dailyTagCount.get('count');
+                });
+                var popularTagList = [];
+                for (var tag in tagCountMap) {
+                    popularTagList.push({ tag: tag, count: tagCountMap[tag] });
+                }
+                popularTagList.sort(function (a, b) {
+                    return a.count > b.count ? 1 : -1;
+                });
+                console.log(popularTagList);
+                _this.$scope.$apply();
+            });
+        };
         MainTagController.prototype.init = function () {
             var _this = this;
-            this.loading = true;
-            var ParseVoice = Parse.Object.extend('Voice');
-            var query = new Parse.Query(ParseVoice);
-            var parseVoices;
             this.cfpLoadingBar.start();
-            query.descending('createdAt');
-            query.equalTo('tags', this.$stateParams['tag']);
-            query.limit(5);
-            query.skip(5 * this.pageCount);
-            query.find({
-                success: function (results) {
-                    console.log('success.');
-                },
-                error: function (error) {
-                    console.error('Error: ' + error.code + ' ' + error.message);
+            this.loading = true;
+            var parseVoices;
+            var DailyTagCount = Parse.Object.extend('DailyTagCount');
+            var query = new Parse.Query(DailyTagCount);
+            query.greaterThanOrEqualTo('date', moment().locale('ja').subtract(1, 'week').toDate());
+            query.ascending('tag');
+            query.find()
+                .then(function (results) {
+                var tagCountMap = {};
+                results.forEach(function (dailyTagCount) {
+                    var currentSum = tagCountMap[dailyTagCount.get('tag')] ? tagCountMap[dailyTagCount.get('tag')] : 0;
+                    tagCountMap[dailyTagCount.get('tag')] = currentSum + dailyTagCount.get('count');
+                });
+                for (var tag in tagCountMap) {
+                    _this.popularTagList.push({ tag: tag, count: tagCountMap[tag] });
                 }
-            }).then(function (results) {
+                _this.popularTagList.sort(function (a, b) {
+                    return a.count < b.count ? 1 : -1;
+                });
+                console.log(_this.popularTagList);
+            })
+                .then(function () {
+                var ParseVoice = Parse.Object.extend('Voice');
+                var query = new Parse.Query(ParseVoice);
+                query.descending('createdAt');
+                query.equalTo('tags', _this.$stateParams['tag']);
+                query.limit(5);
+                query.skip(5 * _this.pageCount);
+                return query.find();
+            })
+                .then(function (results) {
                 parseVoices = results;
                 var promises = [];
                 results.forEach(function (voice) {
