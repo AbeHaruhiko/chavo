@@ -3,7 +3,6 @@ Parse.Cloud.define('hello', function (request, response) {
     response.success('Hello world!');
 });
 Parse.Cloud.define('toggleLike', function (request, response) {
-    Parse.Cloud.useMasterKey();
     var voice = request.params.voice;
     var ParseVoice = Parse.Object.extend('Voice');
     var parseVoice = new ParseVoice();
@@ -20,7 +19,7 @@ Parse.Cloud.define('toggleLike', function (request, response) {
         .then(function (user) {
         console.log('user: ' + user);
         console.log('likes: ' + user.get('likes'));
-        return parseVoice.save();
+        return parseVoice.save(null, { useMasterKey: true });
     })
         .then(function (parseVoice) {
         console.log('likeCound: ' + parseVoice.get('likeCount'));
@@ -43,6 +42,9 @@ Parse.Cloud.define('saveTag', function (request, response) {
                 var parseTag = new ParseTag();
                 parseTag.set('tag', tag);
                 return parseTag.save();
+            }
+            else {
+                return Parse.Promise.as(null);
             }
         })
             .then(function (parseTag) {
