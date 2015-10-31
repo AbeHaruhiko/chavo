@@ -30,7 +30,7 @@ module chavo {
         public cfpLoadingBar: any,
         public $modal: any) {
 
-      // this.initPopularTags();
+      this.initPopularTags();
       this.init();
     }
 
@@ -52,66 +52,36 @@ module chavo {
         });
 
         // 配列にしてソート
-        let popularTagList: { tag: string; count: number; }[] = [];
-        for (var tag in tagCountMap) {  // for inはオブジェクトのプロパティを列挙してくれる。Object.keysで配列ゲットでもできる。
-          popularTagList.push({ tag: tag, count: tagCountMap[tag] });
-        }
-        popularTagList.sort(function(a: any, b: any) {
-          return a.count > b.count ? 1 : -1;
-        });
-
-        console.log(popularTagList);
-        this.$scope.$apply();
-
-      });
-    }
-
-    init() {
-      this.cfpLoadingBar.start();
-
-      this.loading = true;
-
-      var parseVoices: Parse.Object[];
-
-      var DailyTagCount = Parse.Object.extend('DailyTagCount');
-      var query = new Parse.Query(DailyTagCount);
-      // 一週間分
-      query.greaterThanOrEqualTo('date', moment().locale('ja').subtract(1, 'week').toDate());
-      query.ascending('tag');
-      query.find()
-      .then((results: Parse.Object[]) => {
-        // .MapクラスはTypeScript1.5にまだないらしい。
-        let tagCountMap: { [key: string]: number; } = {};
-        results.forEach((dailyTagCount: Parse.Object) => {
-          // タグごとにサマリー
-          let currentSum = tagCountMap[dailyTagCount.get('tag')] ? tagCountMap[dailyTagCount.get('tag')] : 0;
-          tagCountMap[dailyTagCount.get('tag')] = currentSum + dailyTagCount.get('count');
-        });
-
-        // 配列にして降順にソート
         for (var tag in tagCountMap) {  // for inはオブジェクトのプロパティを列挙してくれる。Object.keysで配列ゲットでもできる。
           this.popularTagList.push({ tag: tag, count: tagCountMap[tag] });
         }
         this.popularTagList.sort(function(a: any, b: any) {
           return a.count < b.count ? 1 : -1;
         });
+      });
+    }
 
-        console.log(this.popularTagList);
+    init() {
+      this.loading = true;
+      var ParseVoice = Parse.Object.extend('Voice');
+      var query = new Parse.Query(ParseVoice);
+      var parseVoices: Parse.Object[];
 
-      })
-      .then(() => {
+      this.cfpLoadingBar.start();
 
-        var ParseVoice = Parse.Object.extend('Voice');
-        var query = new Parse.Query(ParseVoice);
+      query.descending('createdAt');
+      query.equalTo('tags', this.$stateParams['tag']);
+      query.limit(5);
+      query.skip(5 * this.pageCount);
 
-        query.descending('createdAt');
-        query.equalTo('tags', this.$stateParams['tag']);
-        query.limit(5);
-        query.skip(5 * this.pageCount);
-
-        return query.find();
-      })
-      .then((results: Parse.Object[]) => {
+      query.find({
+        success: (results: Parse.Object[]) => {
+          console.log('success.');
+        },
+        error: function(error: Parse.Error) {
+          console.error('Error: ' + error.code + ' ' + error.message);
+        }
+      }).then((results: Parse.Object[]) => {
         // 投稿者のアイコンを取得するため、fetchする。
 
         parseVoices = results;
