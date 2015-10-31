@@ -31,7 +31,7 @@ var chavo;
             var _this = this;
             var DailyTagCount = Parse.Object.extend('DailyTagCount');
             var query = new Parse.Query(DailyTagCount);
-            query.greaterThanOrEqualTo('date', moment().locale('ja').subtract(1, 'week').toDate());
+            query.greaterThanOrEqualTo('date', moment().locale('ja').subtract(1, 'month').toDate());
             query.ascending('tag');
             query.find()
                 .then(function (results) {
