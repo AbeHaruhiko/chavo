@@ -1,0 +1,93 @@
+<!doctype html>
+<html ng-app="chavo"><head>
+<meta charset="utf-8">
+<title>chavo</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+<meta property="og:title" content="ちゃぼ：<%= voice.description %>">
+<meta property="og:type" content="article">
+<meta property="og:description" content="<%= voice.description %>">
+<meta property="og:url" content=".">
+<meta property="og:image" content="<%= voice.photoUrl %>">
+<meta property="og:site_name" content="ちゃぼ">
+<link rel="stylesheet" href="/styles/vendor-fb516f42.css">
+<link rel="stylesheet" href="/styles/app-212b2b17.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script src="//www.parsecdn.com/js/parse-1.4.2.min.js">
+</script>
+</head>
+<body>
+<!--[if lt IE 10]>
+ <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+ <![endif]-->
+
+
+  <div ng-controller="MainController as main" class="container">
+
+    <div ng-include="'app/components/navbar/navbar.html'"></div>
+    <div ng-include="'app/components/tabmenu/tabmenu.html'"></div>
+
+    <div ng-controller="MainPostController as main_post" class="row" ng-init="main_post.targetVoiceId = '<%= voice.objectId %>'">
+      <div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3">
+        <div class="media panel panel-default">
+          <div class="media-left">
+            <a href="#">
+              <div ng-style="{ 'background-image': 'url(' + main_post.voice.icon + ')' }"
+                class="media-object img-circle icon-post"></div>
+            </a>
+          </div>
+          <div class="media-body">
+            <div class="media-header">
+              <span>
+                <small>{{ main_post.voice.user }}</small>
+                <small class="post-createdAt">{{ main_post.voice.createdAt }}</small>
+              </span>
+              <span class="pull-right">
+                <span ng-click="main_post.toggleLike(voice)" id="like" ng-class="{ 'like-active': main_post.voice.like }">
+                  <span class="glyphicon glyphicon-heart cursor-pointer" aria-hidden="true"></span>
+                </span>
+                <span id="like-count">{{ main_post.voice.likeCount }}</span>
+                <span ng-if="main_post.voice.userObjectId === main_post.$rootScope.currentUser.id" dropdown class="dropdown"><!-- ここのclass="dropdown"がないと動かない -->
+                  <span
+                      class="glyphicon glyphicon-option-horizontal cursor-pointer dropdown-toggle"
+                      dropdown-toggle>
+                  </span>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a ui-sref="home.compose({ voice: main_post.voice, voiceId: main_post.voice.objectId })">編集する</a></li>
+                    <li><a ng-click="main_post.openDeletePostConfirmModal(main_post.voice)">削除する</a></li>
+                    <script type="text/ng-template" id="deletePostConfirmModal.html">
+                      <div class="modal-body">この投稿を削除しますか？</div>
+                      <div class="modal-footer">
+                        <button class="btn btn-primary" type="button" ng-click="delete_post_modal.ok()">OK</button>
+                        <button class="btn btn-default" type="button" ng-click="delete_post_modal.cancel()">Cancel</button>
+                      </div>
+                    </script>
+                  </ul>
+                </span>
+              </span>
+            </div>
+            <p class="pre-line">{{ main_post.voice.description }}</p>
+            <p><a ng-repeat="tag in main_post.voice.tags" ui-sref="home.tag({ tag: tag })" target="_self"><span class="badge tag-badge">{{ tag }}</span></a></p>
+            <p class="text-right"><small>{{ main_post.voice.speaker }} {{ main_post.voice.age }} {{ main_post.voice.gender }}</small></p>
+            <p ng-show="main_post.voice.photoUrl"><img ng-src="{{ main_post.voice.photoUrl }}" class="img-responsive img-thumbnail"/></p>
+          </div>
+          <!-- <pre>{{voice|json}}</pre> -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<script>
+     (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+     function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+     e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+     e.src='//www.google-analytics.com/analytics.js';
+     r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+     ga('create','UA-XXXXX-X');ga('send','pageview');
+     </script><script src="/scripts/vendor-d10fe554.js"></script><script src="/scripts/app-3491432d.js"></script></body></html>
