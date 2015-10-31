@@ -69,7 +69,7 @@
               </span>
             </div>
             <p class="pre-line">{{ main_post.voice.description }}</p>
-            <p><a ng-repeat="tag in main_post.voice.tags" ui-sref="home.tag({ tag: tag })"><span class="badge tag-badge">{{ tag }}</span></a></p>
+            <p><a ng-repeat="tag in main_post.voice.tags" ui-sref="home.tag({ tag: tag })" target="_self"><span class="badge tag-badge">{{ tag }}</span></a></p>
             <p class="text-right"><small>{{ main_post.voice.speaker }} {{ main_post.voice.age }} {{ main_post.voice.gender }}</small></p>
             <p ng-show="main_post.voice.photoUrl"><img ng-src="{{ main_post.voice.photoUrl }}" class="img-responsive img-thumbnail"/></p>
           </div>
