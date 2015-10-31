@@ -1,5 +1,6 @@
 /// <reference path="../../.tmp/typings/tsd.d.ts" />
 
+/// <reference path="top/top.controller.ts" />
 /// <reference path="main/main.controller.ts" />
 /// <reference path="main/all/main.all.controller.ts" />
 /// <reference path="main/myposts/main.myposts.controller.ts" />
@@ -48,6 +49,7 @@ module chavo {
     .service('AuthService', AuthService)
     .service('FacebookService', FacebookService)
     .directive('cvWhenScroll', WhenScrollDerective.ddo)
+    .controller('TopController', TopController)
     .controller('MainController', MainController)
     .controller('MainAllController', MainAllController)
     .controller('MainTagController', MainTagController)
@@ -71,8 +73,12 @@ module chavo {
 
   .config(function ($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) {
     $stateProvider
-      .state('home', {
+      .state('top', {
         url: '',
+        templateUrl: 'app/top/top.html'
+      })
+      .state('home', {
+        // url: '',
         templateUrl: 'app/main/main.html'
       })
       .state('home.myposts', {
@@ -160,15 +166,23 @@ module chavo {
       fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
 
-    // all, myposts等の無限スクロールを解除
     $rootScope.$on('$stateChangeSuccess',
         (event: angular.IAngularEvent,
           toState: ng.ui.IState,
           toParams: any,
           fromState: ng.ui.IState,
           fromParams: any) => {
+
+        // all, myposts等の無限スクロールを解除
         if (fromState.name === 'home.all' || fromState.name === 'home.myposts' || fromState.name === 'home.tag') {
           WhenScrollController.unbind();
+        }
+
+        // 背景写真セット
+        if (toState.name === 'top' || toState.name === 'login' || toState.name === 'signup') {
+          angular.element(document).find('body').addClass('fullscreen-background');
+        } else {
+          angular.element(document).find('body').removeClass('fullscreen-background');
         }
     });
   });

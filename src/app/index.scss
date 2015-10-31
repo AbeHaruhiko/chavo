@@ -24,8 +24,16 @@ body {
     white-space: pre-line;
 }
 
+// 全面写真
+.fullscreen-background {
+  opacity: 0.8;
+  background:url(../assets/images/background/bg1.jpg) no-repeat center center fixed !important;
+  background-size: cover !important;
+}
 
-
+.top-poem {
+  line-height: 2em;
+}
 
 
 // カーソルをpointerにする
@@ -173,6 +181,11 @@ body {
     background-color: transparent;
     color: inherit;
     transition: all .2s;
+}
+
+.btn-outline-bold {
+    border-width: 3px !important;
+    border-radius: 0;
 }
 
 .btn-primary.btn-outline {

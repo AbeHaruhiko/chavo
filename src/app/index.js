@@ -18,6 +18,7 @@ var chavo;
         .service('AuthService', chavo.AuthService)
         .service('FacebookService', chavo.FacebookService)
         .directive('cvWhenScroll', chavo.WhenScrollDerective.ddo)
+        .controller('TopController', chavo.TopController)
         .controller('MainController', chavo.MainController)
         .controller('MainAllController', chavo.MainAllController)
         .controller('MainTagController', chavo.MainTagController)
@@ -40,8 +41,11 @@ var chavo;
         .controller('RejectOrApproveConfirmModalController', chavo.RejectOrApproveConfirmModalController)
         .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('home', {
+            .state('top', {
             url: '',
+            templateUrl: 'app/top/top.html'
+        })
+            .state('home', {
             templateUrl: 'app/main/main.html'
         })
             .state('home.myposts', {
@@ -130,6 +134,12 @@ var chavo;
         $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
             if (fromState.name === 'home.all' || fromState.name === 'home.myposts' || fromState.name === 'home.tag') {
                 chavo.WhenScrollController.unbind();
+            }
+            if (toState.name === 'top' || toState.name === 'login' || toState.name === 'signup') {
+                angular.element(document).find('body').addClass('fullscreen-background');
+            }
+            else {
+                angular.element(document).find('body').removeClass('fullscreen-background');
             }
         });
     });
