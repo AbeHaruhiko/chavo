@@ -11,13 +11,15 @@ module chavo {
     public loginMessage: string;
 
     /* @ngInject */
-    constructor (public $scope: IMainScope,
+    constructor (
+      public $scope: IMainScope,
       public $rootScope: IChavoRootScope,
       public $state: angular.ui.IStateService,
       public $location: angular.ILocationService,
       public AuthService: AuthService,
       public $q: angular.IQService,
-      public FacebookService: FacebookService) {
+      public FacebookService: FacebookService
+        ) {
     }
 
     // signUp(form: { username: string; email: string; password: string; }) {
