@@ -43,6 +43,7 @@
               <span>
                 <small>{{ main_post.voice.user }}</small>
                 <small class="post-createdAt">{{ main_post.voice.createdAt }}</small>
+                <small>{{ main_post.voice.isPublic ? '一般公開' : '非公開' }}
               </span>
               <span class="pull-right">
                 <span ng-click="main_post.toggleLike(voice)" id="like" ng-class="{ 'like-active': main_post.voice.like }">
@@ -91,4 +92,4 @@
      e.src='//www.google-analytics.com/analytics.js';
      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
      ga('create','UA-XXXXX-X');ga('send','pageview');
-     </script><script src="/scripts/vendor-f5898d8a.js"></script><script src="/scripts/app-e4f846c2.js"></script></body></html>
+     </script><script src="/scripts/vendor-f5898d8a.js"></script><script src="/scripts/app-2f34baa1.js"></script></body></html>

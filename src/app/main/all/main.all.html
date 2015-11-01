@@ -18,6 +18,7 @@
                   {{ voice.createdAt }}
                 </a>
               </small>
+              <small>{{ voice.isPublic ? '一般公開' : '非公開' }}
             </span>
             <span class="pull-right">
               <span ng-click="main_all.toggleLike(voice)" id="like" ng-class="{ 'like-active': voice.like }">
