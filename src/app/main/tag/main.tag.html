@@ -18,10 +18,6 @@
         </div>
         <div class="media-body">
           <div class="media-header">
-            <span>
-              <small>{{ voice.user }}</small>
-              <small>{{ voice.createdAt }}</small>
-            </span>
             <span class="pull-right">
               <span ng-click="main_tag.toggleLike(voice)" id="like" ng-class="{ 'like-active': voice.like }">
                 <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
@@ -44,6 +40,17 @@
                   </script>
                 </ul>
               </span>
+            </span>
+            <span>
+              <small>{{ voice.user }}</small>
+              <br/>
+              <small>{{ voice.isPublic ? '一般公開' : '非公開' }}
+                <small class="post-createdAt">
+                  <!-- <a ui-sref="home.post({ voice: voice, voiceId: voice.objectId })"> -->
+                  <a href="/post/{{voice.objectId}}">
+                    {{ voice.createdAt }}
+                  </a>
+                </small>
             </span>
           </div>
           <p class="pre-line">{{ voice.description }}</p>

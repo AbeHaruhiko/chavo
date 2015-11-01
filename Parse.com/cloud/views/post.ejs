@@ -40,11 +40,6 @@
           </div>
           <div class="media-body">
             <div class="media-header">
-              <span>
-                <small>{{ main_post.voice.user }}</small>
-                <small class="post-createdAt">{{ main_post.voice.createdAt }}</small>
-                <small>{{ main_post.voice.isPublic ? '一般公開' : '非公開' }}
-              </span>
               <span class="pull-right">
                 <span ng-click="main_post.toggleLike(voice)" id="like" ng-class="{ 'like-active': main_post.voice.like }">
                   <span class="glyphicon glyphicon-heart cursor-pointer" aria-hidden="true"></span>
@@ -67,6 +62,12 @@
                     </script>
                   </ul>
                 </span>
+              </span>
+              <span>
+                <small>{{ main_post.voice.user }}</small>
+                <br/>
+                <small>{{ main_post.voice.isPublic ? '一般公開' : '非公開' }}
+                <small class="post-createdAt">{{ main_post.voice.createdAt }}</small>
               </span>
             </div>
             <p class="pre-line">{{ main_post.voice.description }}</p>
