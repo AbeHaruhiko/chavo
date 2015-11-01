@@ -9,13 +9,18 @@ module chavo {
     public showResetPwMessage: boolean = false;
 
     /* @ngInject */
-    constructor (public $scope: IMainScope,
-      public $rootScope: IChavoRootScope,
-      public $state: angular.ui.IStateService,
-      public $location: angular.ILocationService,
-      public AuthService: AuthService,
-      public $q: angular.IQService,
-      public FacebookService: FacebookService) {
+    constructor (
+        public $scope: IMainScope,
+        public $rootScope: IChavoRootScope,
+        public $state: angular.ui.IStateService,
+        public $location: angular.ILocationService,
+        public AuthService: AuthService,
+        public $q: angular.IQService,
+        public FacebookService: FacebookService
+      ) {
+        if (Parse.User.current()) {
+          $state.go('home.all');
+        }
     }
 
     signUp(form: { username: string; email: string; password: string; }) {

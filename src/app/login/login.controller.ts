@@ -20,6 +20,9 @@ module chavo {
       public $q: angular.IQService,
       public FacebookService: FacebookService
         ) {
+      if (Parse.User.current()) {
+        $state.go('home.all');
+      }
     }
 
     // signUp(form: { username: string; email: string; password: string; }) {

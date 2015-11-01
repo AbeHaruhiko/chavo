@@ -11,6 +11,9 @@ var chavo;
             this.$q = $q;
             this.FacebookService = FacebookService;
             this.showResetPwMessage = false;
+            if (Parse.User.current()) {
+                $state.go('home.all');
+            }
         }
         LoginController.prototype.loginWithFacebook = function () {
             this.FacebookService.loginWithFacebookAndGoHome();

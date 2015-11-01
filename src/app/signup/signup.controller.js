@@ -11,6 +11,9 @@ var chavo;
             this.$q = $q;
             this.FacebookService = FacebookService;
             this.showResetPwMessage = false;
+            if (Parse.User.current()) {
+                $state.go('home.all');
+            }
         }
         SignupController.prototype.signUp = function (form) {
             var _this = this;
