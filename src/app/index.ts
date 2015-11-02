@@ -181,8 +181,10 @@ module chavo {
         // 背景写真セット
         if (toState.name === 'top' || toState.name === 'login' || toState.name === 'signup') {
           angular.element(document).find('body').addClass('fullscreen-background');
+          angular.element("#fullscreen-background").addClass('fullscreen-background-div');
         } else {
           angular.element(document).find('body').removeClass('fullscreen-background');
+          angular.element("#fullscreen-background").removeClass('fullscreen-background-div');
         }
     });
   });
