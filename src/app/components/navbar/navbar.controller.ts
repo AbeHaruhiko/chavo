@@ -37,7 +37,10 @@ module chavo {
 
     logOut() {
       this.updateNotification();
-      this.AuthService.logOut();
+      this.AuthService.logOut()
+      .then(() => {
+        this.$state.go('top');
+      });
     }
 
     loginWithFacebook() {

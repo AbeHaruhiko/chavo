@@ -27,8 +27,12 @@ var chavo;
             });
         };
         NavbarController.prototype.logOut = function () {
+            var _this = this;
             this.updateNotification();
-            this.AuthService.logOut();
+            this.AuthService.logOut()
+                .then(function () {
+                _this.$state.go('top');
+            });
         };
         NavbarController.prototype.loginWithFacebook = function () {
             this.updateNotification();

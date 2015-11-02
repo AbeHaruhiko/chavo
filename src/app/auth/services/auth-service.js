@@ -22,7 +22,6 @@ var chavo;
         };
         AuthService.prototype.logIn = function (authData, callbacks) {
             var _this = this;
-            if (authData === void 0) { authData = { username: '', password: '' }; }
             Parse.User.logIn(authData.username, authData.password, callbacks)
                 .then(function (user) {
                 _this.$rootScope.currentUser = user;
@@ -36,7 +35,7 @@ var chavo;
         };
         AuthService.prototype.logOut = function () {
             var _this = this;
-            Parse.User.logOut()
+            return Parse.User.logOut()
                 .then(function () {
                 _this.$rootScope.currentUser = null;
             });
