@@ -42,7 +42,11 @@
               </span>
             </span>
             <span>
-              <small>{{ voice.user }}</small>
+              <small>
+                <a ui-sref="home.user({ id: voice.userObjectId })">
+                  {{ voice.user }}
+                </a>
+              </small>
               <br/>
               <small>{{ voice.isPublic ? '一般公開' : '非公開' }}</small>
                 <small class="post-createdAt">

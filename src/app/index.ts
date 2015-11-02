@@ -5,6 +5,7 @@
 /// <reference path="main/all/main.all.controller.ts" />
 /// <reference path="main/myposts/main.myposts.controller.ts" />
 /// <reference path="main/tag/main.tag.controller.ts" />
+/// <reference path="main/user/main.user.controller.ts" />
 /// <reference path="main/compose/main.compose.controller.ts" />
 /// <reference path="main/post/main.post.controller.ts" />
 /// <reference path="login/login.controller.ts"/>
@@ -53,6 +54,7 @@ module chavo {
     .controller('MainController', MainController)
     .controller('MainAllController', MainAllController)
     .controller('MainTagController', MainTagController)
+    .controller('MainUserController', MainUserController)
     .controller('MainPostController', MainPostController)
     .controller('MainMyPostsController', MainMyPostsController)
     .controller('DeletePostConfirmModalController', DeletePostConfirmModalController)
@@ -97,6 +99,10 @@ module chavo {
       .state('home.tag', {
         url: '/tag/:tag',
         templateUrl: 'app/main/tag/main.tag.html'
+      })
+      .state('home.user', {
+        url: '/user/:id',
+        templateUrl: 'app/main/user/main.user.html'
       })
       .state('home.compose', {
         url: '/compose/:voiceId',

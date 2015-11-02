@@ -1,25 +1,11 @@
 module chavo {
   'use strict';
 
-  export class MainTagController {
+  export class MainUserController {
 
     voices = new Array<Voice>();
     pageCount = 0;
     loading = false;
-
-    sampleTagList: string[] = [
-      'おもしろ',
-      '迷言',
-      '名言',
-      '一発ネタ',
-      '謎ワード',
-      '感動',
-      '成長したなあ。',
-      '苦笑',
-      'ほのぼの'
-    ];
-
-    popularTagList: { tag: string; count: number; }[] = [];
 
     /* @ngInject */
     constructor (
@@ -29,36 +15,8 @@ module chavo {
         public $stateParams: ng.ui.IStateParamsService,
         public cfpLoadingBar: any,
         public $modal: any) {
-
-      this.initPopularTags();
+console.log('user');
       this.init();
-    }
-
-    initPopularTags() {
-
-      var DailyTagCount = Parse.Object.extend('DailyTagCount');
-      var query = new Parse.Query(DailyTagCount);
-      // 一週間分
-      query.greaterThanOrEqualTo('date', moment().locale('ja').subtract(1, 'month').toDate());
-      query.ascending('tag');
-      query.find()
-      .then((results: Parse.Object[]) => {
-        // .MapクラスはTypeScript1.5にまだないらしい。
-        let tagCountMap: { [key: string]: number; } = {};
-        results.forEach((dailyTagCount: Parse.Object) => {
-          // タグごとにサマリー
-          let currentSum = tagCountMap[dailyTagCount.get('tag')] ? tagCountMap[dailyTagCount.get('tag')] : 0;
-          tagCountMap[dailyTagCount.get('tag')] = currentSum + dailyTagCount.get('count');
-        });
-
-        // 配列にしてソート
-        for (var tag in tagCountMap) {  // for inはオブジェクトのプロパティを列挙してくれる。Object.keysで配列ゲットでもできる。
-          this.popularTagList.push({ tag: tag, count: tagCountMap[tag] });
-        }
-        this.popularTagList.sort(function(a: any, b: any) {
-          return a.count < b.count ? 1 : -1;
-        });
-      });
     }
 
     init() {
@@ -70,7 +28,9 @@ module chavo {
       this.cfpLoadingBar.start();
 
       query.descending('createdAt');
-      query.equalTo('tags', this.$stateParams['tag']);
+      let user = new Parse.User();
+      user.id = this.$stateParams['id'];
+      query.equalTo('user', user);
       query.limit(20);
       query.skip(20 * this.pageCount);
 

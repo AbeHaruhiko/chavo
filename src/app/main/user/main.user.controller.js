@@ -1,8 +1,8 @@
 var chavo;
 (function (chavo) {
     'use strict';
-    var MainTagController = (function () {
-        function MainTagController($scope, $rootScope, $state, $stateParams, cfpLoadingBar, $modal) {
+    var MainUserController = (function () {
+        function MainUserController($scope, $rootScope, $state, $stateParams, cfpLoadingBar, $modal) {
             this.$scope = $scope;
             this.$rootScope = $rootScope;
             this.$state = $state;
@@ -12,43 +12,10 @@ var chavo;
             this.voices = new Array();
             this.pageCount = 0;
             this.loading = false;
-            this.sampleTagList = [
-                'おもしろ',
-                '迷言',
-                '名言',
-                '一発ネタ',
-                '謎ワード',
-                '感動',
-                '成長したなあ。',
-                '苦笑',
-                'ほのぼの'
-            ];
-            this.popularTagList = [];
-            this.initPopularTags();
+            console.log('user');
             this.init();
         }
-        MainTagController.prototype.initPopularTags = function () {
-            var _this = this;
-            var DailyTagCount = Parse.Object.extend('DailyTagCount');
-            var query = new Parse.Query(DailyTagCount);
-            query.greaterThanOrEqualTo('date', moment().locale('ja').subtract(1, 'month').toDate());
-            query.ascending('tag');
-            query.find()
-                .then(function (results) {
-                var tagCountMap = {};
-                results.forEach(function (dailyTagCount) {
-                    var currentSum = tagCountMap[dailyTagCount.get('tag')] ? tagCountMap[dailyTagCount.get('tag')] : 0;
-                    tagCountMap[dailyTagCount.get('tag')] = currentSum + dailyTagCount.get('count');
-                });
-                for (var tag in tagCountMap) {
-                    _this.popularTagList.push({ tag: tag, count: tagCountMap[tag] });
-                }
-                _this.popularTagList.sort(function (a, b) {
-                    return a.count < b.count ? 1 : -1;
-                });
-            });
-        };
-        MainTagController.prototype.init = function () {
+        MainUserController.prototype.init = function () {
             var _this = this;
             this.loading = true;
             var ParseVoice = Parse.Object.extend('Voice');
@@ -56,7 +23,9 @@ var chavo;
             var parseVoices;
             this.cfpLoadingBar.start();
             query.descending('createdAt');
-            query.equalTo('tags', this.$stateParams['tag']);
+            var user = new Parse.User();
+            user.id = this.$stateParams['id'];
+            query.equalTo('user', user);
             query.limit(20);
             query.skip(20 * this.pageCount);
             query.find({
@@ -84,7 +53,7 @@ var chavo;
                 _this.applyFoundVoices(parseVoices);
             });
         };
-        MainTagController.prototype.toggleLike = function (voice) {
+        MainUserController.prototype.toggleLike = function (voice) {
             var _this = this;
             voice.like = !voice.like;
             Parse.Cloud.run('toggleLike', { voice: voice })
@@ -96,14 +65,14 @@ var chavo;
                 console.error('Error: ' + error.code + ' ' + error.message);
             });
         };
-        MainTagController.prototype.loadMore = function () {
+        MainUserController.prototype.loadMore = function () {
             if (this.loading) {
                 return;
             }
             this.pageCount++;
             this.init();
         };
-        MainTagController.prototype.openDeletePostConfirmModal = function (voice) {
+        MainUserController.prototype.openDeletePostConfirmModal = function (voice) {
             var _this = this;
             var modalInstance = this.$modal.open({
                 animation: true,
@@ -130,7 +99,7 @@ var chavo;
                 console.dir(voice);
             });
         };
-        MainTagController.prototype.applyFoundVoices = function (parseVoices) {
+        MainUserController.prototype.applyFoundVoices = function (parseVoices) {
             var _this = this;
             var myLikes = !this.$rootScope.currentUser ? []
                 : !this.$rootScope.currentUser.get('likes') ? []
@@ -144,7 +113,7 @@ var chavo;
             this.$scope.$apply();
             this.loading = false;
         };
-        return MainTagController;
+        return MainUserController;
     })();
-    chavo.MainTagController = MainTagController;
+    chavo.MainUserController = MainUserController;
 })(chavo || (chavo = {}));
