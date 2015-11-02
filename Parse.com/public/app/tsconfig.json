@@ -31,6 +31,7 @@
         "./main/myposts/main.myposts.controller.ts",
         "./main/post/main.post.controller.ts",
         "./main/tag/main.tag.controller.ts",
+        "./main/user/main.user.controller.ts",
         "./model/Child.ts",
         "./model/FamilyApplication.ts",
         "./model/GENDER.ts",
