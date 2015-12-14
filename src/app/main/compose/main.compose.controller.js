@@ -28,11 +28,11 @@ var chavo;
             }).then(function (results) {
                 results.forEach(function (parseChild) {
                     if (parseChild.get('birthday')) {
-                        var months = '' + (moment().diff(moment(parseChild.get('birthday')), 'months') - (12 * +years) + 1);
                         var years = '' + moment().diff(moment(parseChild.get('birthday')), 'years');
+                        var months = '' + (moment().diff(moment(parseChild.get('birthday')), 'months') - (12 * +years) + 1);
                         if (months === '12') {
                             months = '0';
-                            years = '' + (years + 1);
+                            years = '' + (+years + 1);
                         }
                     }
                     _this.$scope.$apply(function () {

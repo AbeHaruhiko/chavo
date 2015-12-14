@@ -41,13 +41,13 @@ module chavo {
         results.forEach((parseChild: Parse.Object) => {
 
           if (parseChild.get('birthday')) {
-            // ヶ月（誕生日からの月数 - 年齢分の月数）
-            var months: string = '' + (moment().diff(moment(parseChild.get('birthday')), 'months') - (12 * +years) + 1);
             // 年齢
             var years: string = '' + moment().diff(moment(parseChild.get('birthday')), 'years');
+            // ヶ月（誕生日からの月数 - 年齢分の月数）
+            var months: string = '' + (moment().diff(moment(parseChild.get('birthday')), 'months') - (12 * +years) + 1);
             if (months === '12') {
               months = '0';
-              years = '' + (years + 1); // 一旦numberにしたり。
+              years = '' + (+years + 1); // 一旦numberにしたり。
             }
           }
 
