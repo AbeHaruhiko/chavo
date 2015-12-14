@@ -40,13 +40,16 @@
         "./model/Voice.ts",
         "./settings/content/child/settings.child.controller.ts",
         "./settings/content/children/settings.children.controller.ts",
-        "./settings/content/family/settings.family.controller.ts",
         "./settings/content/family_application/settings.family_application.controller.ts",
         "./settings/content/family_approval/settings.family_approval.controller.ts",
+        "./settings/content/family/settings.family.controller.ts",
         "./settings/content/profile/settings.profile.controller.ts",
         "./settings/content/settings.content.controller.ts",
         "./settings/menu/settings.menu.controller.ts",
         "./signup/signup.controller.ts",
         "./top/top.controller.ts"
-    ]
+    ],
+    "atom": {
+        "rewriteTsconfig": true
+    }
 }
