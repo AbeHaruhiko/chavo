@@ -261,7 +261,10 @@ declare module angular.ui {
         is(state: IState, params?: {}): boolean;
         href(state: IState, params?: {}, options?: IHrefOptions): string;
         href(state: string, params?: {}, options?: IHrefOptions): string;
-        get(state: string): IState;
+        get(state: string, context?: string): IState;
+        get(state: IState, context?: string): IState;
+        get(state: string, context?: IState): IState;
+        get(state: IState, context?: IState): IState;
         get(): IState[];
         /** A reference to the state's config object. However you passed it in. Useful for accessing custom data. */
         current: IState;
@@ -300,7 +303,10 @@ declare module angular.ui {
     	 *
     	 */
         sync(): void;
-        listen(): void;
+        listen(): Function;
+        href(urlMatcher: IUrlMatcher, params?: IStateParamsService, options?: IHrefOptions): string;
+        update(read?: boolean): void;
+        push(urlMatcher: IUrlMatcher, params?: IStateParamsService, options?: IHrefOptions): void;
     }
 
     interface IUiViewScrollProvider {
