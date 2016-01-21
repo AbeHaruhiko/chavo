@@ -25,7 +25,11 @@ var chavo;
                 results.forEach(function (parseChild) {
                     if (parseChild.get('birthday')) {
                         var years = '' + moment().diff(moment(parseChild.get('birthday')), 'years');
-                        var months = '' + (moment().diff(moment(parseChild.get('birthday')), 'months') - (12 * +years));
+                        var months = '' + (moment().diff(moment(parseChild.get('birthday')), 'months') - (12 * +years) + 1);
+                        if (months === '12') {
+                            months = '0';
+                            years = '' + (+years + 1);
+                        }
                     }
                     cfpLoadingBar.complete();
                     _this.$scope.$apply(function () {
